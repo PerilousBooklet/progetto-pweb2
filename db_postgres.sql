@@ -116,10 +116,10 @@ INSERT INTO Autostrada (cod_naz, cod_eu, nome, lunghezza) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Casello`
+-- Table structure for table `casello`
 --
 
-CREATE TABLE Casello (
+CREATE TABLE casello (
   codice int NOT NULL,
   cod_naz varchar NOT NULL,
   comune varchar CHARACTER SET utf8mb4 NOT NULL,
@@ -132,10 +132,10 @@ CREATE TABLE Casello (
 );
 
 --
--- Dumping data for table `Casello`
+-- Dumping data for table `casello`
 --
 
-INSERT INTO Casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_automazione) VALUES
+INSERT INTO casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_automazione) VALUES
 (1, 'A21', 'D492', '1', '3936.4905', '3376.692', 0, NULL),
 (2, 'A26', 'I163', '2', '2579.828', '-329.20062', 1, '1242-03-03'),
 (3, 'A67', 'E237', '3', '2771.6528', '1920.7931', 0, NULL),
@@ -891,7 +891,7 @@ INSERT INTO Casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_au
 (768, 'A44', 'C471', '768', '4414.668', '-4314.5127', 1, '1628-08-20'),
 (769, 'A46', 'C303', '769', '3873.5073', '4698.7397', 0, NULL);
 -- SQLINES LICENSE FOR EVALUATION USE ONLY
-INSERT INTO Casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_automazione) VALUES
+INSERT INTO casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_automazione) VALUES
 (770, 'A93', 'G866', '770', '1062.4606', '-1841.3818', 1, '1370-01-31'),
 (771, 'A27', 'B036', '771', '3981.1582', '2981.94', 0, NULL),
 (772, 'A48', 'G247', '772', '-364.1051', '-4157.05', 0, NULL),
@@ -8922,10 +8922,10 @@ INSERT INTO comune (codice, provincia, nome) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Provincia`
+-- Table structure for table `provincia`
 --
 
-CREATE TABLE Provincia (
+CREATE TABLE provincia (
   sigla varchar NOT NULL,
   regione int NOT NULL,
   nome varchar NOT NULL,
@@ -8933,10 +8933,10 @@ CREATE TABLE Provincia (
 );
 
 --
--- Dumping data for table `Provincia`
+-- Dumping data for table `provincia`
 --
 
-INSERT INTO Provincia (sigla, regione, nome) VALUES
+INSERT INTO provincia (sigla, regione, nome) VALUES
 ('AG', 19, 'Agrigento'),
 ('AL', 1, 'Alessandria'),
 ('AN', 11, 'Ancona'),
@@ -9087,61 +9087,14 @@ INSERT INTO Regione (codice, nome) VALUES
 -- Foreign keys
 --
 
-ALTER TABLE Casello
-  ADD CONSTRAINT cod_naz_fk FOREIGN KEY (cod_naz) REFERENCES autostrada(cod_naz)
-  ADD CONSTRAINT comune_fk FOREIGN KEY (comune) REFERENCES comune(codice);
+ALTER TABLE casello
+  ADD CONSTRAINT cod_naz_fk FOREIGN KEY (cod_naz) REFERENCES autostrada(cod_naz) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT comune_fk FOREIGN KEY (comune) REFERENCES comune(codice) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
 ALTER TABLE comune
-ADD CONSTRAINT provincia_fk FOREIGN KEY (provincia) REFERENCES provincia(sigla)
-  ADD KEY `provincia` (`provincia`);
+  ADD CONSTRAINT provincia_fk FOREIGN KEY (provincia) REFERENCES provincia(sigla) ON UPDATE CASCADE;
 
 
-ALTER TABLE `Provincia`
-  ADD PRIMARY KEY (`sigla`),
-  ADD KEY `regione` (`regione`);
-
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `Casello`
---
-ALTER TABLE `Casello`
-  MODIFY `codice` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
-
---
--- AUTO_INCREMENT for table `Regione`
---
-ALTER TABLE `Regione`
-  MODIFY `codice` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `Casello`
---
-ALTER TABLE `Casello`
-  ADD CONSTRAINT `Casello_ibfk_1` FOREIGN KEY (`cod_naz`) REFERENCES `Autostrada` (`cod_naz`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Casello_ibfk_2` FOREIGN KEY (`comune`) REFERENCES `Comune` (`codice`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `Comune`
---
-ALTER TABLE `Comune`
-  ADD CONSTRAINT `Comune_ibfk_1` FOREIGN KEY (`provincia`) REFERENCES `Provincia` (`sigla`) ON UPDATE CASCADE;
-
---
--- Constraints for table `Provincia`
---
-ALTER TABLE `Provincia`
-  ADD CONSTRAINT `Provincia_ibfk_1` FOREIGN KEY (`regione`) REFERENCES `Regione` (`codice`) ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE provincia
+  ADD CONSTRAINT comune_fk FOREIGN KEY (comune) REFERENCES comune(codice) ON UPDATE CASCADE;
