@@ -15,3 +15,9 @@ Progetto di programmazione web, parte 2.
 ## Run project
 
 `python manage.py runserver`
+
+## Access webapp
+
+App: `http://127.0.0.1:8000/app/`
+
+Admin UI: `http://127.0.0.1:8000/admin/`
