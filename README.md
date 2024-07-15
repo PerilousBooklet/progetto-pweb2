@@ -26,17 +26,19 @@ Update `pip`:
 
 ## Create project
 
-`django-admin startproject project_name`
+`django-admin startproject autostrade`
 
 `python manage.py migrate`
 
 ## Create app
 
-`python manage.py startapp app_name`
+`python manage.py startapp app`
 
 ## Run project
 
 `python manage.py runserver`
+
+oppure usare `./run.sh` (richiede `tmux`)
 
 ## Access webapp
 
