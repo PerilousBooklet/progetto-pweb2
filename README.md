@@ -5,12 +5,14 @@ Progetto di programmazione web, parte 2.
 ## Setup
 
 Create virtual environment:
-  
-`python -m venv virt_env`
+
+`cd autostrade`
+
+`python -m venv .venv`
 
 Activate virtual environment:
 
-`source virt_env/bin/activate`
+`source .venv/bin/activate`
 
 Install django:
 
