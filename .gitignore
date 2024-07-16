@@ -1,1 +1,3 @@
 /autostrade/.venv
+/autostrade/autostrade/__pycache__
+/autostrade/app/__pycache__
