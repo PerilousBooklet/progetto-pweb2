@@ -41,3 +41,24 @@ def addDataTable(table: str, data: dict):
 	cur.close()
 	conn.close()
 	return
+
+def removeDataTable(table: str, data: dict):
+	data["table"] = table
+
+	conn = createConnection()
+	cur = conn.cursor()
+	
+	print(table)
+	print(data)
+
+	if table == "autostrada":
+		cur.execute("DELETE FROM {table} WHERE cod_naz = '{cod_naz}'".format(**data))
+	elif table == "comune": 
+		cur.execute("DELETE FROM {table} WHERE codice = '{codice}'".format(**data))
+	else:
+		cur.execute("DELETE FROM {table} WHERE codice = '{codice}' AND cod_naz = '{cod_naz}' AND comune = '{comune}'".format(**data))
+
+	conn.commit()
+	cur.close()
+	conn.close()
+	return
