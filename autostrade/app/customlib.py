@@ -12,11 +12,13 @@ def createConnection():
 def getDataList(table: str) -> list[tuple]:
 	conn = createConnection()
 	cur = conn.cursor()
+
 	print(table)
+	
 	cur.execute("SELECT * FROM {0};".format(table))
 	result = cur.fetchall()
 	conn.commit()
-	print(result)
+
 	cur.close()
 	conn.close()
 	return result
