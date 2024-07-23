@@ -1,0 +1,332 @@
+/* Global Variable */
+:root {
+  /* PALETTE */
+  --main_accent: #2c8de5;
+  --secondary_accent: #7cbefb9d;
+  --tertiary_accent: #7cbefb37;
+
+  --primary_border_color: #53acff;
+  --secondary_border_color: #53acff60;
+
+  --primary_background: #ffffff;
+  --secondary_background: #d3e9fd;
+  --tertiary_background: #eaeef4;
+
+  /* SPACING */
+  --body_padding: 26px;
+  --inter_margin: 15px;
+
+  --rounded_radius: 13px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  scrollbar-width: thin;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--body_padding);
+  height: 100%;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: var(--tertiary_background);
+  overflow: auto;
+}
+
+.roundedElement {
+  border-radius: var(--rounded_radius);
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  padding: 10px;
+  text-align: center;
+  background: var(--main_accent);
+  color: white;
+}
+
+h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* NAVBAR RULES */
+#nav {
+  background-color: var(--secondary_background);
+  border: 1px solid var(--primary_border_color);
+  padding: 5px;
+  font-size: 15px;
+  margin-top: var(--inter_margin);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 0%;
+  display: flex;
+  flex-direction: row;
+}
+
+nav li a {
+  display: block;
+  margin-right: 5px;
+  color: black;
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
+  border-radius: 20px;
+  transition: 0.5s;
+}
+
+nav li a:hover {
+  background-color: var(--primary_background);
+  border-radius: 9px; /* corrisponde visivamente a 15px sui div */
+}
+
+main {
+  display: flex;
+  flex: 1;
+  margin-top: var(--inter_margin);
+  overflow: hidden;
+  scrollbar-width: thin;
+}
+
+.filterPanel {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary_background);
+  border: 1px solid var(--primary_border_color);
+  padding: 20px;
+  color: black;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
+
+#submitDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  color: black;
+  padding: 15px;
+  text-decoration: none;
+  background-color: var(--primary_background);
+  border-radius: var(--rounded_radius);
+  transition: 0.5s;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  transition: 0.5s;
+  font-size: 98%;
+}
+
+.button:hover {
+  background-color: var(--tertiary_background);
+  font-size: 100%;
+}
+
+.leftButton {
+  margin-right: 4px;
+}
+
+.rightButton {
+  margin-left: 4px;
+}
+
+#clearSearchButtonIns{
+  margin-top: 8px;
+}
+
+.filterOption {
+  padding-bottom: 20px;
+}
+
+.filterInput {
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  transition: 0.5s;
+  font-size: 100%;
+  width: 100%;
+}
+
+#queryResult {
+  background-color: var(--primary_background);
+  padding: 20px;
+  flex: 1;
+  margin-left: var(--inter_margin);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+#queryResult table th {
+  text-align: left;
+  font-size: large;
+}
+
+#editDialog {
+  width: 25svw;
+  flex-direction: column;
+  background-color: var(--secondary_background);
+  border: 1px solid var(--primary_border_color);
+  color: black;
+  padding: 20px;
+}
+
+.editActions {
+  display: flex;
+}
+
+footer {
+  align-items: center;
+  display: flex;
+  background-color: var(--primary_background);
+  color: black;
+  margin-top: var(--inter_margin);
+  padding: 3px;
+  height: fit-content;
+}
+
+#footerLeftSide {
+  flex: 1;
+  margin-right: 25px;
+}
+
+footer p {
+  margin-left: 10px;
+}
+
+footer ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+footer li {
+  float: right;
+}
+
+footer li a {
+  display: block;
+  padding: 7px;
+  color: black;
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+footer li a:hover {
+  background-color: var(--secondary_accent);
+}
+
+/* Stile della tabella */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  /* border: 1px solid; */
+}
+
+th {
+  /* border: 1px solid; */
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
+tr {
+  /* border: 1px solid; */
+  padding: 5px;
+}
+
+tr:hover {
+  background-color: var(--tertiary_accent);
+}
+
+td {
+  /* border: 1px solid; */
+  padding: 5px;
+}
+
+.space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.space-mono-regular-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.space-mono-bold-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* <uniquifier>: Use a unique and descriptive class name */
+/* <weight>: Use a value from 400 to 700 */
+.kode-mono-title {
+  font-family: "Kode Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 500px) {
+  #title {
+    font-size: x-large;
+  }
+
+  #row {
+    flex-direction: column;
+  }
+
+  #nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .filterPanel {
+    width: 100%;
+    flex: 0.3;
+    margin-bottom: 7.5px;
+  }
+
+  #editDialog {
+    width: 70vw;
+  }
+
+  #queryResult {
+    flex: 0.7;
+    margin-left: 0px;
+    width: 100%;
+  }
+
+  footer {
+    font-size: small;
+  }
+}
