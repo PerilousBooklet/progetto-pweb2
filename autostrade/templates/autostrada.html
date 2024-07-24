@@ -4,17 +4,22 @@
 <html lang="it">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
-  <!-- Style -->
-  <link rel="stylesheet" href="{% static 'css/landingPage.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <title>Database Autostrada</title>
+
+  <link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
+
+  <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+	  rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+
   <!-- Icons -->
   <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 
@@ -23,8 +28,6 @@
 <body>
   
   {% include 'header.html' %}
-  
-  {% include 'nav.html' %}
   
   <main id="row">
 		<!-- Form Menu -->
@@ -65,8 +68,39 @@
 		</form>
 
 		<div id="queryResult" class="roundedElement">
-			Table Generation
-		</div>
+
+			{% if autostrade %}
+	  
+			<table>
+			  <thead>
+				<th>Codice Nazionale</th>
+				<th>Codice Europeo</th>
+				<th>Nome</th>
+				<th>Lunghezza</th>
+			  </thead>
+	  
+			  {% for autostrada in autostrade %}
+	  
+			  <tr>
+				<td>{{autostrada.0}}</td>
+				<td>{{autostrada.1}}</td>
+				<td>{{autostrada.2}}</td>
+				<td>{{autostrada.3}}</td>
+			  </tr>
+	  
+			  {% endfor %}
+	  
+			</table>
+	  
+			{% else %}
+			<p>tabella vuota</p>
+			{% endif %}
+	  
+			<!-- <?php
+			// include 'modules/mockUpTable.php';
+			table_gen("Comune");
+			?> -->
+		  </div>
     
 	</main>
   

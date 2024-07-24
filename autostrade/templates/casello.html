@@ -3,29 +3,29 @@
 <!DOCTYPE html>
 <html lang="it">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/landingPage.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Casello</title>
+  
+    <link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
+
+
+    <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
+  
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+  
     <!-- Icons -->
     <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+
   </head>
 
   <body>
-    {% include 'header.html' %} {% include 'nav.html' %}
+    {% include 'header.html' %}
 
     <form class="filterPanel roundedElement" action="" method="POST">
       <div id="filterPanelOptions">
@@ -155,10 +155,54 @@
         </div>
       </div>
 
-      <?php
+      <!-- <?php
     include 'modules/searchButtons.html';
-    ?>
+    ?> -->
+    {% include 'searchButtons.html' %}
     </form>
+
+    <div id="queryResult" class="roundedElement">
+
+      {% if caselli %}
+
+      <table>
+        <thead>
+          <th>Codice</th>
+          <th>Codice Autostrada </th>
+          <th>Codice Comune</th>
+          <th>Nome</th>
+          <th>Coordinata X</th>
+          <th>Coordinata Y</th>
+          <th>Tipo Casello</th>
+          <th>Data</th>
+        </thead>
+
+        {% for casello in caselli %}
+
+        <tr>
+          <td>{{casello.0}}</td>
+          <td>{{casello.1}}</td>
+          <td>{{casello.2}}</td>
+          <td>{{casello.3}}</td>
+          <td>{{casello.4}}</td>
+          <td>{{casello.5}}</td>
+          <td>{{casello.6}}</td>
+          <td>{{casello.7}}</td>
+        </tr>
+
+        {% endfor %}
+
+      </table>
+
+      {% else %}
+      <p>tabella vuota</p>
+      {% endif %}
+
+      <!-- <?php
+			// include 'modules/mockUpTable.php';
+			table_gen("Comune");
+			?> -->
+    </div>
 
     {% include 'footer.html' %}
   </body>

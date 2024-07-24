@@ -5,10 +5,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
+    <title>Database Comune</title>
     <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/landingPage.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
+
+    <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,12 +18,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
     <!-- Icons -->
     <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+
+    <script>
+      function currentTab() {
+        document.getElementById("<id elemento>").add("<classe>");
+      }
+    </script>
   </head>
 
-  <body>
-    {% include 'header.html' %} {% include 'nav.html' %}
+  <body onload="currentTab()">
+    {% include 'header.html' %}
 
-    <form class="filterPanel roundedElement" action="" method="POST">
+    <main class="row">
+      <div >
+        <div>
+          <div class="form-group">
+            <label for="codice">Codice</label>
+            <input type="text" class="form-control" id="codice" />
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="codiceProvincia">Codice Provincia</label>
+            <select class="form-control" id="accessibleAutocomplete" title="Codice Provincia" required></select>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" />
+          </div>
+        </div>
+      </div>
+
+      <!-- <form class="filterPanel roundedElement" action="" method="POST">
       <div id="filterPanelOptions">
         <h2>Ricerca</h2>
 
@@ -35,9 +65,9 @@
           <label for="input-provincia-search">Codice Provincia</label>
           <br />
           <select id="input-provincia-search" type="text" name="provincia" class="filterInput">
-            <!-- <?php
+          <?php
             dropdown_generate_form();
-          ?> -->
+          ?>
           </select>
         </div>
 
@@ -55,32 +85,39 @@
       <div>
         <button id="clearSearchButton" class="button" type="reset">Svuota</button>
       </div>
-    </form>
+    </form> -->
 
-    <div id="queryResult" class="roundedElement">
-      <table>
-        <thead>
-          <th>Codice</th>
-          <th>Codice Provincia</th>
-          <th>Nome</th>
-        </thead>
+      <div id="queryResult" class="roundedElement">
+        {% if comuni %}
 
-        {% if comune %} {% for comune in comuni %}
+        <table class="table">
+          <thead>
+            <th scope="col">Codice</th>
+            <th scope="col">Codice Provincia</th>
+            <th scope="col">Nome</th>
+          </thead>
 
-        <tr>
-          <td>{{comune.0}}</td>
-          <td>{{comune.1}}</td>
-          <td>{{comune.2}}</td>
-        </tr>
+          {% for comune in comuni %}
 
-        {% endfor %} {% endif %}
-      </table>
+          <tr>
+            <td>{{comune.0}}</td>
+            <td>{{comune.1}}</td>
+            <td>{{comune.2}}</td>
+          </tr>
 
-      <!-- <?php
+          {% endfor %}
+        </table>
+
+        {% else %}
+        <p>tabella vuota</p>
+        {% endif %}
+
+        <!-- <?php
 			// include 'modules/mockUpTable.php';
 			table_gen("Comune");
 			?> -->
-    </div>
+      </div>
+    </main>
 
     {% include 'footer.html' %}
   </body>
