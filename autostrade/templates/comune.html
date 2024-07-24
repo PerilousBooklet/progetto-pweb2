@@ -57,6 +57,31 @@
       </div>
     </form>
 
+    <div id="queryResult" class="roundedElement">
+      <table>
+        <thead>
+          <th>Codice</th>
+          <th>Codice Provincia</th>
+          <th>Nome</th>
+        </thead>
+
+        {% if comune %} {% for comune in comuni %}
+
+        <tr>
+          <td>{{comune.0}}</td>
+          <td>{{comune.1}}</td>
+          <td>{{comune.2}}</td>
+        </tr>
+
+        {% endfor %} {% endif %}
+      </table>
+
+      <!-- <?php
+			// include 'modules/mockUpTable.php';
+			table_gen("Comune");
+			?> -->
+    </div>
+
     {% include 'footer.html' %}
   </body>
 </html>
