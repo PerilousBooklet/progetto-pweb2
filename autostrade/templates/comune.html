@@ -39,13 +39,17 @@
         </script>
     </head>
 
-    <body onload="currentTab()" class="d-flex flex-column">
+    <body
+        onload="currentTab()"
+        class="d-flex flex-column"
+        style="height: 100vh; overflow: auto"
+    >
         {% include 'header.html' %}
 
-        <div>
-            <main class="d-flex flex-row">
+        <div class="container" style="height: 100px">
+            <main class="row" style="overflow: scroll">
                 <!-- div per filtri e tabella -->
-                <div class="w-25">
+                <div class="col">
                     <h2>Filtri</h2>
                     <!-- div filtri -->
                     <div class="form-group">
@@ -67,11 +71,11 @@
                     </div>
                 </div>
 
-                <div class="w-75" style="overflow: scroll; height: 80vh">
+                <div class="col table-responsive">
                     <!-- div tabella -->
                     {% if comuni %}
 
-                    <table class="table" style="">
+                    <table class="table table-bordered">
                         <thead>
                             <th scope="col">Codice</th>
                             <th scope="col">Codice Provincia</th>
