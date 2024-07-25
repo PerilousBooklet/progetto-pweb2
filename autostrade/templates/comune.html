@@ -1,124 +1,101 @@
 {% load static %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Database Comune</title>
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Database Comune</title>
+        <!-- Style -->
+        <link
+            rel="stylesheet"
+            href="{% static 'css/bootstrap-italia.min.css' %}"
+        />
 
-    <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
-    <!-- Icons -->
-    <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap"
+            rel="stylesheet"
+        />
+        <!-- Icons -->
+        <link
+            rel="icon"
+            href="{% static 'icons/road.png' %}"
+            type="image/x-icon"
+        />
 
-    <script>
-      function currentTab() {
-        document.getElementById("<id elemento>").add("<classe>");
-      }
-    </script>
-  </head>
+        <script>
+            function currentTab() {
+                document.getElementById("<id elemento>").add("<classe>");
+            }
+        </script>
+    </head>
 
-  <body onload="currentTab()">
-    {% include 'header.html' %}
+    <body onload="currentTab()" class="d-flex flex-column">
+        {% include 'header.html' %}
 
-    <main class="row">
-      <div >
         <div>
-          <div class="form-group">
-            <label for="codice">Codice</label>
-            <input type="text" class="form-control" id="codice" />
-          </div>
+            <main class="d-flex flex-row">
+                <!-- div per filtri e tabella -->
+                <div class="w-25">
+                    <h2>Filtri</h2>
+                    <!-- div filtri -->
+                    <div class="form-group">
+                        <label for="codice">Codice</label>
+                        <input type="text" class="form-control" id="codice" />
+                    </div>
+                    <div class="form-group">
+                        <label for="codiceProvincia">Codice Provincia</label>
+                        <select
+                            class="form-control"
+                            id="accessibleAutocomplete"
+                            title="Codice Provincia"
+                            required
+                        ></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" class="form-control" id="nome" />
+                    </div>
+                </div>
+
+                <div class="w-75" style="overflow: scroll; height: 80vh">
+                    <!-- div tabella -->
+                    {% if comuni %}
+
+                    <table class="table" style="">
+                        <thead>
+                            <th scope="col">Codice</th>
+                            <th scope="col">Codice Provincia</th>
+                            <th scope="col">Nome</th>
+                        </thead>
+
+                        {% for comune in comuni %}
+
+                        <tr>
+                            <td>{{comune.0}}</td>
+                            <td>{{comune.1}}</td>
+                            <td>{{comune.2}}</td>
+                        </tr>
+
+                        {% endfor %}
+                    </table>
+
+                    {% else %}
+                    <p>tabella vuota</p>
+                    {% endif %}
+                </div>
+            </main>
+
+            {% include 'footer.html' %}
         </div>
-        <div>
-          <div class="form-group">
-            <label for="codiceProvincia">Codice Provincia</label>
-            <select class="form-control" id="accessibleAutocomplete" title="Codice Provincia" required></select>
-          </div>
-        </div>
-        <div>
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" id="nome" />
-          </div>
-        </div>
-      </div>
-
-      <!-- <form class="filterPanel roundedElement" action="" method="POST">
-      <div id="filterPanelOptions">
-        <h2>Ricerca</h2>
-
-        <div class="filterOption">
-          <label for="input-codice-search">Codice</label>
-          <br />
-          <input id="input-codice-search" type="text" name="codice" placeholder="codice comune" class="filterInput" />
-        </div>
-
-        <div class="filterOption">
-          <label for="input-provincia-search">Codice Provincia</label>
-          <br />
-          <select id="input-provincia-search" type="text" name="provincia" class="filterInput">
-          <?php
-            dropdown_generate_form();
-          ?>
-          </select>
-        </div>
-
-        <div class="filterOption">
-          <label for="input-nome-search">Nome</label>
-          <br />
-          <input id="input-nome-search" type="text" name="nome" placeholder="nome comune" class="filterInput" />
-        </div>
-      </div>
-
-      <div id="submitDiv">
-        <button id="submitSearchButton" class="button leftButton" type="submit">Cerca</button>
-        <button id="InsertNewRowButton" class="button rightButton" type="button" onclick="ins()">Inserisci</button>
-      </div>
-      <div>
-        <button id="clearSearchButton" class="button" type="reset">Svuota</button>
-      </div>
-    </form> -->
-
-      <div id="queryResult" class="roundedElement">
-        {% if comuni %}
-
-        <table class="table">
-          <thead>
-            <th scope="col">Codice</th>
-            <th scope="col">Codice Provincia</th>
-            <th scope="col">Nome</th>
-          </thead>
-
-          {% for comune in comuni %}
-
-          <tr>
-            <td>{{comune.0}}</td>
-            <td>{{comune.1}}</td>
-            <td>{{comune.2}}</td>
-          </tr>
-
-          {% endfor %}
-        </table>
-
-        {% else %}
-        <p>tabella vuota</p>
-        {% endif %}
-
-        <!-- <?php
-			// include 'modules/mockUpTable.php';
-			table_gen("Comune");
-			?> -->
-      </div>
-    </main>
-
-    {% include 'footer.html' %}
-  </body>
+    </body>
 </html>
