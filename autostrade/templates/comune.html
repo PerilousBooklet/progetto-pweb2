@@ -19,11 +19,11 @@
     <!-- Icons -->
     <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 
-    <script>
+    <!-- <script>
       function currentTab() {
         document.getElementById("<id elemento>").add("<classe>");
       }
-    </script>
+    </script> -->
   </head>
 
   <body onload="currentTab()" style="overflow: auto">
@@ -31,21 +31,37 @@
       <!-- Questo contiene tutti gli elementi della pagina -->
       <main class="row z-index-0">
         <!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
+
         <div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
           <!-- div filtri -->
           <h2>Filtri</h2>
-          <div class="form-group">
-            <label for="codice">Codice</label>
-            <input type="text" class="form-control" id="codice" />
-          </div>
-          <div class="form-group">
-            <label for="codiceProvincia">Codice Provincia</label>
-            <select class="form-control" id="accessibleAutocomplete" title="Codice Provincia" required></select>
-          </div>
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" id="nome" />
-          </div>
+          <form action="/app/comune" method="post">
+            <div class="form-group">
+              <label for="codice">Codice</label>
+              <input type="text" class="form-control" id="codice" />
+            </div>
+            <div class="form-group">
+              <label for="codiceProvincia">Codice Provincia</label>
+              <select class="form-control" id="codiceProvincia" title="Codice Provincia" required>
+                <option selected value=" "></option>
+                {% if listaCodiciProvince %} {% for codice in listaCodiciProvince %}
+                <option value="{{codice}}">{{codice}}</option>
+                {% endfor %} {% endif %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nome">Nome</label>
+              <input type="text" class="form-control" id="nome" />
+            </div>
+
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Cerca</button>
+            </div>
+
+            <div>
+              <button type="reset" class="btn">Svuota</button>
+            </div>
+          </form>
         </div>
 
         <div class="col-4"></div>

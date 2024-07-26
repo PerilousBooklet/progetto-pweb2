@@ -10,7 +10,16 @@ def comune(request):
 		listacomuni = app.customlib.getDataListSearch("comune", request)
 	else:
 		listacomuni = app.customlib.getDataList("comune")
-	context = {"comuni" : listacomuni}
+		
+	listaUnica = []
+	
+	for comune in listacomuni:
+		if comune[1] not in listaUnica:
+			listaUnica.append(comune[1])
+
+	listaUnica.sort()
+
+	context = {"comuni" : listacomuni, "listaCodiciProvince" : listaUnica}
 	template = loader.get_template("comune.html")
 	return HttpResponse(template.render(context, request))
 
