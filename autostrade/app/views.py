@@ -12,7 +12,7 @@ def autostrada(request):
     return HttpResponse(template.render)
 
 
-def casello(request):
+def casello(request2):
     template = loader.get_template('casello.html')
     return HttpResponse(template.render)
 
