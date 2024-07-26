@@ -1,5 +1,6 @@
 from typing import Any
 from unittest import result
+from django.http import HttpRequest
 import psycopg2
 
 dbname = "pweb2"
@@ -10,6 +11,7 @@ def createConnection():
 	return conn
 
 def getDataList(table: str) -> list[tuple]:
+	print("no search")
 	conn = createConnection()
 	cur = conn.cursor()
 	
@@ -22,15 +24,18 @@ def getDataList(table: str) -> list[tuple]:
 	return result
 
 def getDataListSearch(table: str, request) -> list[tuple]:
-
+	print("yes search")
+	print(request.method)
+	print(HttpRequest)
 	form_data = {}
+	form_data["tabella"] = table
 
 	conn = createConnection()
 	cur = conn.cursor()
 
-	form_data["tabella"] = table
-
 	sql = sqlGen(form_data, request)
+
+	print("SQL -> " + sql)
 	
 	cur.execute(sql)
 	result = cur.fetchall()
@@ -97,13 +102,13 @@ def updateDataTable(table: str, data: dict):
 
 def sqlGen(form_data: dict, request) -> str:
 	# Caso comune
-	if form_data["tabella"] == "comune":
+	if form_data.get("tabella") == "comune":
 		if request.POST.get("codice") is None:
 			form_data["codice"] = "%%"
 		else:
 			form_data["codice"] = request.POST.get("codice")
 
-		if request.POST.get("provincia") is " ":
+		if request.POST.get("provincia") == " ":
 			form_data["provincia"] = "%%"
 		else:
 			form_data["provincia"] = request.POST.get("provincia")
@@ -111,9 +116,11 @@ def sqlGen(form_data: dict, request) -> str:
 		if request.POST.get("nome") is None:
 			form_data["nome"] = "%%"
 		else:
-			form_data["nome"] = request.POST.get("nome")
+			form_data["nome"] = "%" + request.POST.get("nome") + "%"
 
-		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND provincia LIKE '{provincia}' AND nome LIKE '%{nome}%'".format(form_data).replace(";", "") + ";"
+		form_data["provincia"] = "%%"
+
+		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND provincia LIKE '{provincia}' AND nome LIKE '{nome}'".format(**form_data).replace(";", "") + ";"
 
 	# Caso autostrada
 	elif form_data["tabella"] == "autostrada":
@@ -137,7 +144,9 @@ def sqlGen(form_data: dict, request) -> str:
 		else:
 			form_data["lunghezza"] = request.POST.get("lunghezza")
 
-		return "SELECT * FROM {tabella} WHERE cod_naz LIKE '{cod_naz}' AND cod_eu LIKE '{cod_eu}' AND nome LIKE '%{nome}%' AND lunghezza LIKE '{lunghezza}'".format(form_data).replace(";", "") + ";"
+		print(form_data.get("tabella"))
+
+		return "SELECT * FROM {tabella} WHERE cod_naz LIKE '{cod_naz}' AND cod_eu LIKE '{cod_eu}' AND nome LIKE '%{nome}%' AND lunghezza LIKE '{lunghezza}'".format(**form_data).replace(";", "") + ";"
 
 	# Caso casello
 	else:
@@ -146,12 +155,12 @@ def sqlGen(form_data: dict, request) -> str:
 		else:
 			form_data["codice"] = request.POST.get("codice")
 		
-		if request.POST.get("cod_naz") is " ":
+		if request.POST.get("cod_naz") == " ":
 			form_data["cod_naz"] = "%%"
 		else:
 			form_data["cod_naz"] = request.POST.get("cod_naz")
 
-		if request.POST.get("comune") is " ":
+		if request.POST.get("comune") == " ":
 			form_data["comune"] = "%%"
 		else:
 			form_data["comune"] = request.POST.get("comune")
@@ -181,4 +190,4 @@ def sqlGen(form_data: dict, request) -> str:
 		else:
 			form_data["data_automazione"] = request.POST.get("data_automazione")
 
-		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '%{nome}%' AND x LIKE '{x}' AND y LIKE '{y}' AND is_automatico LIKE '{is_automatico}' AND data_automazione LIKE '{data_automazione}'".format(form_data).replace(";", "") + ";"
+		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '%{nome}%' AND x LIKE '{x}' AND y LIKE '{y}' AND is_automatico LIKE '{is_automatico}' AND data_automazione LIKE '{data_automazione}'".format(**form_data).replace(";", "") + ";"
