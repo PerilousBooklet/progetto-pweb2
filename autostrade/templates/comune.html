@@ -36,11 +36,12 @@
           <!-- div filtri -->
           <h2>Filtri</h2>
           <form action="/app/comune" method="post">
-            <div class="form-group">
+			{% csrf_token %}
+            <div class="">
               <label for="codice">Codice</label>
               <input type="text" class="form-control" id="codice" />
             </div>
-            <div class="form-group">
+            <div class="">
               <label for="codiceProvincia">Codice Provincia</label>
               <select class="form-control" id="codiceProvincia" title="Codice Provincia" required>
                 <option selected value=" "></option>
@@ -49,7 +50,7 @@
                 {% endfor %} {% endif %}
               </select>
             </div>
-            <div class="form-group">
+            <div class="">
               <label for="nome">Nome</label>
               <input type="text" class="form-control" id="nome" />
             </div>

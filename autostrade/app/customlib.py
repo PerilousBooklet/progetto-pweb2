@@ -26,7 +26,7 @@ def getDataList(table: str) -> list[tuple]:
 def getDataListSearch(table: str, request) -> list[tuple]:
 	print("yes search")
 	print(request.method)
-	print(HttpRequest)
+	print(request.POST)
 	form_data = {}
 	form_data["tabella"] = table
 
