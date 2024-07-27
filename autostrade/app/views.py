@@ -1,58 +1,85 @@
 from django.http import HttpResponse
 from django.template import loader
 import app.customlib
-from app.forms import ComuneForm
+from app.forms import AutostradaForm, AutostradaModalForm, CaselloForm, CaselloModalForm, ComuneForm, ComuneModalForm
 
+#################################################
+# View Index
+#################################################
 def index(request):
 	return HttpResponse("Hello, world. You're at the polls index.")
 
+#################################################
+# View Comune
+#################################################
 def comune(request):
 	if request.method == "POST":
-		listacomuni = app.customlib.getDataListSearch("comune", request)
+		form = ComuneForm(request.POST)
+		listaelementi = app.customlib.getDataListSearch("comune", request)
 	else:
-		listacomuni = app.customlib.getDataList("comune")
-		
-	listaUnica = []
+		listaelementi = app.customlib.getDataList("comune")
+		form = ComuneForm()
 	
-	for comune in listacomuni:
-		if comune[1] not in listaUnica:
-			listaUnica.append(comune[1])
+	formModal = ComuneModalForm()
 
-	listaUnica.sort()
-
-	context = {"comuni" : listacomuni, "listaCodiciProvince" : listaUnica}
+	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
 	template = loader.get_template("comune.html")
 	return HttpResponse(template.render(context, request))
 
+#################################################
+# View Casello
+#################################################
 def casello(request):
-	listacaselli = app.customlib.getDataList("casello")
-	context = {"caselli" : listacaselli}
+	if request.method == "POST":
+		form = CaselloForm(request.POST)
+		listaelementi = app.customlib.getDataListSearch("casello", request)
+	else:
+		listaelementi = app.customlib.getDataList("casello")
+		form = CaselloForm()
+
+	formModal = CaselloModalForm()
+
+	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
 	template = loader.get_template("casello.html")
 	return HttpResponse(template.render(context, request))
 
+#################################################
+# View Autostrada
+#################################################
 def autostrada(request):
-	listaautostrade = app.customlib.getDataList("autostrada")
-	context = {"autostrade" : listaautostrade}
+	if request.method == "POST":
+		form = AutostradaForm(request.POST)
+		listaelementi = app.customlib.getDataListSearch("autostrada", request)
+	else:
+		listaelementi = app.customlib.getDataList("autostrada")
+		form = AutostradaForm()
+
+	formModal = AutostradaModalForm()
+
+	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
 	template = loader.get_template("autostrada.html")
 	return HttpResponse(template.render(context, request))
 
+#################################################
+# View Test
+#################################################
 def test(request):
 	if request.method == "POST":
 		form = ComuneForm(request.POST)
-		listacomuni = app.customlib.getDataListSearch("comune", request)
+		listaelementi = app.customlib.getDataListSearch("comune", request)
 	else:
-		listacomuni = app.customlib.getDataList("comune")
+		listaelementi = app.customlib.getDataList("comune")
 		form = ComuneForm()
 		
 	listaUnica = []
 	
-	for comune in listacomuni:
+	for comune in listaelementi:
 		if comune[1] not in listaUnica:
 			listaUnica.append(comune[1])
 
 	listaUnica.sort()
 
-	context = {"comuni" : listacomuni, "listaCodiciProvince" : listaUnica, "form": form}
+	context = {"comuni" : listaelementi, "form": form}
 	template = loader.get_template("test.html")
 	return HttpResponse(template.render(context, request))
 

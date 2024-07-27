@@ -90,7 +90,7 @@ def updateDataTable(table: str, data: dict):
 		cur.execute("UPDATE comune SET provincia='{provincia}', nome='{nome}' WHERE codice='{codice}';".format(**data))
 	else:
 		# RICODA DI CONTROLLARE LA COSA DELLA DATA
-		if data.get("data_automazione") is None:
+		if data.get("data_automazione") == None:
 			cur.execute("UPDATE casello SET cod_naz='{cod_naz}', comune='{comune}', nome='{nome}', x='{x}', y='{y}', is_automatico={is_automatico}, data_automazione=NULL WHERE codice='{codice}' AND cod_naz='{cod_naz}' AND comune='{comune};".format(**data))
 		else:
 			cur.execute("UPDATE casello SET cod_naz='{cod_naz}', comune='{comune}', nome='{nome}', x='{x}', y='{y}', is_automatico={is_automatico}, data_automazione={data_automazione} WHERE codice='{codice}' AND cod_naz='{cod_naz}' AND comune='{comune};".format(**data))
@@ -103,43 +103,41 @@ def updateDataTable(table: str, data: dict):
 def sqlGen(form_data: dict, request) -> str:
 	# Caso comune
 	if form_data.get("tabella") == "comune":
-		if request.POST.get("codice") is None:
+		if request.POST.get("codice") == "":
 			form_data["codice"] = "%%"
 		else:
-			form_data["codice"] = request.POST.get("codice")
+			form_data["codice"] = "%" + request.POST.get("codice") + "%"
 
-		if request.POST.get("provincia") == " ":
+		if request.POST.get("provincia") == " " or request.POST.get("provincia") == "":
 			form_data["provincia"] = "%%"
 		else:
-			form_data["provincia"] = request.POST.get("provincia")
+			form_data["provincia"] = "%" + request.POST.get("provincia") + "%"
 
-		if request.POST.get("nome") is None:
+		if request.POST.get("nome") == "":
 			form_data["nome"] = "%%"
 		else:
 			form_data["nome"] = "%" + request.POST.get("nome") + "%"
-
-		form_data["provincia"] = "%%"
 
 		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND provincia LIKE '{provincia}' AND nome LIKE '{nome}'".format(**form_data).replace(";", "") + ";"
 
 	# Caso autostrada
 	elif form_data["tabella"] == "autostrada":
-		if request.POST.get("cod_naz") is None:
+		if request.POST.get("cod_naz") == "":
 			form_data["cod_naz"] = "%%"
 		else:
-			form_data["cod_naz"] = request.POST.get("cod_naz")
+			form_data["cod_naz"] = "%" + request.POST.get("cod_naz") + "%"
 
-		if request.POST.get("cod_eu") is None:
+		if request.POST.get("cod_eu") == "":
 			form_data["cod_eu"] = "%%"
 		else:
-			form_data["cod_eu"] = request.POST.get("cod_eu")
+			form_data["cod_eu"] = "%" + request.POST.get("cod_eu") + "%"
 
-		if request.POST.get("nome") is None:
+		if request.POST.get("nome") == "":
 			form_data["nome"] = "%%"
 		else:
-			form_data["nome"] = request.POST.get("nome")
+			form_data["nome"] = "%" +request.POST.get("nome") + "%"
 
-		if request.POST.get("lunghezza") is None:
+		if request.POST.get("lunghezza") == "":
 			form_data["lunghezza"] = "%%"
 		else:
 			form_data["lunghezza"] = request.POST.get("lunghezza")
@@ -150,44 +148,80 @@ def sqlGen(form_data: dict, request) -> str:
 
 	# Caso casello
 	else:
-		if request.POST.get("codice") is None:
+		if request.POST.get("codice") == "":
 			form_data["codice"] = "%%"
 		else:
-			form_data["codice"] = request.POST.get("codice")
+			form_data["codice"] = "%" + request.POST.get("codice") + "%"
 		
 		if request.POST.get("cod_naz") == " ":
 			form_data["cod_naz"] = "%%"
 		else:
-			form_data["cod_naz"] = request.POST.get("cod_naz")
+			form_data["cod_naz"] = "%" + request.POST.get("cod_naz") + "%"
 
 		if request.POST.get("comune") == " ":
 			form_data["comune"] = "%%"
 		else:
-			form_data["comune"] = request.POST.get("comune")
+			form_data["comune"] = "%" + request.POST.get("comune") + "%"
 
-		if request.POST.get("nome") is None:
+		if request.POST.get("nome") == "":
 			form_data["nome"] = "%%"
 		else:
-			form_data["nome"] = request.POST.get("nome")
+			form_data["nome"] = "%" + request.POST.get("nome") + "%"
 
-		if request.POST.get("x") is None:
+		if request.POST.get("x") == "":
 			form_data["x"] = "%%"
 		else:
 			form_data["x"] = request.POST.get("x")
 
-		if request.POST.get("y") is None:
+		if request.POST.get("y") == "":
 			form_data["y"] = "%%"
 		else:
 			form_data["y"] = request.POST.get("y")
 
-		if request.POST.get("is_automatico") is None:
+		if request.POST.get("is_automatico") == "":
 			form_data["is_automatico"] = "%%"
 		else:
 			form_data["is_automatico"] = request.POST.get("is_automatico")
 
-		if request.POST.get("data_automazione") is None:
+		if request.POST.get("data_automazione") == "":
 			form_data["data_automazione"] = "%%"
 		else:
 			form_data["data_automazione"] = request.POST.get("data_automazione")
 
-		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '%{nome}%' AND x LIKE '{x}' AND y LIKE '{y}' AND is_automatico LIKE '{is_automatico}' AND data_automazione LIKE '{data_automazione}'".format(**form_data).replace(";", "") + ";"
+		return "SELECT * FROM {tabella} WHERE codice LIKE '%{codice}%' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '%{nome}%' AND x LIKE '{x}' AND y LIKE '{y}' AND is_automatico LIKE '{is_automatico}' AND data_automazione LIKE '{data_automazione}'".format(**form_data).replace(";", "") + ";"
+
+#
+# Prende una lista di provincie uniche
+#
+def getProvincieUnique():
+	listaelementi = getDataList("comune")
+	listaUnica = [(" ", " ")]
+	
+	for elemento in listaelementi:
+		if (elemento[1], elemento[1]) not in listaUnica:
+			listaUnica.append((elemento[1], elemento[1]))
+	return listaUnica
+
+#
+# Prende una lista di comuni unici
+#
+def getComuniUnique():
+	listaelementi = getDataList("comune")
+	listaUnica = [(" ", " ")]
+	
+	for elemento in listaelementi:
+		if (elemento[1], elemento[1]) not in listaUnica:
+			listaUnica.append((elemento[1], elemento[1]))
+	return listaUnica
+
+#
+# Prende una lista di autostrade uniche
+#
+def getAutostradeUnique():
+	listaelementi = getDataList("autostrada")
+	listaUnica = [(" ", " ")]
+	
+	for elemento in listaelementi:
+		if (elemento[1], elemento[1]) not in listaUnica:
+			listaUnica.append((elemento[1], elemento[1]))
+	return listaUnica
