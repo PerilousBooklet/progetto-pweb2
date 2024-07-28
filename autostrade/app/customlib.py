@@ -1,3 +1,4 @@
+from genericpath import exists
 from typing import Any
 from unittest import result
 from django.http import HttpRequest
@@ -11,7 +12,6 @@ def createConnection():
 	return conn
 
 def getDataList(table: str) -> list[tuple]:
-	print("no search")
 	conn = createConnection()
 	cur = conn.cursor()
 	
@@ -24,9 +24,6 @@ def getDataList(table: str) -> list[tuple]:
 	return result
 
 def getDataListSearch(table: str, request) -> list[tuple]:
-	print("yes search")
-	print(request.method)
-	print(request.POST)
 	form_data = {}
 	form_data["tabella"] = table
 
@@ -64,9 +61,6 @@ def addDataTable(table: str, data: dict):
 def removeDataTable(table: str, data: dict):
 	conn = createConnection()
 	cur = conn.cursor()
-	
-	print(table)
-	print(data)
 
 	if table == "autostrada":
 		cur.execute("DELETE FROM autostrada WHERE cod_naz = '{cod_naz}';".format(**data))
@@ -101,6 +95,10 @@ def updateDataTable(table: str, data: dict):
 	return
 
 def sqlGen(form_data: dict, request) -> str:
+
+	is_automatico_present = ""
+	sql_finale = ""
+
 	# Caso comune
 	if form_data.get("tabella") == "comune":
 		if request.POST.get("codice") == "":
@@ -142,21 +140,21 @@ def sqlGen(form_data: dict, request) -> str:
 		else:
 			form_data["lunghezza"] = request.POST.get("lunghezza")
 
-		print(form_data.get("tabella"))
+		return "SELECT * FROM {tabella} WHERE cod_naz LIKE '{cod_naz}' AND cod_eu LIKE '{cod_eu}' AND nome LIKE '{nome}' AND lunghezza LIKE '{lunghezza}'".format(**form_data).replace(";", "") + ";"
 
-		return "SELECT * FROM {tabella} WHERE cod_naz LIKE '{cod_naz}' AND cod_eu LIKE '{cod_eu}' AND nome LIKE '%{nome}%' AND lunghezza LIKE '{lunghezza}'".format(**form_data).replace(";", "") + ";"
-
-	# Caso casello
+	# Caso casello <- DA QUI
 	else:
+		sql_finale = "SELECT * FROM casello WHERE"
+
 		if request.POST.get("codice") == "":
-			form_data["codice"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["codice"] = "%" + request.POST.get("codice") + "%"
+			sql_finale = sql_finale + " codice LIKE %" + request.POST.get("codice") + "% AND"
 		
 		if request.POST.get("cod_naz") == " ":
-			form_data["cod_naz"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["cod_naz"] = "%" + request.POST.get("cod_naz") + "%"
+			sql_finale = sql_finale + " cod_naz LIKE %" + request.POST.get("cod_naz") + "% AND"
 
 		if request.POST.get("comune") == " ":
 			form_data["comune"] = "%%"
@@ -178,17 +176,21 @@ def sqlGen(form_data: dict, request) -> str:
 		else:
 			form_data["y"] = request.POST.get("y")
 
-		if request.POST.get("is_automatico") == "":
-			form_data["is_automatico"] = "%%"
+		if request.POST.get("is_automatico") == "" or request.POST.get("is_automatico") is None:
+			is_automatico_present = ""
 		else:
 			form_data["is_automatico"] = request.POST.get("is_automatico")
+			is_automatico_present = "AND " + request.POST.get("is_automatico")
 
 		if request.POST.get("data_automazione") == "":
 			form_data["data_automazione"] = "%%"
 		else:
 			form_data["data_automazione"] = request.POST.get("data_automazione")
 
-		return "SELECT * FROM {tabella} WHERE codice LIKE '%{codice}%' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '%{nome}%' AND x LIKE '{x}' AND y LIKE '{y}' AND is_automatico LIKE '{is_automatico}' AND data_automazione LIKE '{data_automazione}'".format(**form_data).replace(";", "") + ";"
+
+		# return sql_finale
+
+		return ("SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND cod_naz LIKE '{cod_naz}' AND comune LIKE '{comune}' AND nome LIKE '{nome}' AND x LIKE '{x}' AND y LIKE '{y}' " + is_automatico_present +" AND data_automazione LIKE '{data_automazione}'").format(**form_data).replace(";", "") + ";"
 
 #
 # Prende una lista di provincie uniche
