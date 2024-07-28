@@ -3,46 +3,45 @@
 <!DOCTYPE html>
 <html>
   
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/landingPage.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
-    <!-- Icons -->
-    <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page</title>
+  <!-- Style -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+</head>
+
+<body id="body" class="">
   
-  <body id="body">
-    
-    <nav class="roundedElement" id="landingPageNav">
-      <ul>
-        <li><a href="/comune">Comune</a></li>
-        <li><a href="/casello">Casello</a></li>
-        <li><a href="/autostrada">Autostrada</a></li>
-      </ul>
-    </nav>
-    
-    <main>
-      
-      <div id="landingPageTitleDiv">
-        <h1 id="landingPageTitle" class="kode-mono-title">DATABASE AUTOSTRADE</h1>
+  <nav class="navbar navbar-expand-lg bg-primary fixed-top z-index-1">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link text-white" href="/app/comune">Comune</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/app/casello">Casello</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="/app/autostrada">Autostrada</a></li>
+        </ul>
       </div>
-      
-      <div id="ballDiv">
-        <div class="ball"></div>
-      </div>
-      
-    </main>
-    
+    </div>
+  </nav>
+
+  <main class="">
+    <div class="">
+      <h1 class="text-primary display-1">DATABASE AUTOSTRADE</h1>
+    </div>
+  </main>
+  
+  <div class="fixed-bottom">
     {% include 'footer.html' %}
-    
-  </body>
+  </div>
+  
+</body>
   
 </html>

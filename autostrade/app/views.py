@@ -3,8 +3,10 @@ from django.template import loader
 import app.customlib
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
+    #return HttpResponse("Hello, world. You're at the polls index.")
+    template = loader.get_template("index.html")
+    return HttpResponse(template.render())
+    
 def comune(request):
     listacomuni = app.customlib.getDataList("comune")
     context = {"comuni" : listacomuni}
@@ -22,6 +24,14 @@ def autostrada(request):
     context = {"autostrade" : listaautostrade}
     template = loader.get_template("autostrada.html")
     return HttpResponse(template.render(context, request))
+
+def crediti(request):
+    template = loader.get_template("crediti.html")
+    return HttpResponse(template.render())
+
+def licenza(request):
+    template = loader.get_template("licenza.html")
+    return HttpResponse(template.render())
 
 # def test(request):
 #     context = {"cacarot" : 1}
