@@ -27,13 +27,13 @@ class AutostradaForm(forms.Form):
 	cod_naz = forms.CharField(label="cod_naz", max_length=100, required=False)
 	cod_naz.widget.attrs.update({"class": "form-control"})
 
-	cod_eu = forms.CharField(label="provincia", max_length=100, required=False)
+	cod_eu = forms.CharField(label="cod_eu", max_length=100, required=False)
 	cod_eu.widget.attrs.update({"class": "form-control"})
 
 	nome = forms.CharField(label="nome", max_length=100, required=False)
 	nome.widget.attrs.update({"class": "form-control"})
 
-	lunghezza = forms.CharField(label="nome", max_length=100, required=False)
+	lunghezza = forms.CharField(label="lunghezza", max_length=100, required=False)
 	lunghezza.widget.attrs.update({"class": "form-control"})
 
 class AutostradaModalForm(forms.Form):
@@ -56,7 +56,7 @@ class CaselloForm(forms.Form):
 	cod_naz = forms.CharField(label="cod_naz", max_length=100, widget=forms.Select(choices=customlib.getAutostradeUnique()), required=False)
 	cod_naz.widget.attrs.update({"class": "form-control"})
 
-	comune = forms.CharField(label="provincia", max_length=100, widget=forms.Select(choices=customlib.getComuniUnique()), required=False)
+	comune = forms.CharField(label="comune", max_length=100, widget=forms.Select(choices=customlib.getComuniUnique()), required=False)
 	comune.widget.attrs.update({"class": "form-control"})
 
 	nome = forms.CharField(label="nome", max_length=100, required=False)

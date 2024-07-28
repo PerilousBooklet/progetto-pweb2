@@ -21,7 +21,7 @@
 		<!-- Icons -->
 		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 	</head>
-
+	
 	{% comment %}
 	<script>
 		const editDialog = document.getElementById("editDialog");
@@ -46,22 +46,18 @@
 					<div class="modal-body">
 						<form>
 							{% csrf_token %} {{ formModal }}
-							<br />
-							<button type="submit" class="btn btn-primary">Modifica</button>
-							<br />
-							<button type="submit" class="btn btn-primary">Rimuovi</button>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modifica</button>
+								<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Rimuovi</button>
+							</div>
 						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save changes</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
 		{% comment %} Fine sezione modale {% endcomment %}
-
+		
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->
 			<main class="row z-index-0">
@@ -74,9 +70,8 @@
 						{% csrf_token %} {{ form }}
 						<br />
 						<button type="submit" class="btn btn-primary">Cerca</button>
-						<br />
-						<br />
-						<button type="reset" class="btn">Svuota</button>
+						<button type="submit" class="btn btn-primary">Inserisci</button>
+						<button type="reset" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
 
@@ -86,7 +81,7 @@
 					<!-- div tabella-->
 					<div class="table-responsive">
 						{% if listaelementi %}
-						<table class="table table-bordered table-hover">
+						<table class="table table-bordered table-hover align-middle">
 							<thead>
 								<th scope="col">Codice</th>
 								<th scope="col">Codice Provincia</th>
@@ -98,18 +93,20 @@
 								<td>{{comune.0}}</td>
 								<td>{{comune.1}}</td>
 								<td>{{comune.2}}</td>
-								<td><button type="button" class="" data-bs-toggle="modal" data-bs-target="#editDialog">edit</button></td>
+								<td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button></td>
 							</tr>
 							{% endfor %}
 						</table>
+						
 						{% else %}
 						<p>tabella vuota</p>
 						{% endif %}
 					</div>
 				</div>
 			</main>
-
+			
 			{% include 'header.html' %}
+			
 			<div class="fixed-bottom">
 				<!-- div footer-->
 				{% include 'footer.html' %}
