@@ -18,11 +18,14 @@ In questo progetto abbiamo creato un'applicazione web che implementa le funziona
 utilizzando principalmente i framework `Django` e `Bootstrap`, come richiesto dalla consegna A, che 
 permettono di interfacciarsi con un database locale PostgreSQL e interrogarlo.
 
-L'applicazione fornisce un'interfaccia utente scritta in HTML e Bootstrap, contenuta nella cartella `templates`.
+Per creare l'interfaccia dell'applicazione web abbiamo utilizzato i template di Django.
 
-L'interazione con il database e' gestita da Django con ...
+Li abbiamo raggruppati nella cartella `templates`, abbinati alle rispettive views e collegati tra loro con gli url di Django.
 
-...
+L'interazione con il database e' gestita da Django tramite form e modali.
+
+I form sono utilizzati per cercare e inserire valori nei filtri e per svuotare i campi dei filtri stessi, 
+mentre i modali sono utilizzati per modificare o rimuovere tuple nel database, tramite un menu popup dedicato.
 
 ## Setup Database
 
