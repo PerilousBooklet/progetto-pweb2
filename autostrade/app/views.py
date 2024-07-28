@@ -7,7 +7,13 @@ from app.forms import AutostradaForm, AutostradaModalForm, CaselloForm, CaselloM
 # View Index
 #################################################
 def index(request):
-	return HttpResponse("Hello, world. You're at the polls index.")
+  #return HttpResponse("Hello, world. You're at the polls index.")
+  template = loader.get_template("index.html")
+  return HttpResponse(template.render())
+
+def landingpage(request):
+  template = loader.get_template("landingpage.html")
+  return HttpResponse(template.render())
 
 #################################################
 # View Comune
@@ -59,6 +65,17 @@ def autostrada(request):
 	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
 	template = loader.get_template("autostrada.html")
 	return HttpResponse(template.render(context, request))
+
+#################################################
+# View Crediti e Licenza
+#################################################
+def crediti(request):
+  template = loader.get_template("crediti.html")
+  return HttpResponse(template.render())
+
+def licenza(request):
+  template = loader.get_template("licenza.html")
+  return HttpResponse(template.render())
 
 #################################################
 # View Test
