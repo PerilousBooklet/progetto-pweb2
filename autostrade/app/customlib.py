@@ -157,35 +157,35 @@ def sqlGen(form_data: dict, request) -> str:
 			sql_finale = sql_finale + " cod_naz LIKE %" + request.POST.get("cod_naz") + "% AND"
 
 		if request.POST.get("comune") == " ":
-			form_data["comune"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["comune"] = "%" + request.POST.get("comune") + "%"
+			sql_finale = sql_finale + " comune LIKE %" + request.POST.get("comune") + "%"
 
 		if request.POST.get("nome") == "":
-			form_data["nome"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["nome"] = "%" + request.POST.get("nome") + "%"
+			sql_finale = sql_finale + " nome LIKE %" + + request.POST.get("nome") + "%"
 
 		if request.POST.get("x") == "":
-			form_data["x"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["x"] = request.POST.get("x")
+			sql_finale = sql_finale + " x LIKE %" + request.POST.get("x")
 
 		if request.POST.get("y") == "":
-			form_data["y"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["y"] = request.POST.get("y")
+			sql_finale = sql_finale + " y LIKE %" + request.POST.get("y")
 
 		if request.POST.get("is_automatico") == "" or request.POST.get("is_automatico") is None:
-			is_automatico_present = ""
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["is_automatico"] = request.POST.get("is_automatico")
+			sql_finale = sql_finale + " is_automatico LIKE %" + request.POST.get("is_automatico")
 			is_automatico_present = "AND " + request.POST.get("is_automatico")
 
 		if request.POST.get("data_automazione") == "":
-			form_data["data_automazione"] = "%%"
+			sql_finale = sql_finale + " 1=1 AND"
 		else:
-			form_data["data_automazione"] = request.POST.get("data_automazione")
+			sql_finale = sql_finale + " data_automazione LIKE %" + request.POST.get("data_automazione")
 
 
 		# return sql_finale
