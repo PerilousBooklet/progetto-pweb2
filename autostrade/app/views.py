@@ -6,7 +6,11 @@ def index(request):
     #return HttpResponse("Hello, world. You're at the polls index.")
     template = loader.get_template("index.html")
     return HttpResponse(template.render())
-    
+
+def landingpage(request):
+    template = loader.get_template("landingpage.html")
+    return HttpResponse(template.render())
+
 def comune(request):
     listacomuni = app.customlib.getDataList("comune")
     context = {"comuni" : listacomuni}
