@@ -2,110 +2,94 @@
 
 <!DOCTYPE html>
 <html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Database Autostrada</title>
 
-<head>
+		<link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Database Autostrada</title>
+		<script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
 
-  <link rel="stylesheet" href="{% static 'css/bootstrap-italia.min.css' %}" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
-  <script src="{% static 'js/bootstrap-italia.bundle.min.js' %}"></script>
+		<!-- Icons -->
+		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+	</head>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-	  rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+	<body>
+		{% include 'header.html' %}
 
-  <!-- Icons -->
-  <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+		<main id="row">
+			<!-- Form Menu -->
+			<form class="filterPanel roundedElement" action="" method="POST">
+				<div id="filterPanelOptions">
+					<h2>Ricerca</h2>
 
-</head>
+					<div class="filterOption">
+						<label for="input-cod_naz">Codice Nazionale</label>
+						<br />
+						<input type="text" name="cod_naz" placeholder="codice nazionale" class="filterInput" id="input-cod_naz" />
+					</div>
 
-<body>
-  
-  {% include 'header.html' %}
-  
-  <main id="row">
-		<!-- Form Menu -->
-		<form class="filterPanel roundedElement" action="" method="POST">
-			<div id="filterPanelOptions">
+					<div class="filterOption">
+						<label for="input-cod_eu">Codice Europeo</label>
+						<br />
+						<input type="text" name="cod_eu" placeholder="codice europeo" class="filterInput" id="input-cod_eu" />
+					</div>
 
-				<h2>Ricerca</h2>
+					<div class="filterOption">
+						<label for="input-nome">Nome</label>
+						<br />
+						<input type="text" name="nome" placeholder="nome autostrada" class="filterInput" id="input-nome" />
+					</div>
 
-				<div class="filterOption">
-					<label for="input-cod_naz">Codice Nazionale</label>
-					<br />
-					<input type="text" name="cod_naz" placeholder="codice nazionale" class="filterInput" id="input-cod_naz">
+					<div class="filterOption">
+						<label for="input-lunghezza">Lunghezza</label>
+						<br />
+						<input type="number" name="lunghezza" placeholder="lunghezza autostrada" class="filterInput" id="input-lunghezza" />
+					</div>
 				</div>
 
-				<div class="filterOption">
-					<label for="input-cod_eu">Codice Europeo</label>
-					<br />
-					<input type="text" name="cod_eu" placeholder="codice europeo" class="filterInput" id="input-cod_eu"/>
+				{% include 'searchButtons.html' %}
+			</form>
+
+			<div class="col-8 overflow-y-auto">
+				<div class="table-responsive">
+					{% if listaelementi %}
+
+					<table class="table table-bordered table-hover">
+						<thead>
+							<th scope="col">Codice Nazionale</th>
+							<th scope="col">Codice Europeo</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Lunghezza</th>
+						</thead>
+
+						{% for autostrada in listaelementi %}
+
+						<tr>
+							<td>{{autostrada.0}}</td>
+							<td>{{autostrada.1}}</td>
+							<td>{{autostrada.2}}</td>
+							<td>{{autostrada.3}}</td>
+						</tr>
+
+						{% endfor %}
+					</table>
+
+					{% else %}
+					<p>tabella vuota</p>
+					{% endif %}
+
 				</div>
-
-				<div class="filterOption">
-					<label for="input-nome">Nome</label>
-					<br />
-					<input type="text" name="nome" placeholder="nome autostrada" class="filterInput" id="input-nome"/>
-				</div>
-
-				<div class="filterOption">
-					<label for="input-lunghezza">Lunghezza</label>
-					<br />
-					<input type="number" name="lunghezza" placeholder="lunghezza autostrada" class="filterInput" id="input-lunghezza" />
-				</div>
-
-
 			</div>
+		</main>
 
-			{% include 'searchButtons.html' %}
-
-		</form>
-
-		<div id="queryResult" class="roundedElement">
-
-			{% if listaelementi %}
-	  
-			<table>
-			  <thead>
-				<th>Codice Nazionale</th>
-				<th>Codice Europeo</th>
-				<th>Nome</th>
-				<th>Lunghezza</th>
-			  </thead>
-	  
-			  {% for autostrada in listaelementi %}
-	  
-			  <tr>
-				<td>{{autostrada.0}}</td>
-				<td>{{autostrada.1}}</td>
-				<td>{{autostrada.2}}</td>
-				<td>{{autostrada.3}}</td>
-			  </tr>
-	  
-			  {% endfor %}
-	  
-			</table>
-	  
-			{% else %}
-			<p>tabella vuota</p>
-			{% endif %}
-	  
-			<!-- <?php
-			// include 'modules/mockUpTable.php';
-			table_gen("Comune");
-			?> -->
-		  </div>
-    
-	</main>
-  
-  {% include 'footer.html' %}
-  
-</body>
-
+		{% include 'footer.html' %}
+	</body>
 </html>
