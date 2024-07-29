@@ -21,7 +21,7 @@ permettono di interfacciarsi con un database locale PostgreSQL e interrogarlo.
 
 Per creare l'interfaccia dell'applicazione web abbiamo utilizzato i template di Django.
 
-Li abbiamo raggruppati nella cartella `templates`, abbinati alle rispettive views e collegati tra loro con gli url di Django.
+Li abbiamo raggruppati nella cartella `templates`, abbinati alle rispettive views e collegati tra loro con gli url.
 
 L'interazione con il database e' gestita da Django tramite form e modali.
 
