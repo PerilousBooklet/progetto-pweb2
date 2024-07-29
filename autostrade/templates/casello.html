@@ -22,6 +22,19 @@
 	<!-- Icons -->
 	<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 
+	<script>
+        function blockDate() {
+            if (
+                document.getElementById("id_is_automatico_2").checked ||
+                document.getElementById("id_is_automatico_0").checked
+            ) {
+                document.getElementById("id_data_automazione").setAttribute("disabled", "");
+            }
+            else{
+                document.getElementById("id_data_automazione").removeAttribute("disabled");
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -32,7 +45,34 @@
 				<!-- div filtri -->
 				<h2>Filtri</h2>
 				<form action="/app/casello" method="post">
-					{% csrf_token %} {{ form }}
+					{% csrf_token %}
+					{{ form.cod_naz.label_tag }}
+					{{ form.cod_naz }}
+					{{ form.codice.label_tag }}
+					{{ form.codice }}
+					{{ form.comune.label_tag }}
+					{{ form.comune }}
+					{{ form.nome.label_tag }}
+					{{ form.nome }}
+					{{ form.x.label_tag }}
+					{{ form.x }}
+					{{ form.y.label_tag }}
+					{{ form.y }}
+					<div class="form-check">
+					{{ form.is_automatico.label_tag }}
+					<br />
+					{{ form.is_automatico.0.label_tag }}
+					{{ form.is_automatico.0 }}
+					<br />
+					{{ form.is_automatico.1.label_tag }}
+					{{ form.is_automatico.1 }}
+					<br />
+					{{ form.is_automatico.2.label_tag }}
+					{{ form.is_automatico.2 }}
+					</div>
+					{{ form.data_automazione.label_tag }}
+					{{ form.data_automazione }}
+
 					<br />
 					<button type="submit" class="btn btn-primary">Cerca</button>
 					<button type="reset" class="btn">Svuota</button>
@@ -66,7 +106,13 @@
 						<td>{{casello.3}}</td>
 						<td>{{casello.4}}</td>
 						<td>{{casello.5}}</td>
-						<td>{{casello.6}}</td>
+						<td>
+							{% if casello.6 == 1 %}
+								Automatico
+							{% else %}
+								Presenziato
+							{% endif %}
+						</td>
 						<td>{{casello.7}}</td>
 						</tr>
 						
@@ -90,6 +136,5 @@
 		<!-- div footer-->
 		{% include 'footer.html' %}
 	</div>
-	
 </body>
 </html>

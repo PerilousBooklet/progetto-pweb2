@@ -13,6 +13,8 @@
 		<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 		<script src="{% static 'js/dialog.js' %}"></script>
 
+		<link href= "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +37,6 @@
 
 	<body onload="" style="overflow: auto">
 		{% comment %} Inizio sezione modale {% endcomment %}
-
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -44,11 +45,12 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form>
-							{% csrf_token %} {{ formModal }}
+						<form method="post" action="">
+							{% csrf_token %}
+							{{ formModal }}
 							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modifica</button>
-								<button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Rimuovi</button>
+								<button formaction="/app/api_modifica" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modifica</button>
+								<button formaction="/app/api_elimina" type="submit" class="btn btn-danger" data-bs-dismiss="modal">Rimuovi</button>
 							</div>
 						</form>
 					</div>
@@ -65,12 +67,14 @@
 
 				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
 					<!-- div filtri -->
+
 					<h2>Filtri</h2>
 					<form action="/app/comune" method="post">
-						{% csrf_token %} {{ form }}
+						{% csrf_token %}
+						{{ form }}
 						<br />
 						<button type="submit" class="btn btn-primary">Cerca</button>
-						<button type="submit" class="btn btn-primary">Inserisci</button>
+						<button formaction="/app/api_aggiungi" type="submit" class="btn btn-primary">Inserisci</button>
 						<button type="reset" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
