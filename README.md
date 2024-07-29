@@ -68,7 +68,7 @@ Avvia e abilita `postgresql.service`:
 
 `sudo systemctl enable --now postgresql.service`
 
-Aggiungi nuovo database ruolo/utente (bisogna usare 2 utenti: `pippo` and `user`, `pippo` e' il nome utente)
+Aggiungi nuovo database ruolo/utente (bisogna usare 2 utenti: `pippo` e `user`, `pippo` e' il nome utente)
 
 `createuser --interactive`
 
@@ -76,16 +76,7 @@ Crea nuovo database:
 
 `createdb pweb2`
 
-Popola il database (you can use either the CLI way with `psql` or the GUI way with `DBeaver`):
-
-usa:
-
-```
-cd ./progetto-pweb2/sql
-psql database -f db_postgres_v2.sql
-```
-
-oppure:
+Popola il database (si possono usare due modi: CLI con `psql` oppure GUI con `DBeaver`):
 
 Apri [DBeaver](https://dbeaver.io/):
 
@@ -97,6 +88,15 @@ Apri [DBeaver](https://dbeaver.io/):
 6. Nella barra seconda-dall'alto, clicca sul bottone `SQL` per creare un nuovo script SQL
 7. Incollaci il contenuto del file `./sql/db_postgres_v2.sql`
 8. Avvia lo script con `Alt + X`
+
+oppure
+
+Esegui nel terminale:
+
+```
+cd ./progetto-pweb2/sql
+psql database -f db_postgres_v2.sql
+```
 
 ## Setup Django Project
 
