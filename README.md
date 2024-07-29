@@ -5,12 +5,13 @@ Progetto di programmazione web, parte 2.
 ## Table of Contents
 
 1. [Spiegazione delle scelte del progetto](#spiegazione-delle-scelte-del-progetto)
-1. [Setup Database](#setup-database)
-2. [Setup Django Project](#setup-django-project)
-3. [Create Project](#create-project)
-4. [Create Webapp](#create-webapp)
-5. [Run Project](#run-project)
-6. [Access Webapp](#access-webapp)
+2. [Setup Ambiente di Sviluppo](#setup-ambiente-di-sviluppo)
+3. [Setup Database](#setup-database)
+4. [Setup Django Project](#setup-django-project)
+5. [Create Project](#create-project)
+6. [Create Webapp](#create-webapp)
+7. [Run Project](#run-project)
+8. [Access Webapp](#access-webapp)
 
 ## Spiegazione delle scelte del progetto
 
@@ -27,7 +28,33 @@ L'interazione con il database e' gestita da Django tramite form e modali.
 I form sono utilizzati per cercare e inserire valori nei filtri e per svuotare i campi dei filtri stessi, 
 mentre i modali sono utilizzati per modificare o rimuovere tuple nel database, tramite un menu popup dedicato.
 
+## Setup Ambiente di Sviluppo
+
+<!-- TODO: sostituire la guida per VM con la guida per Windows -->
+
+Premessa:
+1. le seguenti istruzioni potrebbero sembrare lunghe, ma questo sistema e' l'unico che funzioni su ogni sistema operativo.
+2. Dopo aver constatato che la preparazione del progetto su Windows nativamente e con WSL2 non era possibile, abbiamo scritto la procedura per le macchine virtuali.
+
+Utilizzare una macchina virtuale con [Virtualbox](https://www.virtualbox.org/);
+
+Installare il sistema operativo [EndeavourOS](https://mirror.alpix.eu/endeavouros/iso/EndeavourOS_Endeavour-2024.06.25.iso), uns distribuzione linux semplice e user-friendly.
+
+Quando il sistema operativo e' installato, riavviare ed effettuare il login.
+
+A questo punto, installare le dipendenze: 
+
+Aprire il terminale e avviare i seguenti comandi:
+
+```sh
+sudo pacman -Syu python python-virtualenv postgresql tmux
+```
+
 ## Setup Database
+
+Aprire il terminale.
+
+Scrivere i seguenti comandi per elevare i privilegi esecutivi:
 
 `sudo -i`
 
@@ -39,13 +66,9 @@ Inizializza il database:
 
 Avvia e abilita `postgresql.service`:
 
-`sudo systemctl start postgresql.service`
-
-`sudo systemctl enable postgresql.service`
-
 `sudo systemctl enable --now postgresql.service`
 
-Aggiungi nuovo database ruolo/utente (you must create 2 users: `pippo` and `user`, `pippo` should be your pc username)
+Aggiungi nuovo database ruolo/utente (bisogna usare 2 utenti: `pippo` and `user`, `pippo` e' il nome utente)
 
 `createuser --interactive`
 
