@@ -24,7 +24,8 @@ DROP DATABASE pweb2;
 -- Name: pweb2; Type: DATABASE; Schema: -; Owner: -
 --
 
-CREATE DATABASE pweb2 WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'C.UTF-8';
+CREATE DATABASE pweb2 WITH TEMPLATE = template0 ENCODING = 'UTF8';
+-- LOCALE_PROVIDER = libc LOCALE = 'C.UTF-8';
 
 
 \connect pweb2
