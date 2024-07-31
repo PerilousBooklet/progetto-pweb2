@@ -217,6 +217,6 @@ def getAutostradeUnique():
 	listaUnica = [(" ", " ")]
 	
 	for elemento in listaelementi:
-		if (elemento[1], elemento[1]) not in listaUnica:
-			listaUnica.append((elemento[1], elemento[1]))
+		if (elemento[0], elemento[0]) not in listaUnica:
+			listaUnica.append((elemento[0], elemento[0]))
 	return listaUnica

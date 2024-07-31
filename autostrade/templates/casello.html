@@ -46,10 +46,10 @@
 				<h2>Filtri</h2>
 				<form action="/app/casello" method="post">
 					{% csrf_token %}
-					{{ form.cod_naz.label_tag }}
-					{{ form.cod_naz }}
 					{{ form.codice.label_tag }}
 					{{ form.codice }}
+					{{ form.cod_naz.label_tag }}
+					{{ form.cod_naz }}
 					{{ form.comune.label_tag }}
 					{{ form.comune }}
 					{{ form.nome.label_tag }}
