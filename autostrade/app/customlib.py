@@ -25,16 +25,18 @@ def getDataList(table: str) -> list[tuple]:
 
 def getDataListSearch(table: str, request) -> list[tuple]:
 	form_data = {}
-	form_data["tabella"] = table
 
 	conn = createConnection()
 	cur = conn.cursor()
 
-	sql = sqlGen(form_data, request)
-
-	print("SQL -> " + sql)
+	parsed_data = sqlGen(table, request)
 	
-	cur.execute(sql)
+	if table == "comune":
+		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s", parsed_data)
+	elif table == "autostrada":
+		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s", parsed_data)
+	else :
+		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s", parsed_data)
 	result = cur.fetchall()
 	conn.commit()
 
@@ -43,16 +45,13 @@ def getDataListSearch(table: str, request) -> list[tuple]:
 	return result
 
 def addDataTable(table: str, request):
-	table = "comune"
+
+	parsed_data = (request.POST["codice"], request.POST["provincia"], request.POST["nome"])
+
 	conn = createConnection()
 	cur = conn.cursor()
 
-	if table == "autostrada":
-		cur.execute("INSERT INTO autostrada (cod_naz, cod_eu, nome, lunghezza) VALUES ('{cod_naz}', '{cod_eu}', '{nome}', '{lunghezza}');".format(**data))
-	elif table == "comune": 
-		cur.execute("INSERT INTO comune (codice, provincia, nome) VALUES ('{codice}', '{provincia}', '{nome}');".format(**request.POST).replace("['", "").replace("']", ""))
-	else:
-		cur.execute("INSERT INTO casello (codice, cod_naz, comune, nome, x, y, is_automatico, data_automazione) VALUES ('{codice}', '{cod_naz}', '{comune}', '{nome}', '{x}', '{y}', '{is_automatico}', '{data_automazione}');".format(**data))
+	cur.execute("INSERT INTO comune (codice, provincia, nome) VALUES (%s, %s, %s);", parsed_data)
 
 	conn.commit()
 	cur.close()
@@ -60,16 +59,13 @@ def addDataTable(table: str, request):
 	return
 
 def removeDataTable(table: str, request):
-	table = "comune"
+
+	parsed_data = (request.POST["codiceModal"])
+
 	conn = createConnection()
 	cur = conn.cursor()
 
-	if table == "autostrada":
-		cur.execute("DELETE FROM autostrada WHERE cod_naz = '{cod_naz}';".format(**data))
-	elif table == "comune": 
-		cur.execute("DELETE FROM comune WHERE codice = '{codiceModal}';".format(**request.POST).replace("['", "").replace("']", ""))
-	else:
-		cur.execute("DELETE FROM casello WHERE codice = '{codice}' AND cod_naz = '{cod_naz}' AND comune = '{comune}';".format(**data))
+	cur.execute("DELETE FROM comune WHERE codice = %s;", parsed_data)
 
 	conn.commit()
 	cur.close()
@@ -77,126 +73,121 @@ def removeDataTable(table: str, request):
 	return
 
 def updateDataTable(table: str, request):
-	table="comune"
+
+	parsed_data = (request.POST["provinciaModal"], request.POST["nomeModal"], request.POST["codiceModal"])
+
 	conn = createConnection()
 	cur = conn.cursor()
 
-	if table == "autostrada":
-		cur.execute("UPDATE autostrada SET cod_eu='{cod_eu}', nome='{nome}', lunghezza={lunghezza} WHERE cod_naz='{cod_naz}';".format(**data))
-	elif table == "comune":
-		cur.execute("UPDATE comune SET provincia='{provinciaModal}', nome='{nomeModal}' WHERE codice='{codiceModal}';".format(**request.POST).replace("['", "").replace("']", ""))
-	else:
-		# RICODA DI CONTROLLARE LA COSA DELLA DATA
-		if data.get("data_automazione") == None:
-			cur.execute("UPDATE casello SET cod_naz='{cod_naz}', comune='{comune}', nome='{nome}', x='{x}', y='{y}', is_automatico={is_automatico}, data_automazione=NULL WHERE codice='{codice}' AND cod_naz='{cod_naz}' AND comune='{comune};".format(**data))
-		else:
-			cur.execute("UPDATE casello SET cod_naz='{cod_naz}', comune='{comune}', nome='{nome}', x='{x}', y='{y}', is_automatico={is_automatico}, data_automazione={data_automazione} WHERE codice='{codice}' AND cod_naz='{cod_naz}' AND comune='{comune};".format(**data))
+	cur.execute("UPDATE comune SET provincia=%s, nome=%s WHERE codice=%s;", parsed_data)
 
 	conn.commit()
 	cur.close()
 	conn.close()
 	return
 
-def sqlGen(form_data: dict, request) -> str:
+def sqlGen(tabella: str, request) -> tuple:
 
 	is_automatico_present = ""
 	sql_finale = ""
 
+	parsed_data = ()
+
 	# Caso comune
-	if form_data.get("tabella") == "comune":
+	if tabella == "comune":
 		if request.POST.get("codice") == "":
-			form_data["codice"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["codice"] = "%" + request.POST.get("codice") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("codice") + "%",)
 
 		if request.POST.get("provincia") == " " or request.POST.get("provincia") == "":
-			form_data["provincia"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["provincia"] = "%" + request.POST.get("provincia") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("provincia") + "%",)
 
 		if request.POST.get("nome") == "":
-			form_data["nome"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["nome"] = "%" + request.POST.get("nome") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
 
-		return "SELECT * FROM {tabella} WHERE codice LIKE '{codice}' AND provincia LIKE '{provincia}' AND nome LIKE '{nome}'".format(**form_data).replace(";", "") + ";"
+		return parsed_data
 
 	# Caso autostrada
-	elif form_data["tabella"] == "autostrada":
+	elif tabella == "autostrada":
 		if request.POST.get("cod_naz") == "":
-			form_data["cod_naz"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["cod_naz"] = "%" + request.POST.get("cod_naz") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("cod_naz") + "%",)
 
 		if request.POST.get("cod_eu") == "":
-			form_data["cod_eu"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["cod_eu"] = "%" + request.POST.get("cod_eu") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("cod_eu") + "%",)
 
 		if request.POST.get("nome") == "":
-			form_data["nome"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["nome"] = "%" +request.POST.get("nome") + "%"
+			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
 
 		if request.POST.get("lunghezza") == "":
-			form_data["lunghezza"] = "%%"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			form_data["lunghezza"] = request.POST.get("lunghezza")
+			parsed_data = parsed_data + ("%" + request.POST.get("lunghezza") + "%",)
 
-		return "SELECT * FROM {tabella} WHERE cod_naz LIKE '{cod_naz}' AND cod_eu LIKE '{cod_eu}' AND nome LIKE '{nome}' AND lunghezza LIKE '{lunghezza}'".format(**form_data).replace(";", "") + ";"
+		return parsed_data
 
 	# Caso casello <- DA QUI
 	else:
 		sql_finale = "SELECT * FROM casello WHERE"
 
 		if request.POST.get("codice") == "":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " codice LIKE '%" + request.POST.get("codice") + "%' AND"
+			parsed_data = parsed_data + ("%" + request.POST.get("codice") + "%",)
 		
 		if request.POST.get("cod_naz") == " ":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " cod_naz LIKE '" + request.POST.get("cod_naz") + "' AND"
+			parsed_data = parsed_data + ("%" + request.POST.get("cod_naz") + "%",)
 
 		if request.POST.get("comune") == " ":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " comune LIKE '" + request.POST.get("comune") + "' AND"
+			parsed_data = parsed_data + ("%" + request.POST.get("comune") + "%",)
 
 		if request.POST.get("nome") == "":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " nome LIKE '%" + request.POST.get("nome") + "%' AND"
+			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
 
 		if request.POST.get("x") == "":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " x LIKE '" + request.POST.get("x") + "' AND"
+			parsed_data = parsed_data + (request.POST.get("x"),)
 
 		if request.POST.get("y") == "":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " y LIKE '" + request.POST.get("y") + "' AND"
+			parsed_data = parsed_data + (request.POST.get("y"),)
 
 		if request.POST.get("is_automatico") == "":
-			sql_finale = sql_finale + " 1=1 AND"
+			parsed_data = parsed_data + ("%%",)
 		else:
 			print(request.POST.get("is_automatico").lower())
-			if request.POST.get("is_automatico").lower() == "true" or request.POST.get("is_automatico").lower() == "1":
-				sql_finale = sql_finale + " is_automatico = 1 AND"
-			elif request.POST.get("is_automatico").lower() == "false" or request.POST.get("is_automatico").lower() == "0":
-				sql_finale = sql_finale + " is_automatico = 0 AND"
+			if request.POST.get("is_automatico").lower() == "1":
+				parsed_data = parsed_data + ("1",)
+			elif request.POST.get("is_automatico").lower() == "0":
+				parsed_data = parsed_data + ("0",)
 			else:
-				sql_finale = sql_finale + " 1=1 AND"
+				parsed_data = parsed_data + ("%%",)
 
 		if request.POST.get("data_automazione") == "" or request.POST.get("data_automazione") is None:
-			sql_finale = sql_finale + " 1=1"
+			parsed_data = parsed_data + ("%%",)
 		else:
-			sql_finale = sql_finale + " data_automazione LIKE '" + request.POST.get("data_automazione") + "'"
+			parsed_data = parsed_data + (request.POST.get("data_automazione"),)
 
-
-		return sql_finale
+		# Altrimenti se il valore di ricerca/inserimento contiene "'", darà errore
+		return parsed_data
 
 #
 # Prende una lista di provincie uniche
