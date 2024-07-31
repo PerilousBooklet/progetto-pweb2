@@ -76,7 +76,7 @@ Crea nuovo database:
 
 `createdb pweb2`
 
-Popola il database (si possono usare due modi: CLI con `psql` oppure GUI con `DBeaver`):
+Popola il database:
 
 Apri [DBeaver](https://dbeaver.io/):
 
@@ -88,15 +88,6 @@ Apri [DBeaver](https://dbeaver.io/):
 6. Nella barra seconda-dall'alto, clicca sul bottone `SQL` per creare un nuovo script SQL
 7. Incollaci il contenuto del file `./sql/db_postgres_v2.sql`
 8. Avvia lo script con `Alt + X`
-
-oppure
-
-Esegui nel terminale:
-
-```
-cd ./progetto-pweb2/sql
-psql database -f db_postgres_v2.sql
-```
 
 ## Setup Django Project
 
