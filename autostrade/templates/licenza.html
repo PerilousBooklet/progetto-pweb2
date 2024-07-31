@@ -2,48 +2,34 @@
 
 <!DOCTYPE html>
 <html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Landing Page</title>
+		<!-- Style -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
+		<!-- Icons -->
+		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
-  <!-- Style -->
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
-  <!-- Icons -->
-  <link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
-</head>
+	<body>
+		{% include 'header.html' %}
 
-<body>
-  
-  {% include 'header.html' %}
-  
-  <main class="container-fluid">
-    <div class="" style="padding-top: 80px; padding-left: 15px;">
-      <p xmlns:cc="http://creativecommons.org/ns#" class="text-black">The whole website and all of its pages and content are licensed under
-        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank"
-          rel="license noopener noreferrer" style="display:inline-block;" class="text-black">Creative Commons
-          Attribution-NonCommercial-ShareAlike 4.0 International<img
-            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img
-            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img
-            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img
-            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-            src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
-      </p>
-    </div>
-  </main>
-  
-  <div class="fixed-bottom">
-    {% include 'footer.html' %}
-  </div>
-  
-</body>
+		<main class="container-fluid">
+			<div class="" style="padding-top: 80px; padding-left: 15px">
+				<p xmlns:cc="http://creativecommons.org/ns#" class="text-black">
+					The whole website and all of its pages and content are licensed under
+					<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display: inline-block">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International<img style="height: 22px !important; margin-left: 3px; vertical-align: text-bottom" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt="" /><img style="height: 22px !important; margin-left: 3px; vertical-align: text-bottom" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt="" /><img style="height: 22px !important; margin-left: 3px; vertical-align: text-bottom" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt="" /><img style="height: 22px !important; margin-left: 3px; vertical-align: text-bottom" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt="" /></a>
+					, with exception for <a href="https://github.com/twbs/bootstrap">Bootstrap</a>, <a href="https://github.com/django/django">Django</a>, <a href="https://github.com/jquery/jquery">JQuery</a> and Flaticon images.
+				</p>
+			</div>
+		</main>
 
+		<div class="fixed-bottom">{% include 'footer.html' %}</div>
+	</body>
 </html>
