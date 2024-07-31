@@ -45,9 +45,6 @@ SET row_security = off;
 -- Name: public; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA public;
-
-
 --
 -- TOC entry 3434 (class 0 OID 0)
 -- Dependencies: 4
