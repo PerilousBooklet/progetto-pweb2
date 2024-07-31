@@ -2,7 +2,7 @@
 
 Progetto di programmazione web, parte 2.
 
-## Table of Contents
+## Indice
 
 1. [Spiegazione delle scelte del progetto](#spiegazione-delle-scelte-del-progetto)
 2. [Setup Ambiente di Sviluppo](#setup-ambiente-di-sviluppo)
