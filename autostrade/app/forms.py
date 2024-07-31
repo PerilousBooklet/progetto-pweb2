@@ -61,4 +61,4 @@ class CaselloForm(forms.Form):
 	is_automatico.widget.attrs.update({"class": "form-check-input", "onclick": "blockDate()"})
 
 	data_automazione = forms.DateField(label="Data automazione", widget=forms.widgets.DateInput(attrs={'type': 'date'}), required=False)
-	data_automazione.widget.attrs.update({"class": "date form-control", "disabled": " "})
+	data_automazione.widget.attrs.update({"class": "date form-control"})
