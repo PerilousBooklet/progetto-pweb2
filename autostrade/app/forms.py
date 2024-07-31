@@ -15,7 +15,7 @@ class ComuneForm(forms.Form):
 class ComuneModalForm(forms.Form):
 	forms.Select
 	codiceModal = forms.CharField(label="Codice comune", max_length=100, required=False)
-	codiceModal.widget.attrs.update({"class": "form-control"})
+	codiceModal.widget.attrs.update({"class": "form-control", "disabled": " "})
 
 	provinciaModal = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
 	provinciaModal.widget.attrs.update({"class": "form-select"})
@@ -51,10 +51,10 @@ class CaselloForm(forms.Form):
 	nome = forms.CharField(label="Nome", max_length=100, required=False)
 	nome.widget.attrs.update({"class": "form-control"})
 
-	x = forms.CharField(label="Coord. x", max_length=100, required=False)
+	x = forms.CharField(label="Coordinata X", max_length=100, required=False)
 	x.widget.attrs.update({"class": "form-control"})
 
-	y = forms.CharField(label="Coord. y", max_length=100, required=False)
+	y = forms.CharField(label="Coordinata Y", max_length=100, required=False)
 	y.widget.attrs.update({"class": "form-control"})
 
 	is_automatico = forms.ChoiceField(label="Tipo casello", widget=forms.RadioSelect, choices=opzioniAutomatico, required=False)

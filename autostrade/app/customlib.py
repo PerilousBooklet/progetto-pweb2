@@ -1,7 +1,3 @@
-from genericpath import exists
-from typing import Any
-from unittest import result
-from django.http import HttpRequest
 import psycopg2
 
 dbname = "pweb2"
