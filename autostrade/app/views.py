@@ -1,19 +1,20 @@
+from urllib import request
 from django.http import HttpResponse
 from django.template import loader
 import app.customlib
-from app.forms import AutostradaForm, AutostradaModalForm, CaselloForm, CaselloModalForm, ComuneForm, ComuneModalForm
+from app.forms import AutostradaForm, CaselloForm, ComuneForm, ComuneModalForm
 
 #################################################
 # View Index
 #################################################
 def index(request):
-  #return HttpResponse("Hello, world. You're at the polls index.")
-  template = loader.get_template("index.html")
-  return HttpResponse(template.render())
+	#return HttpResponse("Hello, world. You're at the polls index.")
+	template = loader.get_template("index.html")
+	return HttpResponse(template.render())
 
 def landingpage(request):
-  template = loader.get_template("landingpage.html")
-  return HttpResponse(template.render())
+	template = loader.get_template("landingpage.html")
+	return HttpResponse(template.render())
 
 #################################################
 # View Comune
@@ -43,9 +44,7 @@ def casello(request):
 		listaelementi = app.customlib.getDataList("casello")
 		form = CaselloForm()
 
-	formModal = CaselloModalForm()
-
-	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
+	context = {"listaelementi" : listaelementi, "form": form}
 	template = loader.get_template("casello.html")
 	return HttpResponse(template.render(context, request))
 
@@ -60,9 +59,7 @@ def autostrada(request):
 		listaelementi = app.customlib.getDataList("autostrada")
 		form = AutostradaForm()
 
-	formModal = AutostradaModalForm()
-
-	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
+	context = {"listaelementi" : listaelementi, "form": form}
 	template = loader.get_template("autostrada.html")
 	return HttpResponse(template.render(context, request))
 
@@ -70,12 +67,39 @@ def autostrada(request):
 # View Crediti e Licenza
 #################################################
 def crediti(request):
-  template = loader.get_template("crediti.html")
-  return HttpResponse(template.render())
+	template = loader.get_template("crediti.html")
+	return HttpResponse(template.render())
 
 def licenza(request):
-  template = loader.get_template("licenza.html")
-  return HttpResponse(template.render())
+	template = loader.get_template("licenza.html")
+	return HttpResponse(template.render())
+
+#################################################
+# View api_modifica
+#################################################
+def api_modifica(request):
+	print(request.POST)
+	app.customlib.updateDataTable("comune", request)
+	template = loader.get_template("api_generic.html")
+	return HttpResponse(template.render())
+
+#################################################
+# View api_elimina
+#################################################
+def api_elimina(request):
+	print(request.POST)
+	app.customlib.removeDataTable("comune", request)
+	template = loader.get_template("api_generic.html")
+	return HttpResponse(template.render())
+
+#################################################
+# View api_aggiungi
+#################################################
+def api_aggiungi(request):
+	print(request.POST)
+	app.customlib.addDataTable("comune", request)
+	template = loader.get_template("api_generic.html")
+	return HttpResponse(template.render())
 
 #################################################
 # View Test

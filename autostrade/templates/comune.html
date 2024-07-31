@@ -13,25 +13,17 @@
 		<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 		<script src="{% static 'js/dialog.js' %}"></script>
 
+		<link href= "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap"
-			rel="stylesheet"
-		/>
+		<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 		<!-- Icons -->
-		<link
-			rel="icon"
-			href="{% static 'icons/road.png' %}"
-			type="image/x-icon"
-		/>
+		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 	</head>
-
+	
 	{% comment %}
 	<script>
 		const editDialog = document.getElementById("editDialog");
@@ -45,73 +37,45 @@
 
 	<body onload="" style="overflow: auto">
 		{% comment %} Inizio sezione modale {% endcomment %}
-
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title">Modifica Riga</h5>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form method="post" action="">
 							{% csrf_token %}
 							{{ formModal }}
-							<br />
-							<button type="submit" class="btn btn-primary">
-								Modifica
-							</button>
-							<br />
-							<button type="submit" class="btn btn-primary">
-								Rimuovi
-							</button>
+							<div class="modal-footer">
+								<button formaction="/app/api_modifica" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modifica</button>
+								<button formaction="/app/api_elimina" type="submit" class="btn btn-danger" data-bs-dismiss="modal">Rimuovi</button>
+							</div>
 						</form>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-bs-dismiss="modal"
-						>
-							Close
-						</button>
-						<button type="button" class="btn btn-primary">
-							Save changes
-						</button>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
 		{% comment %} Fine sezione modale {% endcomment %}
-
-		<div
-			class="container-fluid"
-			style="
-				padding-top: 100px;
-				padding-right: 80px;
-				padding-bottom: 100px;
-			"
-		>
+		
+		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->
 			<main class="row z-index-0">
 				<!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
 
 				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
 					<!-- div filtri -->
+
 					<h2>Filtri</h2>
 					<form action="/app/comune" method="post">
-						{% csrf_token %} {{ form }}
+						{% csrf_token %}
+						{{ form }}
 						<br />
 						<button type="submit" class="btn btn-primary">Cerca</button>
-						<br />
-						<br />
-						<button type="reset" class="btn">Svuota</button>
+						<button formaction="/app/api_aggiungi" type="submit" class="btn btn-primary">Inserisci</button>
+						<button type="reset" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
 
@@ -121,7 +85,7 @@
 					<!-- div tabella-->
 					<div class="table-responsive">
 						{% if listaelementi %}
-						<table class="table table-bordered table-hover">
+						<table class="table table-bordered table-hover align-middle">
 							<thead>
 								<th scope="col">Codice</th>
 								<th scope="col">Codice Provincia</th>
@@ -133,18 +97,20 @@
 								<td>{{comune.0}}</td>
 								<td>{{comune.1}}</td>
 								<td>{{comune.2}}</td>
-								<td><button type="button" class="" data-bs-toggle="modal" data-bs-target="#editDialog">edit</button></td>
+								<td><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button></td>
 							</tr>
 							{% endfor %}
 						</table>
+						
 						{% else %}
 						<p>tabella vuota</p>
 						{% endif %}
 					</div>
 				</div>
 			</main>
-
+			
 			{% include 'header.html' %}
+			
 			<div class="fixed-bottom">
 				<!-- div footer-->
 				{% include 'footer.html' %}
