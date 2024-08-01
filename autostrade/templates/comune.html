@@ -63,11 +63,10 @@
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->
 			<main class="row z-index-0">
+				
 				<!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
-
 				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
 					<!-- div filtri -->
-
 					<h2>Filtri</h2>
 					<form action="/app/comune" method="post">
 						{% csrf_token %}
@@ -81,7 +80,7 @@
 
 				<div class="col-4"></div>
 
-				<div class="col-8 overflow-y-auto">
+				<div class="col-xs-6 col-sm-6 col-md-8 overflow-y-auto">
 					<!-- div tabella-->
 					<div class="table-responsive">
 						{% if listaelementi %}
