@@ -10,8 +10,14 @@ def createConnection():
 def getDataList(table: str) -> list[tuple]:
 	conn = createConnection()
 	cur = conn.cursor()
+
+	if table == "comune":
+		cur.execute("SELECT * FROM comune ORDER BY codice")
+	elif table == "autostrada":
+		cur.execute("SELECT * FROM autostrada ORDER BY cod_naz")
+	else :
+		cur.execute("SELECT * FROM casello ORDER BY codice")
 	
-	cur.execute("SELECT * FROM {0};".format(table))
 	result = cur.fetchall()
 	conn.commit()
 
@@ -28,11 +34,11 @@ def getDataListSearch(table: str, request) -> list[tuple]:
 	parsed_data = sqlGen(table, request)
 	
 	if table == "comune":
-		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s", parsed_data)
+		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s ORDER BY codice", parsed_data)
 	elif table == "autostrada":
-		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s", parsed_data)
+		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s ORDER BY cod_naz", parsed_data)
 	else :
-		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s", parsed_data)
+		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s ORDER BY codice", parsed_data)
 	result = cur.fetchall()
 	conn.commit()
 
