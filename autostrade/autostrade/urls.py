@@ -20,4 +20,5 @@ from django.urls import include, path
 urlpatterns = [
     path("app/", include("app.urls")),
     path('admin/', admin.site.urls),
+    path('', include("app.urls")), #questo era quello che mancava per risolvere l'errore 404 quando si andava all'indirizzo 127.0.0.1:8000 al posto di 127.0.0.1:8000/app
 ]
