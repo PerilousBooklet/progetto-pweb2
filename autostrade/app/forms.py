@@ -13,9 +13,8 @@ class ComuneForm(forms.Form):
 	nome.widget.attrs.update({"class": "form-control"})
 
 class ComuneModalForm(forms.Form):
-	forms.Select
-	codiceModal = forms.CharField(label="Codice comune", max_length=100, required=False)
-	codiceModal.widget.attrs.update({"class": "form-control", "disabled": " "})
+	codiceModal = forms.CharField(label="", max_length=100, required=False)
+	codiceModal.widget.attrs.update({"class": "form-control", "hidden": " "})
 
 	provinciaModal = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
 	provinciaModal.widget.attrs.update({"class": "form-select"})

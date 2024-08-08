@@ -26,7 +26,7 @@ def comune(request):
 	else:
 		listaelementi = app.customlib.getDataList("comune")
 		form = ComuneForm()
-	
+
 	formModal = ComuneModalForm()
 
 	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
@@ -111,9 +111,9 @@ def test(request):
 	else:
 		listaelementi = app.customlib.getDataList("comune")
 		form = ComuneForm()
-		
+
 	listaUnica = []
-	
+
 	for comune in listaelementi:
 		if comune[1] not in listaUnica:
 			listaUnica.append(comune[1])
@@ -123,4 +123,3 @@ def test(request):
 	context = {"comuni" : listaelementi, "form": form}
 	template = loader.get_template("test.html")
 	return HttpResponse(template.render(context, request))
-
