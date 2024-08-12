@@ -43,6 +43,14 @@ def casello(request):
 	else:
 		listaelementi = app.customlib.getDataList("casello")
 		form = CaselloForm()
+	
+	for i in range(listaelementi.__len__()-1):
+		elemento = listaelementi[i]
+		if elemento[7] != "NULL":
+			elemento_split:list[str] = elemento[7].split("-")
+			data = elemento_split[2] + "/" + elemento_split[1] + "/" + elemento_split[0]
+			temp_elemento = (elemento[0],elemento[1],elemento[2],elemento[3],elemento[4],elemento[5],elemento[6],data)
+			listaelementi[i] = temp_elemento
 
 	context = {"listaelementi" : listaelementi, "form": form}
 	template = loader.get_template("casello.html")

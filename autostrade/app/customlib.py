@@ -15,7 +15,7 @@ def getDataList(table: str) -> list[tuple]:
 		cur.execute("SELECT * FROM comune ORDER BY codice")
 	elif table == "autostrada":
 		cur.execute("SELECT * FROM autostrada ORDER BY cod_naz")
-	else :
+	else:
 		cur.execute("SELECT * FROM casello ORDER BY codice")
 	
 	result = cur.fetchall()

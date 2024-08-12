@@ -1,0 +1,50 @@
+Valutazione generale: 
+	Applicazione molto molto basica - tante cose dal punto di vista funzionale mancano e non sono state neanche pensate. 
+
+Base di dati: ok
+	Molto bene che vi siete cercati i comuni italiani con i loro codici - 
+	E anche le autostrade -  mi pare - Anche se i nomi ve li siete inventati -  la A1 e l'Autostrada del Sole - La A7 è l'autostrada dei Laghi -  Comunque non importa. 
+	Sui Caselli non mi pronuncio,  Anche perché questa è un'informazione difficile da reperire,  Ma mi rendo conto che avete generato a caso le coordinate e probabilmente qualche casello si trova in Africa o in nuova Zelanda  o in mezzo all'oceano 😂
+
+Palette: Ok,  
+	Foglio di stile:  ok
+	Bello pulito essenziale
+		Niente di particolarmente  innovativo,   ma quando non ce n'è bisogno va bene. 
+
+Navigazione: 
+	È vero che nel database l'entità,  cioè le tabelle,  hanno nomi al singolare,  ma nella barra di navigazione i nomi delle pagine stavano meglio al plurale: Comuni,  autostrade,  Caselli
+		Inoltre non so se avete notato la lista che vi ho fatto appunto precedente,  l'ordine della navigazione dovrebbe riflettere l'importanza della pagina linkata  e mi avete messo i caselli tra i comuni e le autostrade!
+
+Tabelle: Male, molto male… i dati non sono linkati
+	Nella  pagina dei comuni  sarebbe stato utile vedere il numero di Caselli e cliccando su questo numero andarli a vedere
+	Stessa cosa nella pagina delle autostrade 
+	Nella pagina Dei Caselli oltre a vedere il codice dei comuni E delle autostrade sarebbe stato opportuno far vedere anche i nomi dei comuni e delle autostrade,  e cliccando su questi valori andare a vedere le pagine dei comuni e delle autostrade 
+
+Ordinamenti: Non avete messo nessun meccanismo di ordinamento dei dati e sarebbe stato opportuno. 
+
+Form di ricerca: 
+	Dopo che avete lanciato una ricerca  il form è naturalmente resettato,  e che vuol dire che se voglio rifare la ricerca o raffinarla devo reinserire i dati da capo -  e a questo. ci si domanda: “ a che serve il tasto svuota?”
+	Per le ricerche spaziali -  Questa è difficile e ve lo dico solamente per vostra cultura -  è opportuno permettere l'inserimento  nelle coordinate di un  punto centrale  e poi definire  un raggio di distanza -  e quindi andare a trovare tutti gli elementi che si ritrovano entro quel raggio-
+
+CRUD: Comune
+	Inserimento: 
+		Usate lo stesso form di ricerca per l'inserimento -  per l'utente questa cosa non è chiara - Anche perché dovete pensare che l'utente magari si sbaglia a schiacciare il pulsante E anziché Premere Cerca,  preme Inserisci e si ritrova un comune in più
+		Anche perché non date nessun feedback dell'avvenuto inserimento 
+
+			infine è possibile inserire i comuni senza codice!!!! Almeno uno
+
+			infatti se prova a inserire  con un codice esistente non viene inserito -  il che va bene -  ma bisogna avvertire l'utente che l'operazione non ha avuto successo.
+	Modifica 
+		La modifica va bene,  solo che non è chiaro l'utente immediatamente che cliccando sopra un comune Si attiva la funzione
+			dovete comunque dare all'utente  il feedback che l'aggiornamento è avvenuto -  oppure no
+			dovresti potuto usare il pop up di modifica anche per l'inserimento, sarebbe stato molto meglio
+
+	Cancellazione
+		Molto male dal punto dell' usabilità,  usarlo lo stesso form di modifica  per la cancellazione -  anche perché sopra c'è scritto MODIFICA -   e invece avete inserito anche un pulsante “Elimina”  che all'inizio pensavo servisse ad annullare l'operazione -  E invece no!
+			e anche in questo caso non date notifica all'utente della cancellazione -  e questa è un'operazione pericolosa, molto pericolosa, e l'utente Va avvertito anche prima.
+
+Messaggistica: 
+	Non c'è messaggistica per l'utente - A parte quando una ricerca da una tabella vuota-  Ma dare un feedback  all'utente specialmente per le operazioni di cancellazione, modifica, inserimento è fondamentale
+
+Varie:
+	Male molto male,  le date agli utenti non si visualizzano mai in formato internazionale! Sempre dd-mm-yyyy  o simili! 
