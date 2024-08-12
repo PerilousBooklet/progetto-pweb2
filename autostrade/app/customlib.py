@@ -7,7 +7,7 @@ def createConnection():
 	conn = psycopg2.connect("dbname=" + dbname + " user=" + username)
 	return conn
 
-def getDataList(table: str) -> list[tuple]:
+def getDataList(table: str):
 	conn = createConnection()
 	cur = conn.cursor()
 
@@ -25,7 +25,7 @@ def getDataList(table: str) -> list[tuple]:
 	conn.close()
 	return result
 
-def getDataListSearch(table: str, request) -> list[tuple]:
+def getDataListSearch(table: str, request):
 	form_data = {}
 
 	conn = createConnection()
@@ -88,7 +88,7 @@ def updateDataTable(table: str, request):
 	conn.close()
 	return
 
-def sqlGen(tabella: str, request) -> tuple:
+def sqlGen(tabella: str, request):
 
 	is_automatico_present = ""
 	sql_finale = ""

@@ -1,3 +1,5 @@
+from email import contentmanager
+import traceback
 from urllib import request
 from django.http import HttpResponse
 from django.template import loader
@@ -20,56 +22,69 @@ def landingpage(request):
 # View Comune
 #################################################
 def comune(request):
-	if request.method == "POST":
-		form = ComuneForm(request.POST)
-		listaelementi = app.customlib.getDataListSearch("comune", request)
-	else:
-		listaelementi = app.customlib.getDataList("comune")
-		form = ComuneForm()
-
-	formModal = ComuneModalForm()
-
-	context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
-	template = loader.get_template("comune.html")
-	return HttpResponse(template.render(context, request))
+	try:
+		if request.method == "POST":
+			form = ComuneForm(request.POST)
+			listaelementi = app.customlib.getDataListSearch("comune", request)
+		else:
+			listaelementi = app.customlib.getDataList("comune")
+			form = ComuneForm()
+		formModal = ComuneModalForm()
+		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
+		template = loader.get_template("comune.html")
+		return HttpResponse(template.render(context, request))
+	except Exception as err:
+		context = {"pagina": "Comune", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View Casello
 #################################################
 def casello(request):
-	if request.method == "POST":
-		form = CaselloForm(request.POST)
-		listaelementi = app.customlib.getDataListSearch("casello", request)
-	else:
-		listaelementi = app.customlib.getDataList("casello")
-		form = CaselloForm()
-	
-	for i in range(listaelementi.__len__()-1):
-		elemento = listaelementi[i]
-		if elemento[7] != "NULL":
-			elemento_split:list[str] = elemento[7].split("-")
-			data = elemento_split[2] + "/" + elemento_split[1] + "/" + elemento_split[0]
-			temp_elemento = (elemento[0],elemento[1],elemento[2],elemento[3],elemento[4],elemento[5],elemento[6],data)
-			listaelementi[i] = temp_elemento
+	try:
+		if request.method == "POST":
+			form = CaselloForm(request.POST)
+			listaelementi = app.customlib.getDataListSearch("casello", request)
+		else:
+			listaelementi = app.customlib.getDataList("casello")
+			form = CaselloForm()
+		
+		for i in range(listaelementi.__len__()-1):
+			elemento = listaelementi[i]
+			if elemento[7] != "NULL":
+				elemento_split:list[str] = elemento[7].split("-")
+				data = elemento_split[2] + "/" + elemento_split[1] + "/" + elemento_split[0]
+				temp_elemento = (elemento[0],elemento[1],elemento[2],elemento[3],elemento[4],elemento[5],elemento[6],data)
+				listaelementi[i] = temp_elemento
 
-	context = {"listaelementi" : listaelementi, "form": form}
-	template = loader.get_template("casello.html")
-	return HttpResponse(template.render(context, request))
+		context = {"listaelementi" : listaelementi, "form": form}
+		template = loader.get_template("casello.html")
+		return HttpResponse(template.render(context, request))
+	except Exception as err:
+		context = {"pagina": "Casello", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View Autostrada
 #################################################
 def autostrada(request):
-	if request.method == "POST":
-		form = AutostradaForm(request.POST)
-		listaelementi = app.customlib.getDataListSearch("autostrada", request)
-	else:
-		listaelementi = app.customlib.getDataList("autostrada")
-		form = AutostradaForm()
+	try:
+		if request.method == "POST":
+			form = AutostradaForm(request.POST)
+			listaelementi = app.customlib.getDataListSearch("autostrada", request)
+		else:
+			listaelementi = app.customlib.getDataList("autostrada")
+			form = AutostradaForm()
 
-	context = {"listaelementi" : listaelementi, "form": form}
-	template = loader.get_template("autostrada.html")
-	return HttpResponse(template.render(context, request))
+		context = {"listaelementi" : listaelementi, "form": form}
+		template = loader.get_template("autostrada.html")
+		return HttpResponse(template.render(context, request))
+	except Exception as err:
+		context = {"pagina": "Autostrada", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View Crediti e Licenza
@@ -86,7 +101,6 @@ def licenza(request):
 # View api_modifica
 #################################################
 def api_modifica(request):
-	print(request.POST)
 	app.customlib.updateDataTable("comune", request)
 	template = loader.get_template("api_generic.html")
 	return HttpResponse(template.render())
@@ -95,7 +109,6 @@ def api_modifica(request):
 # View api_elimina
 #################################################
 def api_elimina(request):
-	print(request.POST)
 	app.customlib.removeDataTable("comune", request)
 	template = loader.get_template("api_generic.html")
 	return HttpResponse(template.render())
@@ -104,7 +117,6 @@ def api_elimina(request):
 # View api_aggiungi
 #################################################
 def api_aggiungi(request):
-	print(request.POST)
 	app.customlib.addDataTable("comune", request)
 	template = loader.get_template("api_generic.html")
 	return HttpResponse(template.render())
@@ -131,3 +143,11 @@ def test(request):
 	context = {"comuni" : listaelementi, "form": form}
 	template = loader.get_template("test.html")
 	return HttpResponse(template.render(context, request))
+
+#################################################
+# View userError
+#################################################
+def usererror(request):
+	context = {"pagina": "usererror"}
+	template = loader.get_template("userError.html")
+	return HttpResponse(template.render(context))
