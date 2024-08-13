@@ -1,16 +1,3 @@
-Valutazione generale: 
-	Applicazione molto molto basica - tante cose dal punto di vista funzionale mancano e non sono state neanche pensate. 
-
-Base di dati: ok
-	Molto bene che vi siete cercati i comuni italiani con i loro codici - 
-	E anche le autostrade -  mi pare - Anche se i nomi ve li siete inventati -  la A1 e l'Autostrada del Sole - La A7 è l'autostrada dei Laghi -  Comunque non importa. 
-	Sui Caselli non mi pronuncio,  Anche perché questa è un'informazione difficile da reperire,  Ma mi rendo conto che avete generato a caso le coordinate e probabilmente qualche casello si trova in Africa o in nuova Zelanda  o in mezzo all'oceano 😂
-
-Palette: Ok,  
-	Foglio di stile:  ok
-	Bello pulito essenziale
-		Niente di particolarmente  innovativo,   ma quando non ce n'è bisogno va bene. 
-
 Navigazione: 
 	È vero che nel database l'entità,  cioè le tabelle,  hanno nomi al singolare,  ma nella barra di navigazione i nomi delle pagine stavano meglio al plurale: Comuni,  autostrade,  Caselli
 		Inoltre non so se avete notato la lista che vi ho fatto appunto precedente,  l'ordine della navigazione dovrebbe riflettere l'importanza della pagina linkata  e mi avete messo i caselli tra i comuni e le autostrade!

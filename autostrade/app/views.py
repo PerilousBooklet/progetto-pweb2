@@ -101,25 +101,40 @@ def licenza(request):
 # View api_modifica
 #################################################
 def api_modifica(request):
-	app.customlib.updateDataTable("comune", request)
-	template = loader.get_template("api_generic.html")
-	return HttpResponse(template.render())
+	try:
+		app.customlib.updateDataTable("comune", request)
+		template = loader.get_template("api_generic.html")
+		return HttpResponse(template.render())
+	except Exception as err:
+		context = {"pagina": "api_modifica", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View api_elimina
 #################################################
 def api_elimina(request):
-	app.customlib.removeDataTable("comune", request)
-	template = loader.get_template("api_generic.html")
-	return HttpResponse(template.render())
+	try:
+		app.customlib.removeDataTable("comune", request)
+		template = loader.get_template("api_generic.html")
+		return HttpResponse(template.render())
+	except Exception as err:
+		context = {"pagina": "api_elimina", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View api_aggiungi
 #################################################
 def api_aggiungi(request):
-	app.customlib.addDataTable("comune", request)
-	template = loader.get_template("api_generic.html")
-	return HttpResponse(template.render())
+	try:
+		app.customlib.addDataTable("comune", request)
+		template = loader.get_template("api_generic.html")
+		return HttpResponse(template.render())
+	except Exception as err:
+		context = {"pagina": "api_aggiungi", "stacktrace": traceback.format_exc()}
+		template = loader.get_template("userError.html")
+		return HttpResponse(template.render(context))
 
 #################################################
 # View Test
