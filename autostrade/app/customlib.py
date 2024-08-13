@@ -5,6 +5,7 @@ username = "user"
 
 def createConnection():
 	conn = psycopg2.connect("dbname=" + dbname + " user=" + username)
+	conn.set_session(autocommit=True)
 	return conn
 
 def getDataList(table: str):
@@ -12,14 +13,29 @@ def getDataList(table: str):
 	cur = conn.cursor()
 
 	if table == "comune":
-		cur.execute("SELECT * FROM comune ORDER BY codice")
+		cur.execute("select comune.codice, count(casello.codice) from comune join casello on comune.codice = casello.comune group by comune.codice, casello.codice order by casello.codice;")
+		count_result = cur.fetchall()
+		cur.execute("SELECT * FROM comune ORDER BY codice;")
 	elif table == "autostrada":
-		cur.execute("SELECT * FROM autostrada ORDER BY cod_naz")
+		cur.execute("SELECT * FROM autostrada ORDER BY cod_naz;")
 	else:
-		cur.execute("SELECT * FROM casello ORDER BY codice")
+		cur.execute("SELECT * FROM casello ORDER BY codice;")
 	
 	result = cur.fetchall()
-	conn.commit()
+
+	for element in result:
+		element = element + (0,)
+
+	for i in range(len(result)):
+		result[i] = result[i] + (0,)
+
+	if "count_result" in locals():
+		for i in range(len(result)):
+			for j in range(len(count_result)-1):
+				if result[i][0] == count_result[j][0]:
+					temp_list = list(result[i])
+					temp_list[len(temp_list)-1] = count_result[j][1]
+					result[i] = tuple(temp_list)
 
 	cur.close()
 	conn.close()
@@ -34,13 +50,13 @@ def getDataListSearch(table: str, request):
 	parsed_data = sqlGen(table, request)
 	
 	if table == "comune":
-		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s ORDER BY codice", parsed_data)
+		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s ORDER BY codice;", parsed_data)
 	elif table == "autostrada":
-		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s ORDER BY cod_naz", parsed_data)
+		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s ORDER BY cod_naz;", parsed_data)
 	else :
-		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s ORDER BY codice", parsed_data)
+		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s ORDER BY codice;", parsed_data)
 	result = cur.fetchall()
-	conn.commit()
+	
 
 	cur.close()
 	conn.close()
@@ -55,7 +71,7 @@ def addDataTable(table: str, request):
 
 	cur.execute("INSERT INTO comune (codice, provincia, nome) VALUES (%s, %s, %s);", parsed_data)
 
-	conn.commit()
+	
 	cur.close()
 	conn.close()
 	return
@@ -69,7 +85,7 @@ def removeDataTable(table: str, request):
 
 	cur.execute("DELETE FROM comune WHERE codice = %s;", parsed_data)
 
-	conn.commit()
+	
 	cur.close()
 	conn.close()
 	return
@@ -83,7 +99,7 @@ def updateDataTable(table: str, request):
 
 	cur.execute("UPDATE comune SET provincia=%s, nome=%s WHERE codice=%s;", parsed_data)
 
-	conn.commit()
+	
 	cur.close()
 	conn.close()
 	return

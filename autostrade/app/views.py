@@ -51,6 +51,7 @@ def casello(request):
 			form = CaselloForm()
 		
 		for i in range(listaelementi.__len__()-1):
+			break
 			elemento = listaelementi[i]
 			if elemento[7] != "NULL":
 				elemento_split:list[str] = elemento[7].split("-")

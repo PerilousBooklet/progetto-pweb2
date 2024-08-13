@@ -89,6 +89,7 @@
 								<th scope="col">Codici</th>
 								<th scope="col">Codici Province</th>
 								<th scope="col">Nomi</th>
+								<th scope="col">Numero Caselli</th>
 								<th scope="col">Modifica</th>
 							</thead>
 							{% for comune in listaelementi %}
@@ -96,6 +97,7 @@
 								<td>{{comune.0}}</td>
 								<td>{{comune.1}}</td>
 								<td>{{comune.2}}</td>
+								<td>{{comune.3}}</td>
 								<td>
 									<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
 								</td>
