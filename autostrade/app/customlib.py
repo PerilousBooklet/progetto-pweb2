@@ -13,11 +13,11 @@ def getDataList(table: str):
 	cur = conn.cursor()
 
 	if table == "comune":
-		cur.execute("SELECT comune.codice, comune.provincia, comune.nome, count(casello.codice) FROM comune left JOIN casello ON comune.codice = casello.comune group by comune.codice, comune.provincia, comune.nome order by comune.codice;")
+		cur.execute("SELECT comune.codice, comune.provincia, comune.nome, count(casello.codice) FROM comune left JOIN casello ON comune.codice = casello.comune GROUP BY comune.codice, comune.provincia, comune.nome ORDER BY comune.codice;")
 		result = cur.fetchall()
 	
 	elif table == "autostrada":
-		cur.execute("SELECT autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) FROM autostrada JOIN casello ON autostrada.cod_naz = casello.cod_naz group by autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz order by casello.cod_naz;")
+		cur.execute("SELECT autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) FROM autostrada JOIN casello ON autostrada.cod_naz = casello.cod_naz GROUP BY autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz ORDER BY casello.cod_naz;")
 		result = cur.fetchall()
 	
 	else:
@@ -37,11 +37,12 @@ def getDataListSearch(table: str, post_data:dict[str, str]):
 	parsed_data = sqlGen(table, post_data)
 	
 	if table == "comune":
-		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s ORDER BY codice;", parsed_data)
+		cur.execute("SELECT comune.codice, comune.provincia, comune.nome, count(casello.codice) FROM comune left JOIN casello ON comune.codice = casello.comune WHERE comune.codice LIKE %s AND comune.provincia LIKE %s AND comune.nome LIKE %s GROUP BY comune.codice, comune.provincia, comune.nome ORDER BY comune.codice;", parsed_data)
 	elif table == "autostrada":
-		cur.execute("SELECT * FROM autostrada WHERE cod_naz LIKE %s AND cod_eu LIKE %s AND nome LIKE %s AND lunghezza LIKE %s ORDER BY cod_naz;", parsed_data)
+		print(parsed_data)
+		cur.execute("SELECT autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) FROM autostrada JOIN casello ON autostrada.cod_naz = casello.cod_naz WHERE autostrada.cod_naz LIKE %s AND autostrada.cod_eu LIKE %s AND autostrada.nome LIKE %s AND autostrada.lunghezza LIKE %s GROUP BY autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz ORDER BY casello.cod_naz;", parsed_data)
 	else :
-		cur.execute("SELECT * FROM casello WHERE codice LIKE %s AND cod_naz LIKE %s AND comune LIKE %s AND nome LIKE %s AND x LIKE %s AND y LIKE %s AND CAST(is_automatico AS TEXT) LIKE %s AND data_automazione LIKE %s ORDER BY codice;", parsed_data)
+		cur.execute("SELECT casello.codice, casello.cod_naz, autostrada.nome, casello.comune, comune.nome, casello.nome, casello.x, casello.y, casello.is_automatico, casello.data_automazione FROM comune JOIN casello ON comune.codice = casello.comune JOIN autostrada ON autostrada.cod_naz = casello.cod_naz WHERE casello.codice LIKE %s AND casello.cod_naz LIKE %s AND casello.comune LIKE %s AND casello.nome LIKE %s AND casello.x LIKE %s AND casello.y LIKE %s AND CAST(casello.is_automatico AS TEXT) LIKE %s AND casello.data_automazione LIKE %s ORDER BY casello.codice;", parsed_data)
 	result = cur.fetchall()
 	
 
