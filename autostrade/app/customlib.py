@@ -13,19 +13,8 @@ def getDataList(table: str):
 	cur = conn.cursor()
 
 	if table == "comune":
-		cur.execute("select comune.codice, count(casello.codice) from comune join casello on comune.codice = casello.comune group by comune.codice, casello.codice order by casello.codice;")
-		count_result = cur.fetchall()
-		cur.execute("SELECT * FROM comune ORDER BY codice;")
+		cur.execute("select comune.codice, comune.provincia, comune.nome, count(casello.codice) from comune left join casello on comune.codice = casello.comune group by comune.codice, comune.provincia, comune.nome order by comune.codice;")
 		result = cur.fetchall()
-		for i in range(len(result)):
-			result[i] = result[i] + (0,)
-		if "count_result" in locals():
-			for i in range(len(result)):
-				for j in range(len(count_result)):
-					if result[i][0] == count_result[j][0]:
-						temp_list = list(result[i])
-						temp_list[len(temp_list)-1] = count_result[j][1]
-						result[i] = tuple(temp_list)
 	
 	elif table == "autostrada":
 		cur.execute("select autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) from autostrada join casello on autostrada.cod_naz = casello.cod_naz group by autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz order by casello.cod_naz;")
