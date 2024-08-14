@@ -27,8 +27,13 @@ def comune(request):
 			form = ComuneForm(post_data)
 			listaelementi = app.customlib.getDataListSearch("comune", post_data)
 		else:
-			listaelementi = app.customlib.getDataList("comune")
-			form = ComuneForm()
+			if request.GET.get('codice') is not None:
+				get_codice = request.GET.get('codice')
+				form = ComuneForm({"codice": get_codice})
+				listaelementi = app.customlib.getDataListSearch("comune", {"codice": get_codice})
+			else:
+				listaelementi = app.customlib.getDataList("comune")
+				form = ComuneForm()
 		formModal = ComuneModalForm()
 		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
 		template = loader.get_template("comune.html")
@@ -86,8 +91,13 @@ def autostrada(request):
 			form = AutostradaForm(post_data)
 			listaelementi = app.customlib.getDataListSearch("autostrada", post_data)
 		else:
-			listaelementi = app.customlib.getDataList("autostrada")
-			form = AutostradaForm()
+			if request.GET.get('cod_naz') is not None:
+				get_cod_naz = request.GET.get('cod_naz')
+				form = AutostradaForm({"cod_naz": get_cod_naz})
+				listaelementi = app.customlib.getDataListSearch("autostrada", {"cod_naz": get_cod_naz})
+			else:
+				listaelementi = app.customlib.getDataList("autostrada")
+				form = AutostradaForm()
 
 		context = {"listaelementi" : listaelementi, "form": form}
 		template = loader.get_template("autostrada.html")

@@ -100,17 +100,17 @@ def sqlGen(tabella: str, post_data):
 
 	# Caso comune
 	if tabella == "comune":
-		if post_data.get("codice") == "":
+		if post_data.get("codice") == "" or post_data.get("codice") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("codice") + "%",)
 
-		if post_data.get("provincia") == " " or post_data.get("provincia") == "":
+		if post_data.get("provincia") == " " or post_data.get("provincia") == "" or post_data.get("provincia") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("provincia") + "%",)
 
-		if post_data.get("nome") == "":
+		if post_data.get("nome") == "" or post_data.get("nome") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("nome") + "%",)
@@ -119,22 +119,22 @@ def sqlGen(tabella: str, post_data):
 
 	# Caso autostrada
 	elif tabella == "autostrada":
-		if post_data.get("cod_naz") == "":
+		if post_data.get("cod_naz") == "" or post_data.get("cod_naz") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("cod_naz") + "%",)
 
-		if post_data.get("cod_eu") == "":
+		if post_data.get("cod_eu") == "" or post_data.get("cod_eu") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("cod_eu") + "%",)
 
-		if post_data.get("nome") == "":
+		if post_data.get("nome") == "" or post_data.get("nome") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("nome") + "%",)
 
-		if post_data.get("lunghezza") == "":
+		if post_data.get("lunghezza") == "" or post_data.get("lunghezza") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
 			parsed_data = parsed_data + ("%" + post_data.get("lunghezza") + "%",)
