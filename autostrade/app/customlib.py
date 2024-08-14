@@ -13,15 +13,15 @@ def getDataList(table: str):
 	cur = conn.cursor()
 
 	if table == "comune":
-		cur.execute("select comune.codice, comune.provincia, comune.nome, count(casello.codice) from comune left join casello on comune.codice = casello.comune group by comune.codice, comune.provincia, comune.nome order by comune.codice;")
+		cur.execute("SELECT comune.codice, comune.provincia, comune.nome, count(casello.codice) FROM comune left JOIN casello ON comune.codice = casello.comune group by comune.codice, comune.provincia, comune.nome order by comune.codice;")
 		result = cur.fetchall()
 	
 	elif table == "autostrada":
-		cur.execute("select autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) from autostrada join casello on autostrada.cod_naz = casello.cod_naz group by autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz order by casello.cod_naz;")
+		cur.execute("SELECT autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, count(casello.cod_naz) FROM autostrada JOIN casello ON autostrada.cod_naz = casello.cod_naz group by autostrada.cod_naz, autostrada.cod_eu, autostrada.nome, autostrada.lunghezza, casello.cod_naz order by casello.cod_naz;")
 		result = cur.fetchall()
 	
 	else:
-		cur.execute("SELECT casello.codice, casello.cod_naz, casello.comune, casello.nome, casello.x, casello.y, casello.is_automatico, casello.data_automazione, comune.nome, autostrada.nome FROM comune JOIN casello ON comune.codice = casello.comune JOIN autostrada ON autostrada.cod_naz = casello.cod_naz ORDER BY casello.codice;")
+		cur.execute("SELECT casello.codice, casello.cod_naz, autostrada.nome, casello.comune, comune.nome, casello.nome, casello.x, casello.y, casello.is_automatico, casello.data_automazione FROM comune JOIN casello ON comune.codice = casello.comune JOIN autostrada ON autostrada.cod_naz = casello.cod_naz ORDER BY casello.codice;")
 		result = cur.fetchall()
 
 	cur.close()
