@@ -61,12 +61,12 @@ def casello(request):
 				form = CaselloForm()
 				listaelementi = app.customlib.getDataList("casello")
 		
-		for i in range(listaelementi.__len__()-1):
+		for i in range(len(listaelementi)):
 			elemento = listaelementi[i]
 			if elemento[7] != "NULL":
 				elemento_split:list[str] = elemento[7].split("-")
 				data = elemento_split[2] + "/" + elemento_split[1] + "/" + elemento_split[0]
-				temp_elemento = (elemento[0],elemento[1],elemento[2],elemento[3],elemento[4],elemento[5],elemento[6],data)
+				temp_elemento = (elemento[0],elemento[1],elemento[2],elemento[3],elemento[4],elemento[5],elemento[6],data,elemento[8],elemento[9],)
 				listaelementi[i] = temp_elemento
 
 		context = {"listaelementi" : listaelementi, "form": form}
@@ -85,9 +85,7 @@ def autostrada(request):
 		post_data:dict[str,str] = request.POST
 		if request.GET.get('q') is not None:
 			post_data = {"codice": request.GET.get('q')}
-			print(post_data)
 		if request.method == "POST":
-			print(request.GET.get('q'))
 			form = AutostradaForm(post_data)
 			listaelementi = app.customlib.getDataListSearch("autostrada", post_data)
 		else:
