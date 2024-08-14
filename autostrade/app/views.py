@@ -82,8 +82,6 @@ def casello(request):
 def autostrada(request):
 	try:
 		post_data:dict[str,str] = request.POST
-		if request.GET.get('q') is not None:
-			post_data = {"codice": request.GET.get('q')}
 		if request.method == "POST":
 			form = AutostradaForm(post_data)
 			listaelementi = app.customlib.getDataListSearch("autostrada", post_data)
