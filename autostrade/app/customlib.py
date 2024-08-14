@@ -23,7 +23,7 @@ def getDataList(table: str):
 			result[i] = result[i] + (0,)
 		if "count_result" in locals():
 			for i in range(len(result)):
-				for j in range(len(count_result)-1):
+				for j in range(len(count_result)):
 					if result[i][0] == count_result[j][0]:
 						temp_list = list(result[i])
 						temp_list[len(temp_list)-1] = count_result[j][1]
@@ -40,7 +40,7 @@ def getDataList(table: str):
 			result[i] = result[i] + (0,)
 		if "count_result" in locals():
 			for i in range(len(result)):
-				for j in range(len(count_result)-1):
+				for j in range(len(count_result)):
 					if result[i][0] == count_result[j][0]:
 						temp_list = list(result[i])
 						temp_list[len(temp_list)-1] = count_result[j][1]
@@ -56,13 +56,13 @@ def getDataList(table: str):
 	conn.close()
 	return result
 
-def getDataListSearch(table: str, request):
+def getDataListSearch(table: str, post_data:dict[str, str]):
 	form_data = {}
 
 	conn = createConnection()
 	cur = conn.cursor()
 
-	parsed_data = sqlGen(table, request)
+	parsed_data = sqlGen(table, post_data)
 	
 	if table == "comune":
 		cur.execute("SELECT * FROM comune WHERE codice LIKE %s AND provincia LIKE %s AND nome LIKE %s ORDER BY codice;", parsed_data)
@@ -99,7 +99,6 @@ def removeDataTable(table: str, request):
 	cur = conn.cursor()
 
 	cur.execute("DELETE FROM comune WHERE codice = %s;", parsed_data)
-
 	
 	cur.close()
 	conn.close()
@@ -119,7 +118,7 @@ def updateDataTable(table: str, request):
 	conn.close()
 	return
 
-def sqlGen(tabella: str, request):
+def sqlGen(tabella: str, post_data):
 
 	is_automatico_present = ""
 	sql_finale = ""
@@ -128,44 +127,44 @@ def sqlGen(tabella: str, request):
 
 	# Caso comune
 	if tabella == "comune":
-		if request.POST.get("codice") == "":
+		if post_data.get("codice") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("codice") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("codice") + "%",)
 
-		if request.POST.get("provincia") == " " or request.POST.get("provincia") == "":
+		if post_data.get("provincia") == " " or post_data.get("provincia") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("provincia") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("provincia") + "%",)
 
-		if request.POST.get("nome") == "":
+		if post_data.get("nome") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("nome") + "%",)
 
 		return parsed_data
 
 	# Caso autostrada
 	elif tabella == "autostrada":
-		if request.POST.get("cod_naz") == "":
+		if post_data.get("cod_naz") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("cod_naz") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("cod_naz") + "%",)
 
-		if request.POST.get("cod_eu") == "":
+		if post_data.get("cod_eu") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("cod_eu") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("cod_eu") + "%",)
 
-		if request.POST.get("nome") == "":
+		if post_data.get("nome") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("nome") + "%",)
 
-		if request.POST.get("lunghezza") == "":
+		if post_data.get("lunghezza") == "":
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("lunghezza") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("lunghezza") + "%",)
 
 		return parsed_data
 
@@ -173,51 +172,51 @@ def sqlGen(tabella: str, request):
 	else:
 		sql_finale = "SELECT * FROM casello WHERE"
 
-		if request.POST.get("codice") == "":
+		if post_data.get("codice") == "" or post_data.get("codice") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("codice") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("codice") + "%",)
 		
-		if request.POST.get("cod_naz") == " ":
+		if post_data.get("cod_naz") == " " or post_data.get("cod_naz") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("cod_naz") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("cod_naz") + "%",)
 
-		if request.POST.get("comune") == " ":
+		if post_data.get("comune") == " " or post_data.get("comune") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("comune") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("comune") + "%",)
 
-		if request.POST.get("nome") == "":
+		if post_data.get("nome") == "" or post_data.get("nome") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + request.POST.get("nome") + "%",)
+			parsed_data = parsed_data + ("%" + post_data.get("nome") + "%",)
 
-		if request.POST.get("x") == "":
+		if post_data.get("x") == "" or post_data.get("x") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + (request.POST.get("x"),)
+			parsed_data = parsed_data + (post_data.get("x"),)
 
-		if request.POST.get("y") == "":
+		if post_data.get("y") == "" or post_data.get("y") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + (request.POST.get("y"),)
+			parsed_data = parsed_data + (post_data.get("y"),)
 
-		if request.POST.get("is_automatico") == "":
+		if post_data.get("is_automatico") == "" or post_data.get("is_automatico") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			print(request.POST.get("is_automatico").lower())
-			if request.POST.get("is_automatico").lower() == "1":
+			print(post_data.get("is_automatico").lower())
+			if post_data.get("is_automatico").lower() == "1":
 				parsed_data = parsed_data + ("1",)
-			elif request.POST.get("is_automatico").lower() == "0":
+			elif post_data.get("is_automatico").lower() == "0":
 				parsed_data = parsed_data + ("0",)
 			else:
 				parsed_data = parsed_data + ("%%",)
 
-		if request.POST.get("data_automazione") == "" or request.POST.get("data_automazione") is None:
+		if post_data.get("data_automazione") == "" or post_data.get("data_automazione") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + (request.POST.get("data_automazione"),)
+			parsed_data = parsed_data + (post_data.get("data_automazione"),)
 
 		# Altrimenti se il valore di ricerca/inserimento contiene "'", darà errore
 		return parsed_data

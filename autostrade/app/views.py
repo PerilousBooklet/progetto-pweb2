@@ -1,4 +1,3 @@
-from email import contentmanager
 import traceback
 from urllib import request
 from django.http import HttpResponse
@@ -23,9 +22,10 @@ def landingpage(request):
 #################################################
 def comune(request):
 	try:
+		post_data:dict[str,str] = request.POST
 		if request.method == "POST":
-			form = ComuneForm(request.POST)
-			listaelementi = app.customlib.getDataListSearch("comune", request)
+			form = ComuneForm(post_data)
+			listaelementi = app.customlib.getDataListSearch("comune", post_data)
 		else:
 			listaelementi = app.customlib.getDataList("comune")
 			form = ComuneForm()
@@ -43,15 +43,25 @@ def comune(request):
 #################################################
 def casello(request):
 	try:
+		post_data:dict[str,str] = request.POST
+
 		if request.method == "POST":
-			form = CaselloForm(request.POST)
-			listaelementi = app.customlib.getDataListSearch("casello", request)
+			form = CaselloForm(post_data)
+			listaelementi = app.customlib.getDataListSearch("casello", post_data)
 		else:
-			listaelementi = app.customlib.getDataList("casello")
-			form = CaselloForm()
+			if request.GET.get('comune') is not None:
+				get_comune = request.GET.get('comune')
+				form = CaselloForm({"comune": get_comune})
+				listaelementi = app.customlib.getDataListSearch("casello", {"comune": get_comune})
+			elif request.GET.get('autostrada') is not None:
+				get_autostrada = request.GET.get('autostrada')
+				form = CaselloForm({"cod_naz": get_autostrada})
+				listaelementi = app.customlib.getDataListSearch("casello", {"cod_naz": get_autostrada})
+			else:
+				form = CaselloForm()
+				listaelementi = app.customlib.getDataList("casello")
 		
 		for i in range(listaelementi.__len__()-1):
-			break
 			elemento = listaelementi[i]
 			if elemento[7] != "NULL":
 				elemento_split:list[str] = elemento[7].split("-")
@@ -72,9 +82,14 @@ def casello(request):
 #################################################
 def autostrada(request):
 	try:
+		post_data:dict[str,str] = request.POST
+		if request.GET.get('q') is not None:
+			post_data = {"codice": request.GET.get('q')}
+			print(post_data)
 		if request.method == "POST":
-			form = AutostradaForm(request.POST)
-			listaelementi = app.customlib.getDataListSearch("autostrada", request)
+			print(request.GET.get('q'))
+			form = AutostradaForm(post_data)
+			listaelementi = app.customlib.getDataListSearch("autostrada", post_data)
 		else:
 			listaelementi = app.customlib.getDataList("autostrada")
 			form = AutostradaForm()
