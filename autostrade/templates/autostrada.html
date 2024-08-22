@@ -44,19 +44,21 @@
 					{% if listaelementi %}
 					<table class="table table-bordered table-hover align-middle">
 						<thead>
-							<th scope="col">Codice Nazionale</th>
-							<th scope="col">Codice europeo</th>
-							<th scope="col">Nome</th>
-							<th scope="col">Lunghezza</th>
+							<th scope="col">Codici Nazionali</th>
+							<th scope="col">Codici europei</th>
+							<th scope="col">Nomi</th>
+							<th scope="col">Lunghezze</th>
+							<th scope="col">Numero caselli</th>
 						</thead>
 
 						{% for autostrada in listaelementi %}
 
 						<tr>
-							<td>{{autostrada.0}}</td>
+							<td><a href="/app/casello?autostrada={{autostrada.0}}">{{autostrada.0}}</a></td>
 							<td>{{autostrada.1}}</td>
 							<td>{{autostrada.2}}</td>
 							<td>{{autostrada.3}}</td>
+							<td>{{autostrada.4}}</td>
 						</tr>
 
 						{% endfor %}

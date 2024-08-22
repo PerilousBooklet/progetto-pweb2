@@ -87,33 +87,37 @@
 				
 					<table class="table table-bordered table-hover align-middle">
 						<thead>
-						<th scope="col">Codice</th>
-						<th scope="col">Codice Autostrada </th>
-						<th scope="col">Codice Comune</th>
-						<th scope="col">Nome</th>
-						<th scope="col">Coordinata X</th>
-						<th scope="col">Coordinata Y</th>
-						<th scope="col">Tipo Casello</th>
-						<th scope="col">Data</th>
+						<th scope="col">Codici</th>
+						<th scope="col">Codici Autostrade</th>
+						<th scope="col">Nomi Autostrade</th>
+						<th scope="col">Codici Comuni</th>
+						<th scope="col">Nomi Comuni</th>
+						<th scope="col">Nomi</th>
+						<th scope="col">Coordinate X</th>
+						<th scope="col">Coordinate Y</th>
+						<th scope="col">Tipi Caselli</th>
+						<th scope="col">Date</th>
 						</thead>
 						
 						{% for casello in listaelementi %}
 						
 						<tr>
 						<td>{{casello.0}}</td>
-						<td>{{casello.1}}</td>
+						<td><a href="/app/comune?codice={{casello.1}}">{{casello.1}}</a></td>
 						<td>{{casello.2}}</td>
-						<td>{{casello.3}}</td>
+						<td><a href="/app/comune?codice={{casello.3}}">{{casello.3}}</a></td>
 						<td>{{casello.4}}</td>
 						<td>{{casello.5}}</td>
+						<td>{{casello.6}}</td>
+						<td>{{casello.7}}</td>
 						<td>
-							{% if casello.6 == 1 %}
+							{% if casello.8 == 1 %}
 								Automatico
 							{% else %}
 								Presenziato
 							{% endif %}
 						</td>
-						<td>{{casello.7}}</td>
+						<td>{{casello.9}}</td>
 						</tr>
 						
 						{% endfor %}

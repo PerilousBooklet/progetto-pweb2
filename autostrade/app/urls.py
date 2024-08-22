@@ -12,5 +12,6 @@ urlpatterns = [
 	path("api_elimina", views.api_elimina, name="api_elimina"),
 	path("api_aggiungi", views.api_aggiungi, name="api_aggiungi"),
     path("crediti", views.crediti, name="crediti"),
+	path("userError", views.usererror, name="userError"),
     path("licenza", views.licenza, name="licenza")
 ]

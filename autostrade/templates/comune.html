@@ -86,16 +86,18 @@
 						{% if listaelementi %}
 						<table class="table table-bordered table-hover align-middle">
 							<thead>
-								<th scope="col">Codice</th>
-								<th scope="col">Codice Provincia</th>
-								<th scope="col">Nome</th>
+								<th scope="col">Codici</th>
+								<th scope="col">Codici Province</th>
+								<th scope="col">Nomi</th>
+								<th scope="col">Numero Caselli</th>
 								<th scope="col">Modifica</th>
 							</thead>
 							{% for comune in listaelementi %}
 							<tr class="rs-row">
-								<td>{{comune.0}}</td>
+								<td><a href="/app/casello?comune={{comune.0}}">{{comune.0}}</a></td>
 								<td>{{comune.1}}</td>
 								<td>{{comune.2}}</td>
+								<td>{{comune.3}}</td>
 								<td>
 									<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
 								</td>
