@@ -44,7 +44,7 @@ class CaselloForm(forms.Form):
 	cod_naz = forms.CharField(label="Codice autostrada", max_length=100, widget=forms.Select(choices=customlib.getAutostradeUnique()), required=False)
 	cod_naz.widget.attrs.update({"class": "form-select"})
 
-	comune = forms.CharField(label="Comune casello", max_length=100, required=False)
+	comune = forms.CharField(label="Codice comune", max_length=100, required=False)
 	comune.widget.attrs.update({"class": "form-control"})
 
 	nome = forms.CharField(label="Nome", max_length=100, required=False)

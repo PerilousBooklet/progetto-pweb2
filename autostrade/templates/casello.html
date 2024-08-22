@@ -2,143 +2,113 @@
 
 <!DOCTYPE html>
 <html lang="it">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Database Casello</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Database Casello</title>
 
-	<!-- Style -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-	
-	<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+		<!-- Style -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 
-	<!-- Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-	rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-	<!-- Icons -->
-	<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
-	<script>
-        function blockDate() {
-            if (
-                document.getElementById("id_is_automatico_2").checked ||
-                document.getElementById("id_is_automatico_0").checked
-            ) {
-                document.getElementById("id_data_automazione").setAttribute("disabled", "");
-            }
-            else{
-                document.getElementById("id_data_automazione").removeAttribute("disabled");
-            }
-        }
-    </script>
-</head>
+		<!-- Icons -->
+		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 
-<body onload="blockDate()">
-	<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
-		<main class="row z-index-0">
-			<!-- Form Menu -->
-			<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
-				<!-- div filtri -->
-				<h2>Filtri</h2>
-				<form action="/app/casello" method="post">
-					{% csrf_token %}
-					{{ form.codice.label_tag }}
-					{{ form.codice }}
-					{{ form.cod_naz.label_tag }}
-					{{ form.cod_naz }}
-					{{ form.comune.label_tag }}
-					{{ form.comune }}
-					{{ form.nome.label_tag }}
-					{{ form.nome }}
-					{{ form.x.label_tag }}
-					{{ form.x }}
-					{{ form.y.label_tag }}
-					{{ form.y }}
-					<div class="form-check">
-					{{ form.is_automatico.label_tag }}
-					<br />
-					{{ form.is_automatico.0.label_tag }}
-					{{ form.is_automatico.0 }}
-					<br />
-					{{ form.is_automatico.1.label_tag }}
-					{{ form.is_automatico.1 }}
-					<br />
-					{{ form.is_automatico.2.label_tag }}
-					{{ form.is_automatico.2 }}
-					</div>
-					{{ form.data_automazione.label_tag }}
-					{{ form.data_automazione }}
+		<script>
+			function blockDate() {
+				if (document.getElementById("id_is_automatico_2").checked || document.getElementById("id_is_automatico_0").checked) {
+					document.getElementById("id_data_automazione").setAttribute("disabled", "");
+				} else {
+					document.getElementById("id_data_automazione").removeAttribute("disabled");
+				}
+			}
+		</script>
+	</head>
 
-					<br />
-					<button type="submit" class="btn btn-primary">Cerca</button>
-					<button type="reset" class="btn btn-light">Svuota</button>
-				</form>
-			</div>
+	<body onload="blockDate()">
+		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
+			<main class="row z-index-0">
+				<!-- Form Menu -->
+				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
+					<!-- div filtri -->
+					<h2>Filtri</h2>
+					<form action="/app/casello" method="post">
+						{% csrf_token %} {{ form.codice.label_tag }} {{ form.codice }} {{ form.cod_naz.label_tag }} {{ form.cod_naz }} {{ form.comune.label_tag }} {{ form.comune }} {{ form.nome.label_tag }} {{ form.nome }} {{ form.x.label_tag }} {{ form.x }} {{ form.y.label_tag }} {{ form.y }}
+						<div class="form-check">
+							{{ form.is_automatico.label_tag }}
+							<br />
+							{{ form.is_automatico.0.label_tag }} {{ form.is_automatico.0 }}
+							<br />
+							{{ form.is_automatico.1.label_tag }} {{ form.is_automatico.1 }}
+							<br />
+							{{ form.is_automatico.2.label_tag }} {{ form.is_automatico.2 }}
+						</div>
+						{{ form.data_automazione.label_tag }} {{ form.data_automazione }}
 
-			<div class="col-4"></div>
-			
-			<div class="col-8 overflow-y-auto">
-				<div class="table-responsive">
-					{% if listaelementi %}
-				
-					<table class="table table-bordered table-hover align-middle">
-						<thead>
-						<th scope="col">Codici</th>
-						<th scope="col">Codici Autostrade</th>
-						<th scope="col">Nomi Autostrade</th>
-						<th scope="col">Codici Comuni</th>
-						<th scope="col">Nomi Comuni</th>
-						<th scope="col">Nomi</th>
-						<th scope="col">Coordinate X</th>
-						<th scope="col">Coordinate Y</th>
-						<th scope="col">Tipi Caselli</th>
-						<th scope="col">Date</th>
-						</thead>
-						
-						{% for casello in listaelementi %}
-						
-						<tr>
-						<td>{{casello.0}}</td>
-						<td><a href="/app/comune?codice={{casello.1}}">{{casello.1}}</a></td>
-						<td>{{casello.2}}</td>
-						<td><a href="/app/comune?codice={{casello.3}}">{{casello.3}}</a></td>
-						<td>{{casello.4}}</td>
-						<td>{{casello.5}}</td>
-						<td>{{casello.6}}</td>
-						<td>{{casello.7}}</td>
-						<td>
-							{% if casello.8 == 1 %}
-								Automatico
-							{% else %}
-								Presenziato
-							{% endif %}
-						</td>
-						<td>{{casello.9}}</td>
-						</tr>
-						
-						{% endfor %}
-						
-					</table>
-					
-					{% else %}
-					<p>tabella vuota</p>
-					{% endif %}
+						<br />
+						<button type="submit" class="btn btn-primary">Cerca</button>
+						<button type="reset" class="btn btn-light">Svuota</button>
+					</form>
 				</div>
-			</div>
-			
-		</main>
-		
-		{% include 'header.html' %}
-		
-	</div>
-	
-	<div class="fixed-bottom">
-		<!-- div footer-->
-		{% include 'footer.html' %}
-	</div>
-</body>
+
+				<div class="col-4"></div>
+
+				<div class="col-8 overflow-y-auto">
+					<div class="table-responsive">
+						{% if listaelementi %}
+
+						<table class="table table-bordered table-hover align-middle">
+							<thead>
+								<th scope="col">Codici</th>
+								<th scope="col">Codici Autostrade</th>
+								<th scope="col">Nomi Autostrade</th>
+								<th scope="col">Codici Comuni</th>
+								<th scope="col">Nomi Comuni</th>
+								<th scope="col">Nomi</th>
+								<th scope="col">Coordinate X</th>
+								<th scope="col">Coordinate Y</th>
+								<th scope="col">Tipi Caselli</th>
+								<th scope="col">Date</th>
+							</thead>
+
+							{% for casello in listaelementi %}
+
+							<tr>
+								<td>{{casello.0}}</td>
+								<td><a href="/app/autostrada?cod_naz={{casello.1}}">{{casello.1}}</a></td>
+								<td>{{casello.2}}</td>
+								<td><a href="/app/comune?codice={{casello.3}}">{{casello.3}}</a></td>
+								<td>{{casello.4}}</td>
+								<td>{{casello.5}}</td>
+								<td>{{casello.6}}</td>
+								<td>{{casello.7}}</td>
+								<td>{% if casello.8 == 1 %} Automatico {% else %} Presenziato {% endif %}</td>
+								<td>{{casello.9}}</td>
+							</tr>
+
+							{% endfor %}
+						</table>
+
+						{% else %}
+						<p>tabella vuota</p>
+						{% endif %}
+					</div>
+				</div>
+			</main>
+
+			{% include 'header.html' %}
+		</div>
+
+		<div class="fixed-bottom">
+			<!-- div footer-->
+			{% include 'footer.html' %}
+		</div>
+	</body>
 </html>
