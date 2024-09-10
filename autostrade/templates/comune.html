@@ -6,20 +6,24 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Database Comune</title>
-		<!-- Style -->
+
+		<!-- Styles -->
 		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 		<link href="{% static 'css/bootstrap-datepicker.css' %}" rel="stylesheet" />
 		<link href="{% static 'css/bootstrap-table.min.css' %}" rel="stylesheet" />
 
+		<!-- Scripts -->
+		<script src="{% static 'js/populateModal.js' %}"></script>
 		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 		<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-		<script src="{% static 'js/dialog.js' %}"></script>
+		<script src="{% static 'js/bootstrap-table.min.js' %}"></script>
 
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
+
 		<!-- Icons -->
 		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 	</head>
@@ -32,15 +36,16 @@
 		// 	myInput.focus();
 		// });
 
-		function Svuota () {
+		function Svuota() {
 			$("#id_codice")[0].value = "";
 			$("#id_provincia")[0].value = "";
 			$("#id_nome")[0].value = "";
-		};
+		}
 	</script>
 
 	<body style="overflow: auto">
-		{% comment %} Inizio sezione modale {% endcomment %}
+
+		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -56,7 +61,6 @@
 							{% csrf_token %} {{ formModal }}
 							<div class="modal-footer">
 								<button formaction="/app/api_modifica" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Modifica</button>
-								<button formaction="/app/api_elimina" type="submit" class="btn btn-danger" data-bs-dismiss="modal">Rimuovi</button>
 							</div>
 						</form>
 					</div>
@@ -64,7 +68,29 @@
 			</div>
 		</div>
 
-		{% comment %} Fine sezione modale {% endcomment %}
+		<!-- modale elimina -->
+		<div class="modal fade" id="deleteDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Elimina Riga</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<label for="CodiceModalDelete">Codice Comune</label>
+
+						<form method="post" action="">
+							{% csrf_token %} {{ formDeleteModal }}
+							<div class="modal-footer">
+								<button formaction="/app/api_elimina" type="submit" class="btn btn-danger" data-bs-dismiss="modal">Elimina</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->
@@ -103,14 +129,12 @@
 								<td>{{comune.2}}</td>
 								<td>{{comune.3}}</td>
 								<td>
-									<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
+									<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
+									<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
 								</td>
 							</tr>
 							{% endfor %}
 						</table>
-
-						<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script>
-						<script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js></script>
 
 						{% else %}
 						<p>tabella vuota</p>

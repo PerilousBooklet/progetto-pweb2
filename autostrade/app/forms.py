@@ -12,15 +12,25 @@ class ComuneForm(forms.Form):
 	nome = forms.CharField(label="Nome comune", max_length=100, required=False)
 	nome.widget.attrs.update({"class": "form-control"})
 
-class ComuneModalForm(forms.Form):
-	codiceModal = forms.CharField(label="", max_length=100, required=False)
-	codiceModal.widget.attrs.update({"class": "form-control", "hidden": " "})
+class ComuneModalEditForm(forms.Form):
+    codiceModalEdit = forms.CharField(label="", max_length=100, required=False)
+    codiceModalEdit.widget.attrs.update({"class": "form-control", "hidden": " "})
 
-	provinciaModal = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
-	provinciaModal.widget.attrs.update({"class": "form-select"})
+    provinciaModalEdit = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
+    provinciaModalEdit.widget.attrs.update({"class": "form-select"})
 
-	nomeModal = forms.CharField(label="Nome comune", max_length=100, required=False)
-	nomeModal.widget.attrs.update({"class": "form-control"})
+    nomeModalEdit = forms.CharField(label="Nome comune", max_length=100, required=False)
+    nomeModalEdit.widget.attrs.update({"class": "form-control"})
+
+class ComuneModalDeleteForm(forms.Form):
+    codiceModalDelete = forms.CharField(label="", max_length=100, required=False)
+    codiceModalDelete.widget.attrs.update({"class": "form-control", "disabled": " "})
+
+    provinciaModalDelete = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
+    provinciaModalDelete.widget.attrs.update({"class": "form-select", "disabled": " "})
+
+    nomeModalDelete = forms.CharField(label="Nome comune", max_length=100, required=False)
+    nomeModalDelete.widget.attrs.update({"class": "form-control", "disabled": " "})
 
 class AutostradaForm(forms.Form):
 	cod_naz = forms.CharField(label="Codice nazionale", max_length=100, required=False)
