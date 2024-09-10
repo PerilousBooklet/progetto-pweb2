@@ -23,17 +23,30 @@
 
 		<!-- Icons -->
 		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
-
-		<script>
-			function blockDate() {
-				if (document.getElementById("id_is_automatico_2").checked || document.getElementById("id_is_automatico_0").checked) {
-					document.getElementById("id_data_automazione").setAttribute("disabled", "");
-				} else {
-					document.getElementById("id_data_automazione").removeAttribute("disabled");
-				}
-			}
-		</script>
 	</head>
+
+	<script>
+		function blockDate() {
+			if (document.getElementById("id_is_automatico_2").checked || document.getElementById("id_is_automatico_0").checked) {
+				document.getElementById("id_data_automazione").setAttribute("disabled", "");
+			} else {
+				document.getElementById("id_data_automazione").removeAttribute("disabled");
+			}
+		}
+
+		function Svuota () {
+			$("#id_codice")[0].value = "";
+			$("#id_cod_naz")[0].value = "";
+			$("#id_comune")[0].value = "";
+			$("#id_nome")[0].value = "";
+			$("#id_x")[0].value = "";
+			$("#id_y")[0].value = "";
+			$("#id_is_automatico_2")[0].checked = true;
+			blockDate();
+			console.log($("id_data_automazione"));
+
+		};
+	</script>
 
 	<body onload="blockDate()">
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
@@ -57,7 +70,7 @@
 
 						<br />
 						<button type="submit" class="btn btn-primary">Cerca</button>
-						<button type="reset" class="btn btn-light">Svuota</button>
+						<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
 

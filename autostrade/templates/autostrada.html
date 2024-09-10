@@ -22,6 +22,14 @@
 		<link rel="icon" href="{% static 'icons/road.png' %}" type="image/x-icon" />
 	</head>
 
+	<script>
+		function Svuota () {
+			$("#id_codice")[0].value = "";
+			$("#id_provincia")[0].value = "";
+			$("#id_nome")[0].value = "";
+		};
+	</script>
+
 	<body>
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<main class="row z-index-0">
@@ -33,7 +41,7 @@
 						{% csrf_token %} {{ form }}
 						<br />
 						<button type="submit" class="btn btn-primary">Cerca</button>
-						<button type="reset" class="btn btn-light">Svuota</button>
+						<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
 
