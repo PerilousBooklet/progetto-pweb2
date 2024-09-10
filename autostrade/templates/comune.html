@@ -95,12 +95,12 @@
 					<!-- div tabella-->
 					<div class="table-responsive">
 						{% if listaelementi %}
-						<table data-sort-name="casello" data-toggle="table" class="table table-bordered table-hover align-middle" sort:true>
+						<table data-toggle="table" class="table table-bordered table-hover align-middle" sort:true>
 							<thead>
-								<th class="sorting" scope="col" data-field="codici" data-sortable="true">Codici</th>
-								<th scope="col" data-field="province" data-sortable="true">Codici Province</th>
-								<th scope="col" data-field="nomi" data-sortable="true">Nomi</th>
-								<th scope="col" data-field="caselli" data-sortable="true">Numero Caselli</th>
+								<th class="sorting" scope="col" data-sortable="true">Codici</th>
+								<th scope="col" data-sortable="true">Codici Province</th>
+								<th scope="col" data-sortable="true">Nomi</th>
+								<th scope="col" data-sortable="true">Numero Caselli</th>
 								<th scope="col">Modifica</th>
 							</thead>
 							{% for comune in listaelementi %}

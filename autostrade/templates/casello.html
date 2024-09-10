@@ -67,18 +67,18 @@
 					<div class="table-responsive">
 						{% if listaelementi %}
 
-						<table data-sort-name="casello" data-sort-order="asc" data-toggle="table" class="table table-bordered table-hover align-middle">
+						<table data-toggle="table" class="table table-bordered table-hover align-middle">
 							<thead>
-								<th scope="col" data-field="codici" data-sortable="true">Codici</th>
-								<th scope="col" data-field="autostrade" data-sortable="true">Codici Autostrade</th>
-								<th scope="col" data-field="nomiautstrade" data-sortable="true">Nomi Autostrade</th>
-								<th scope="col" data-field="codcomune" data-sortable="true">Codici Comuni</th>
-								<th scope="col" data-field="comuni" data-sortable="true">Nomi Comuni</th>
-								<th scope="col" data-field="nomi" data-sortable="true">Nomi</th>
-								<th scope="col" data-field="x" data-sortable="true">Coordinate X</th>
-								<th scope="col" data-field="y" data-sortable="true">Coordinate Y</th>
-								<th scope="col" data-field="tipi" data-sortable="true">Tipi Caselli</th>
-								<th scope="col" data-field="date" data-sortable="true">Date</th>
+								<th scope="col" data-sortable="true">Codici</th>
+								<th scope="col" data-sortable="true">Codici Autostrade</th>
+								<th scope="col" data-sortable="true">Nomi Autostrade</th>
+								<th scope="col" data-sortable="true">Codici Comuni</th>
+								<th scope="col" data-sortable="true">Nomi Comuni</th>
+								<th scope="col" data-sortable="true">Nomi</th>
+								<th scope="col" data-sortable="true">Coordinate X</th>
+								<th scope="col" data-sortable="true">Coordinate Y</th>
+								<th scope="col" data-sortable="true">Tipi Caselli</th>
+								<th scope="col" data-sortable="true">Date</th>
 							</thead>
 
 							{% for casello in listaelementi %}
@@ -98,6 +98,8 @@
 
 							{% endfor %}
 						</table>
+
+						<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js></script>
 
 						{% else %}
 						<p>tabella vuota</p>
