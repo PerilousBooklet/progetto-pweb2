@@ -66,12 +66,12 @@ def addDataTable(table: str, request):
 
 def removeDataTable(table: str, request):
 
-	parsed_data = (request.POST["codiceModal"])
+	parsed_data = (request.POST["codiceModalDelete"])
 
 	conn = createConnection()
 	cur = conn.cursor()
 
-	cur.execute("DELETE FROM comune WHERE codice = %s;", parsed_data)
+	cur.execute("DELETE FROM comune WHERE codice = '{0}';".format(parsed_data))
 	
 	cur.close()
 	conn.close()
@@ -79,7 +79,7 @@ def removeDataTable(table: str, request):
 
 def updateDataTable(table: str, request):
 
-	parsed_data = (request.POST["provinciaModal"], request.POST["nomeModal"], request.POST["codiceModal"])
+	parsed_data = (request.POST["provinciaModalEdit"], request.POST["nomeModalEdit"], request.POST["codiceModalEdit"])
 
 	conn = createConnection()
 	cur = conn.cursor()

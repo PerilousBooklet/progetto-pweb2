@@ -14,6 +14,7 @@
 
 		<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 		<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap-table.min.js' %}"></script>
 
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,7 +35,7 @@
 			}
 		}
 
-		function Svuota () {
+		function Svuota() {
 			$("#id_codice")[0].value = "";
 			$("#id_cod_naz")[0].value = "";
 			$("#id_comune")[0].value = "";
@@ -44,7 +45,7 @@
 			$("#id_is_automatico_2")[0].checked = true;
 			blockDate();
 			$("#id_data_automazione").value = "";
-		};
+		}
 	</script>
 
 	<body onload="blockDate()">
@@ -110,8 +111,6 @@
 
 							{% endfor %}
 						</table>
-
-						<script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/bootstrap-table.min.js></script>
 
 						{% else %}
 						<p>tabella vuota</p>

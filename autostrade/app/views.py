@@ -3,7 +3,7 @@ from urllib import request
 from django.http import HttpResponse
 from django.template import loader
 import app.customlib
-from app.forms import AutostradaForm, CaselloForm, ComuneForm, ComuneModalForm
+from app.forms import AutostradaForm, CaselloForm, ComuneForm, ComuneModalDeleteForm, ComuneModalEditForm
 
 #################################################
 # View Index
@@ -34,8 +34,9 @@ def comune(request):
 			else:
 				listaelementi = app.customlib.getDataList("comune")
 				form = ComuneForm()
-		formModal = ComuneModalForm()
-		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModal}
+		formModalEdit = ComuneModalEditForm()
+		formeModalDelet = ComuneModalDeleteForm()
+		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModalEdit, "formDeleteModal": formeModalDelet}
 		template = loader.get_template("comune.html")
 		return HttpResponse(template.render(context, request))
 	except Exception as err:
