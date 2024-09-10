@@ -26,10 +26,10 @@ class ComuneModalDeleteForm(forms.Form):
     codiceModalDelete = forms.CharField(label="", max_length=100, required=False)
     codiceModalDelete.widget.attrs.update({"class": "form-control", "hidden": " "})
 
-    provinciaModalDelete = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
+    provinciaModalDelete = forms.CharField(label="", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
     provinciaModalDelete.widget.attrs.update({"class": "form-select", "hidden": " "})
 
-    nomeModalDelete = forms.CharField(label="Nome comune", max_length=100, required=False)
+    nomeModalDelete = forms.CharField(label="", max_length=100, required=False)
     nomeModalDelete.widget.attrs.update({"class": "form-control", "hidden": " "})
 
 class AutostradaForm(forms.Form):

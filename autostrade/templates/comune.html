@@ -44,7 +44,6 @@
 	</script>
 
 	<body style="overflow: auto">
-
 		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
@@ -54,7 +53,7 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<label for="fakeCodiceModal">Codice Comune</label>
+						<label for="fakeCodiceModal">Codice comune</label>
 						<input id="fakeCodiceModal" class="form-control" disabled type="text" />
 
 						<form method="post" action="">
@@ -77,7 +76,14 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<label for="CodiceModalDelete">Codice Comune</label>
+						<label for="CodiceModalDelete">Codice comune</label>
+						<input id="fakeCodiceModalDelete" class="form-control" disabled type="text" />
+
+						<label for="fakeProvinciaModalDelete">Provincia</label>
+						<input id="fakeProvinciaModalDelete" class="form-control" disabled type="text" />
+
+						<label for="fakeNomeModalDelete">Nome comune</label>
+						<input id="fakeNomeModalDelete" class="form-control" disabled type="text" />
 
 						<form method="post" action="">
 							{% csrf_token %} {{ formDeleteModal }}
@@ -89,8 +95,6 @@
 				</div>
 			</div>
 		</div>
-
-
 
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->

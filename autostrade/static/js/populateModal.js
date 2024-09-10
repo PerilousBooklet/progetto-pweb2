@@ -9,4 +9,8 @@ function populateModal(codice, provincia, nome) {
 	$("#id_codiceModalDelete")[0].value = codice; //Codice
 	$("#id_provinciaModalDelete")[0].value = provincia; //Provincia
 	$("#id_nomeModalDelete")[0].value = nome; //Nome
+
+	$("#fakeCodiceModalDelete")[0].value = codice; //Codice
+	$("#fakeProvinciaModalDelete")[0].value = provincia; //Provincia
+	$("#fakeNomeModalDelete")[0].value = nome; //Nome
 }
