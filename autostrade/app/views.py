@@ -136,7 +136,6 @@ def api_modifica(request):
 # View api_elimina
 #################################################
 def api_elimina(request):
-	print(request.POST)
 	try:
 		app.customlib.removeDataTable("comune", request)
 		template = loader.get_template("api_generic.html")

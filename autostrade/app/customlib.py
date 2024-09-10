@@ -71,7 +71,7 @@ def removeDataTable(table: str, request):
 	conn = createConnection()
 	cur = conn.cursor()
 
-	cur.execute("DELETE FROM comune WHERE codice = %s;", parsed_data)
+	cur.execute("DELETE FROM comune WHERE codice = '{0}';".format(parsed_data))
 	
 	cur.close()
 	conn.close()
