@@ -50,9 +50,9 @@
 
 	<body onload="blockDate()">
 		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
-			<main class="row z-index-0">
+			<div class="row z-index-0">
 				<!-- Form Menu -->
-				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
+				<div class="col-xl-4" style="padding-top: 40px; padding-left: 80px; padding-right: 20px; padding-bottom: 60px; width: 380px">
 					<!-- div filtri -->
 					<h2>Filtri</h2>
 					<form action="/app/casello" method="post">
@@ -73,13 +73,11 @@
 						<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
 					</form>
 				</div>
-
-				<div class="col-4"></div>
-
-				<div class="col-8 overflow-y-auto">
+				
+				<div class="col-xl-8 overflow-y-auto">
 					<div class="table-responsive">
 						{% if listaelementi %}
-
+						
 						<table data-toggle="table" class="table table-bordered table-hover align-middle">
 							<thead>
 								<th scope="col" data-sortable="true">Codici</th>
@@ -119,7 +117,7 @@
 						{% endif %}
 					</div>
 				</div>
-			</main>
+			</div>
 
 			{% include 'header.html' %}
 		</div>
