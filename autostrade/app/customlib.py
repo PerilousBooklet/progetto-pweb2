@@ -122,7 +122,7 @@ def sqlGen(tabella: str, post_data):
 		if post_data.get("cod_naz") == "" or post_data.get("cod_naz") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + post_data.get("cod_naz") + "%",)
+			parsed_data = parsed_data + (post_data.get("cod_naz"),)
 
 		if post_data.get("cod_eu") == "" or post_data.get("cod_eu") is None:
 			parsed_data = parsed_data + ("%%",)
@@ -153,7 +153,7 @@ def sqlGen(tabella: str, post_data):
 		if post_data.get("cod_naz") == " " or post_data.get("cod_naz") is None:
 			parsed_data = parsed_data + ("%%",)
 		else:
-			parsed_data = parsed_data + ("%" + post_data.get("cod_naz") + "%",)
+			parsed_data = parsed_data + (post_data.get("cod_naz"),)
 
 		if post_data.get("comune") == " " or post_data.get("comune") is None:
 			parsed_data = parsed_data + ("%%",)

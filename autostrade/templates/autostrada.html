@@ -67,11 +67,11 @@
 							{% for autostrada in listaelementi %}
 
 							<tr>
-								<td><a href="/app/casello?autostrada={{autostrada.0}}">{{autostrada.0}}</a></td>
+								<td>{{autostrada.0}}</td>
 								<td>{{autostrada.1}}</td>
 								<td>{{autostrada.2}}</td>
 								<td>{{autostrada.3}}</td>
-								<td>{{autostrada.4}}</td>
+								<td><a href="/app/casello?autostrada={{autostrada.0}}">{{autostrada.4}}</a></td>
 							</tr>
 
 							{% endfor %}

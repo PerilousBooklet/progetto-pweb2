@@ -40,9 +40,50 @@
 			$("#id_provincia")[0].value = "";
 			$("#id_nome")[0].value = "";
 		}
+
+		console.log("{{success}}");
+
+		// alert
+		if ("{{success}}" == "1") {
+			e.preventDefault();
+			// var id = $(this).attr("data-toggle-id");
+			var alert = $("#alert-" + 1);
+			var timeOut;
+
+			console.log("alert " + alert + " timout " + timeOut);
+			alert.appendTo(".page-alerts");
+			alert.slideDown();
+
+			//Is autoclosing alert
+			var delay = 3000;
+			if (delay != undefined) {
+				delay = parseInt(delay);
+				clearTimeout(timeOut);
+				timeOut = window.setTimeout(function () {
+					alert.slideUp();
+				}, delay);
+			}
+		}
+
+		//Close alert
+		$(".page-alert .close").click(function (e) {
+			e.preventDefault();
+			$(this).closest(".page-alert").slideUp();
+		});
+
+		//Clear all
+		$(".clear-page-alerts").click(function (e) {
+			e.preventDefault();
+			$(".page-alert").slideUp();
+		});
 	</script>
 
 	<body style="overflow: auto" onload="enableTooltips()">
+		<!-- <div>
+			<div class="alert alert-success"><strong>Success!</strong> This alert box could indicate a successful or positive action.</div>
+			<div class="alert alert-danger"><strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.</div>
+		</div> -->
+
 		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
@@ -128,11 +169,12 @@
 							<tbody>
 								{% for comune in listaelementi %}
 								<tr class="rs-row">
-									<td><a href="/app/casello?comune={{comune.0}}">{{comune.0}}</a></td>
+									<td>{{comune.0}}</td>
 									<td>{{comune.1}}</td>
 									<td>{{comune.2}}</td>
-									<td>{{comune.3}}</td>
+									<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
 									<td>
+										<button onclick="notify()"></button>
 										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
 										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
 									</td>
