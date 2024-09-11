@@ -29,12 +29,11 @@
 	</head>
 
 	<script>
-		// const editDialog = document.getElementById("editDialog");
-		// const myInput = document.getElementById("myInput");
-
-		// editDialog.addEventListener("shown.bs.modal", () => {
-		// 	myInput.focus();
-		// });
+		function enableTooltips() {
+			$(document).ready(function () {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		}
 
 		function Svuota() {
 			$("#id_codice")[0].value = "";
@@ -43,7 +42,7 @@
 		}
 	</script>
 
-	<body style="overflow: auto">
+	<body style="overflow: auto" onload="enableTooltips()">
 		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
@@ -124,20 +123,22 @@
 								<th scope="col" data-sortable="true">Codici Province</th>
 								<th scope="col" data-sortable="true">Nomi</th>
 								<th scope="col" data-sortable="true">Numero Caselli</th>
-								<th scope="col">Modifica</th>
+								<th scope="col"></th>
 							</thead>
-							{% for comune in listaelementi %}
-							<tr class="rs-row">
-								<td><a href="/app/casello?comune={{comune.0}}">{{comune.0}}</a></td>
-								<td>{{comune.1}}</td>
-								<td>{{comune.2}}</td>
-								<td>{{comune.3}}</td>
-								<td>
-									<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
-									<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
-								</td>
-							</tr>
-							{% endfor %}
+							<tbody>
+								{% for comune in listaelementi %}
+								<tr class="rs-row">
+									<td><a href="/app/casello?comune={{comune.0}}">{{comune.0}}</a></td>
+									<td>{{comune.1}}</td>
+									<td>{{comune.2}}</td>
+									<td>{{comune.3}}</td>
+									<td>
+										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
+										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
 						</table>
 
 						{% else %}

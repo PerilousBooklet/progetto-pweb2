@@ -1,5 +1,5 @@
 function populateModal(codice, provincia, nome) {
-	console.log(codice + " " + provincia + " " + nome);
+	// console.log(codice + " " + provincia + " " + nome);
 
 	$("#fakeCodiceModal")[0].value = codice;
 	$("#id_codiceModalEdit")[0].value = codice; //Codice
