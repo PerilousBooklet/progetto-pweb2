@@ -52,7 +52,7 @@ def getDataListSearch(table: str, post_data:dict[str, str]):
 
 def addDataTable(table: str, request):
 
-	parsed_data = (request.POST["codice"], request.POST["provincia"], request.POST["nome"])
+	parsed_data = (request.POST["codiceModalInsert"], request.POST["provinciaModalInsert"], request.POST["nomeModalInsert"])
 
 	conn = createConnection()
 	cur = conn.cursor()
