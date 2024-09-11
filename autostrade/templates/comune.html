@@ -44,45 +44,64 @@
 		console.log("{{success}}");
 
 		// alert
-		if ("{{success}}" == "1") {
-			e.preventDefault();
-			// var id = $(this).attr("data-toggle-id");
-			var alert = $("#alert-" + 1);
-			var timeOut;
-
-			console.log("alert " + alert + " timout " + timeOut);
-			alert.appendTo(".page-alerts");
-			alert.slideDown();
-
-			//Is autoclosing alert
-			var delay = 3000;
-			if (delay != undefined) {
-				delay = parseInt(delay);
-				clearTimeout(timeOut);
-				timeOut = window.setTimeout(function () {
-					alert.slideUp();
-				}, delay);
+		$(function () {
+			$(".page-alert").hide();
+			$("#alertContainer").removeAttr("hidden");
+			var alert = null;
+			if ("{{success}}" == "1" || "{{success}}" == "2" || "{{success}}" == "3") {
+				alert = $("#alert-" + 1); //id di successo
+			} else if ("{{success}}" == "-1" || "{{success}}" == "-2" || "{{success}}" == "-3") {
+				alert = $("#alert-" + 2); //id di insuccesso
 			}
-		}
 
-		//Close alert
-		$(".page-alert .close").click(function (e) {
-			e.preventDefault();
-			$(this).closest(".page-alert").slideUp();
-		});
+			switch ("{{success}}") {
+				case "1": //inserimento
+					$("#alert-1")[0].innerHTML = "<strong>Successo!</strong> Inserimento avvenuto correttamente.";
+					break;
+				case "-1":
+					$("#alert-2")[0].innerHTML = "<strong>Errore!</strong> Inserimento non avvenuto!";
+					break;
+				case "2": //modifica
+					$("#alert-1")[0].innerHTML = "<strong>Successo!</strong> Modifica avvenuta correttamente.";
+					break;
+				case "-2":
+					$("#alert-2")[0].innerHTML = "<strong>Errore!</strong> Modifica non avvenuta!";
+					break;
+				case "3": //eliminazione
+					$("#alert-1")[0].innerHTML = "<strong>Successo!</strong> Eliminazione avvenuta correttamente.";
+					break;
+				case "-3":
+					$("#alert-2")[0].innerHTML = "<strong>Errore!</strong> Elminazione non avvenuta!";
+					break;
+				default:
+					break;
+			}
 
-		//Clear all
-		$(".clear-page-alerts").click(function (e) {
-			e.preventDefault();
-			$(".page-alert").slideUp();
+			if (alert != null) {
+				var timeOut;
+
+				alert.appendTo(".page-alerts");
+				alert.slideDown();
+
+				//Is autoclosing alert
+				var delay = 3000;
+				if (delay != undefined) {
+					delay = parseInt(delay);
+					clearTimeout(timeOut);
+					timeOut = window.setTimeout(function () {
+						alert.slideUp();
+					}, delay);
+				}
+			}
 		});
 	</script>
 
 	<body style="overflow: auto" onload="enableTooltips()">
-		<!-- <div>
-			<div class="alert alert-success"><strong>Success!</strong> This alert box could indicate a successful or positive action.</div>
-			<div class="alert alert-danger"><strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.</div>
-		</div> -->
+		<div id="alertContainer" class="page-alerts" hidden style="margin-top: 56px">
+			<div class="alert alert-success page-alert" id="alert-1"><strong>Successo!</strong> Placeholder</div>
+
+			<div class="alert alert-danger page-alert" id="alert-2"><strong>Errore!</strong> Placeholder</div>
+		</div>
 
 		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
@@ -136,7 +155,7 @@
 			</div>
 		</div>
 
-		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
+		<div class="container-fluid" style="padding-top: 50px; padding-right: 80px; padding-bottom: 100px">
 			<!-- Questo contiene tutti gli elementi della pagina -->
 			<main class="row z-index-0">
 				<!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
@@ -174,7 +193,6 @@
 									<td>{{comune.2}}</td>
 									<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
 									<td>
-										<button onclick="notify()"></button>
 										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
 										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
 									</td>
