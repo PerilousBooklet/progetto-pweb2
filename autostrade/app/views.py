@@ -3,7 +3,7 @@ from urllib import request
 from django.http import HttpResponse
 from django.template import loader
 import app.customlib
-from app.forms import AutostradaForm, CaselloForm, ComuneForm, ComuneModalDeleteForm, ComuneModalEditForm
+from app.forms import AutostradaForm, CaselloForm, ComuneForm, ComuneModalDeleteForm, ComuneModalEditForm, ComuneModalInsertForm
 
 #################################################
 # View Index
@@ -30,29 +30,30 @@ def landingpage(request):
 #  3 = successo eliminazione
 
 def comune(request, success=0):
-	try:
-		post_data:dict[str,str] = request.POST
-		if request.method == "POST":
-			form = ComuneForm(post_data)
-			listaelementi = app.customlib.getDataListSearch("comune", post_data)
-		else:
-			if request.GET.get('codice') is not None:
-				get_codice = request.GET.get('codice')
-				form = ComuneForm({"codice": get_codice})
-				listaelementi = app.customlib.getDataListSearch("comune", {"codice": get_codice})
-			else:
-				listaelementi = app.customlib.getDataList("comune")
-				form = ComuneForm()
-		formModalEdit = ComuneModalEditForm()
-		formeModalDelet = ComuneModalDeleteForm()
-		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModalEdit, "formDeleteModal": formeModalDelet, "success": success}
-		template = loader.get_template("comune.html")
-		return HttpResponse(template.render(context, request))
-	except Exception as err:
-		context = {"pagina": "Comune", "stacktrace": traceback.format_exc()}
-		template = loader.get_template("userError.html")
-		return HttpResponse(template.render(context))
-
+    try:
+        post_data:dict[str,str] = request.POST
+        if request.method == "POST":
+            form = ComuneForm(post_data)
+            listaelementi = app.customlib.getDataListSearch("comune", post_data)
+        else:
+            if request.GET.get('codice') is not None:
+                get_codice = request.GET.get('codice')
+                form = ComuneForm({"codice": get_codice})
+                listaelementi = app.customlib.getDataListSearch("comune", {"codice": get_codice})
+            else:
+                listaelementi = app.customlib.getDataList("comune")
+                form = ComuneForm()
+        formModalEdit = ComuneModalEditForm()
+        formModalDelete = ComuneModalDeleteForm()
+        formModalInsert = ComuneModalInsertForm()
+        context = {"listaelementi" : listaelementi, "form": form, "formModal": formModalEdit, "formDeleteModal": formModalDelete, "formInsertModal": formModalInsert, "success": success}
+        template = loader.get_template("comune.html")
+        return HttpResponse(template.render(context, request))
+    except Exception as err:
+        context = {"pagina": "Comune", "stacktrace": traceback.format_exc()}
+        template = loader.get_template("userError.html")
+        return HttpResponse(template.render(context))
+	
 #################################################
 # View Casello
 #################################################
