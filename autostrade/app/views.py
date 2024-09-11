@@ -20,7 +20,16 @@ def landingpage(request):
 #################################################
 # View Comune
 #################################################
-def comune(request):
+
+# -3 = fallimento eliminazione
+# -2 = fallimento modifica
+# -1 = fallimento inserimento
+#  0 = stato iniziale, netruale
+#  1 = successo inserimento
+#  2 = successo modifica
+#  3 = successo eliminazione
+
+def comune(request, success=0):
 	try:
 		post_data:dict[str,str] = request.POST
 		if request.method == "POST":
@@ -36,7 +45,7 @@ def comune(request):
 				form = ComuneForm()
 		formModalEdit = ComuneModalEditForm()
 		formeModalDelet = ComuneModalDeleteForm()
-		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModalEdit, "formDeleteModal": formeModalDelet}
+		context = {"listaelementi" : listaelementi, "form": form, "formModal": formModalEdit, "formDeleteModal": formeModalDelet, "success": success}
 		template = loader.get_template("comune.html")
 		return HttpResponse(template.render(context, request))
 	except Exception as err:
@@ -120,17 +129,24 @@ def licenza(request):
 	return HttpResponse(template.render())
 
 #################################################
+# View api_aggiungi
+#################################################
+def api_aggiungi(request):
+	try:
+		app.customlib.addDataTable("comune", request)
+		return comune(request, 1)
+	except Exception as err:
+		return comune(request, -1)
+
+#################################################
 # View api_modifica
 #################################################
 def api_modifica(request):
 	try:
 		app.customlib.updateDataTable("comune", request)
-		template = loader.get_template("api_generic.html")
-		return HttpResponse(template.render())
+		return comune(request, 2)
 	except Exception as err:
-		context = {"pagina": "api_modifica", "stacktrace": traceback.format_exc()}
-		template = loader.get_template("userError.html")
-		return HttpResponse(template.render(context))
+		return comune(request, -2)
 
 #################################################
 # View api_elimina
@@ -138,25 +154,9 @@ def api_modifica(request):
 def api_elimina(request):
 	try:
 		app.customlib.removeDataTable("comune", request)
-		template = loader.get_template("api_generic.html")
-		return HttpResponse(template.render())
+		return comune(request, 3)
 	except Exception as err:
-		context = {"pagina": "api_elimina", "stacktrace": traceback.format_exc()}
-		template = loader.get_template("userError.html")
-		return HttpResponse(template.render(context))
-
-#################################################
-# View api_aggiungi
-#################################################
-def api_aggiungi(request):
-	try:
-		app.customlib.addDataTable("comune", request)
-		template = loader.get_template("api_generic.html")
-		return HttpResponse(template.render())
-	except Exception as err:
-		context = {"pagina": "api_aggiungi", "stacktrace": traceback.format_exc()}
-		template = loader.get_template("userError.html")
-		return HttpResponse(template.render(context))
+		return comune(request, -3)
 
 #################################################
 # View Test
