@@ -2,12 +2,11 @@ from typing import Dict
 import psycopg2
 
 dbname = "pweb2"
-username = "utente"
-password = "password_qui"
+username = "pweb2"
+password = "pweb2"
 
 def createConnection():
-    conn = psycopg2.connect("dbname=" + dbname + " user=" + username)
-    # conn = psycopg2.connect("dbname=" + dbname + " user=" + username + " password=" + password)
+    conn = psycopg2.connect("dbname=" + dbname + " user=" + username + " password=" + password)
     conn.set_session(autocommit=True)
     return conn
 
