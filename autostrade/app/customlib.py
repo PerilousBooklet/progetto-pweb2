@@ -3,9 +3,11 @@ import psycopg2
 
 dbname = "pweb2"
 username = "user"
+password = "password_qui"
 
 def createConnection():
     conn = psycopg2.connect("dbname=" + dbname + " user=" + username)
+    # conn = psycopg2.connect("dbname=" + dbname + " user=" + username + " password=" + password)
     conn.set_session(autocommit=True)
     return conn
 
