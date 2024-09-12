@@ -1,5 +1,3 @@
-from difflib import IS_CHARACTER_JUNK
-from typing import final
 from django import forms
 import app.customlib as customlib
 
