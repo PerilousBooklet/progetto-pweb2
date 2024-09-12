@@ -97,9 +97,9 @@ CREATE TABLE public.casello (
 --
 
 CREATE TABLE public.comune (
-    codice character varying NOT NULL,
+    codice character varying NOT NULL CHECK (LENGTH(codice) > 0),
     provincia character varying NOT NULL,
-    nome character varying NOT NULL
+    nome character varying NOT NULL CHECK (LENGTH(nome) > 0)
 );
 
 
