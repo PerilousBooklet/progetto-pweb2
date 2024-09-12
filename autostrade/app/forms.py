@@ -54,7 +54,7 @@ class AutostradaForm(forms.Form):
 	nome.widget.attrs.update({"class": "form-control"})
 
 	lunghezza = forms.CharField(label="Lunghezza", max_length=100, required=False)
-	lunghezza.widget.attrs.update({"class": "form-control"})
+	lunghezza.widget.attrs.update({"class": "form-control", "type": "number"})
 
 class CaselloForm(forms.Form):
 	opzioniAutomatico = [("0", "Presenziato"), ("1", "Automatico"), ("", "Tutti")]
@@ -71,11 +71,11 @@ class CaselloForm(forms.Form):
 	nome = forms.CharField(label="Nome", max_length=100, required=False)
 	nome.widget.attrs.update({"class": "form-control"})
 
-	x = forms.CharField(label="Coordinata X", max_length=100, required=False)
-	x.widget.attrs.update({"class": "form-control"})
+	x = forms.CharField(label="Coordinata X", required=False)
+	x.widget.attrs.update({"class": "form-control", "type": "number", "step": "0.000001"})
 
-	y = forms.CharField(label="Coordinata Y", max_length=100, required=False)
-	y.widget.attrs.update({"class": "form-control"})
+	y = forms.CharField(label="Coordinata Y", required=False)
+	y.widget.attrs.update({"class": "form-control", "type": "number", "step": "0.000001"})
 
 	is_automatico = forms.ChoiceField(label="Tipo casello", widget=forms.RadioSelect, choices=opzioniAutomatico, required=False)
 	is_automatico.widget.attrs.update({"class": "form-check-input", "onclick": "blockDate()"})

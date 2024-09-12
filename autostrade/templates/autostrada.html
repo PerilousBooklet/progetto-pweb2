@@ -28,6 +28,10 @@
 	</head>
 
 	<script>
+		function floatValues() {
+			$("#id_lunghezza").attr("type", "number");
+		}
+
 		function Svuota() {
 			$("#id_cod_naz")[0].value = "";
 			$("#id_cod_eu")[0].value = "";
@@ -36,7 +40,7 @@
 		}
 	</script>
 
-	<body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
+	<body onload="floatValues()" style="display: flex; height: 100%; flex-direction: column; overflow: auto">
 		<main class="row" style="display: flex; flex: 1; overflow: auto; padding: 50px; padding-top: 106px; padding-bottom: 98px">
 			<!-- Form Menu -->
 			<div class="col-sm-3" style="height: auto; padding-bottom: 30px">

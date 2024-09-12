@@ -29,6 +29,11 @@
 	</head>
 
 	<script>
+		function floatValues() {
+			$("#id_x").attr("type", "number");
+			$("#id_y").attr("type", "number");
+		}
+
 		function blockDate() {
 			if (document.getElementById("id_is_automatico_2").checked || document.getElementById("id_is_automatico_0").checked) {
 				document.getElementById("id_data_automazione").setAttribute("disabled", "");
@@ -50,7 +55,7 @@
 		}
 	</script>
 
-	<body onload="blockDate()" body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
+	<body onload="blockDate(); floatValues()" body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
 		<main class="row" style="display: flex; flex: 1; overflow: auto; padding: 50px; padding-top: 106px; padding-bottom: 98px">
 			<!-- Form Menu -->
 			<div class="col-sm-3" style="height: auto; padding-bottom: 30px">
