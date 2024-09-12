@@ -1,4 +1,5 @@
 from difflib import IS_CHARACTER_JUNK
+from typing import final
 from django import forms
 import app.customlib as customlib
 
@@ -31,6 +32,16 @@ class ComuneModalDeleteForm(forms.Form):
 
     nomeModalDelete = forms.CharField(label="", max_length=100, required=False)
     nomeModalDelete.widget.attrs.update({"class": "form-control", "hidden": " "})
+
+class ComuneModalInsertForm(forms.Form):
+    codiceModalInsert = forms.CharField(label="Codice comune", max_length=100, required=False)
+    codiceModalInsert.widget.attrs.update({"class": "form-control"})
+
+    provinciaModalInsert = forms.CharField(label="Provincia", widget=forms.Select(choices=customlib.getProvincieUnique()), required=False)
+    provinciaModalInsert.widget.attrs.update({"class": "form-select"})
+
+    nomeModalInsert = forms.CharField(label="Nome comune", max_length=100, required=False)
+    nomeModalInsert.widget.attrs.update({"class": "form-control"})
 
 class AutostradaForm(forms.Form):
 	cod_naz = forms.CharField(label="Codice nazionale", max_length=100, required=False)

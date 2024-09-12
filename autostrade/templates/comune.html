@@ -103,6 +103,26 @@
 			<div class="alert alert-danger page-alert" id="alert-2"><strong>Errore!</strong> Placeholder</div>
 		</div>
 
+		<!-- modale inserisci -->
+		<div class="modal fade" id="insertDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Inserisci Riga</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form method="post" action="">
+							{% csrf_token %} {{ formInsertModal }}
+							<div class="modal-footer">
+								<button formaction="/app/api_aggiungi" type="submit" class="btn btn-primary" data-bs-dismiss="modal">Inserisci</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- modale modifica -->
 		<div class="modal fade" id="editDialog" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
 			<div class="modal-dialog">
@@ -165,9 +185,9 @@
 					<form action="/app/comune" method="post">
 						{% csrf_token %} {{ form }}
 						<br />
-						<button type="submit" class="btn btn-primary">Cerca</button>
-						<button formaction="/app/api_aggiungi" type="submit" class="btn btn-primary">Inserisci</button>
-						<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light">Svuota</button>
+						<button type="submit" class="btn btn-primary" data-toggle="tooltip" data-bs-placement="bottom" title="Cerca all'interno del database">Cerca</button>
+						<button type="button" onclick="populateInsertModal()" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" data-bs-placement="bottom" title="Inserisci una nuova riga nel database" data-bs-target="#insertDialog">Inserisci</button>
+						<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light" data-toggle="tooltip" data-bs-placement="bottom" title="Svuota i filitri di ricerca">Svuota</button>
 					</form>
 				</div>
 
@@ -193,8 +213,8 @@
 									<td>{{comune.2}}</td>
 									<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
 									<td>
-										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
-										<button type="button" onclick="populateModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
+										<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
+										<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
 									</td>
 								</tr>
 								{% endfor %}

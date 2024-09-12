@@ -1,4 +1,4 @@
-function populateModal(codice, provincia, nome) {
+function populateRowModal(codice, provincia, nome) {
 	// console.log(codice + " " + provincia + " " + nome);
 
 	$("#fakeCodiceModal")[0].value = codice;
@@ -13,4 +13,10 @@ function populateModal(codice, provincia, nome) {
 	$("#fakeCodiceModalDelete")[0].value = codice; //Codice
 	$("#fakeProvinciaModalDelete")[0].value = provincia; //Provincia
 	$("#fakeNomeModalDelete")[0].value = nome; //Nome
+}
+
+function populateInsertModal() {
+	$("#id_codiceModalInsert")[0].value = $("#id_codice")[0].value;
+	$("#id_provinciaModalInsert")[0].value = $("#id_provincia")[0].value;
+	$("#id_nomeModalInsert")[0].value = $("#id_nome")[0].value;
 }
