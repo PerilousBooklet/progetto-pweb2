@@ -53,7 +53,7 @@ def getDataListSearch(table: str, post_data:dict[str, str]):
 
 def addDataTable(table: str, request):
 
-    parsed_data = (request.POST["codiceModalInsert"], request.POST["provinciaModalInsert"], request.POST["nomeModalInsert"])
+    parsed_data = (request.POST["codiceModalInsert"].strip(), request.POST["provinciaModalInsert"], request.POST["nomeModalInsert"].strip())
 
     conn = createConnection()
     cur = conn.cursor()
@@ -138,7 +138,7 @@ def sqlGen(tabella: str, post_data):
         if post_data.get("lunghezza") == "" or post_data.get("lunghezza") is None:
             parsed_data = parsed_data + ("%%",)
         else:
-            parsed_data = parsed_data + ("%" + post_data.get("lunghezza") + "%",)
+            parsed_data = parsed_data + (post_data.get("lunghezza"),)
 
         return parsed_data
 
