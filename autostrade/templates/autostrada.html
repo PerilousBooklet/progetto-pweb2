@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" style="height: 100%">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,57 +35,51 @@
 		}
 	</script>
 
-	<body>
-		<div class="container-fluid" style="padding-top: 100px; padding-right: 80px; padding-bottom: 100px">
-			<main class="row z-index-0">
-				<!-- Form Menu -->
-				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
-					<!-- div filtri -->
-					<h2>Filtri</h2>
-					<form action="/app/autostrada" method="post">
-						{% csrf_token %} {{ form }}
-						<br />
-						<button type="submit" class="btn btn-primary">Cerca</button>
-						<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
-					</form>
-				</div>
+	<body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
+		<main style="display: flex; flex: 1; overflow: hidden; padding: 50px; padding-top: 106px; padding-bottom: 98px">
+			<!-- Form Menu -->
+			<div class="col-sm-2" style="padding-right: 20px">
+				<!-- div filtri -->
+				<h2>Filtri</h2>
+				<form action="/app/autostrada" method="post">
+					{% csrf_token %} {{ form }}
+					<br />
+					<button type="submit" class="btn btn-primary">Cerca</button>
+					<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
+				</form>
+			</div>
 
-				<div class="col-4"></div>
+			<div class="col-sm-10" style="overflow: auto; padding-left: 20px">
+				{% if listaelementi %}
+				<table data-toggle="table" class="table table-bordered table-hover align-middle">
+					<thead>
+						<th scope="col" data-sortable="true">Codici Nazionali</th>
+						<th scope="col" data-sortable="true">Codici europei</th>
+						<th scope="col" data-sortable="true">Nomi</th>
+						<th scope="col" data-sortable="true">Lunghezze</th>
+						<th scope="col" data-sortable="true">Numero caselli</th>
+					</thead>
 
-				<div class="col-8 overflow-y-auto">
-					<div class="table-responsive">
-						{% if listaelementi %}
-						<table data-toggle="table" class="table table-bordered table-hover align-middle">
-							<thead>
-								<th scope="col" data-sortable="true">Codici Nazionali</th>
-								<th scope="col" data-sortable="true">Codici europei</th>
-								<th scope="col" data-sortable="true">Nomi</th>
-								<th scope="col" data-sortable="true">Lunghezze</th>
-								<th scope="col" data-sortable="true">Numero caselli</th>
-							</thead>
+					{% for autostrada in listaelementi %}
 
-							{% for autostrada in listaelementi %}
+					<tr>
+						<td>{{autostrada.0}}</td>
+						<td>{{autostrada.1}}</td>
+						<td>{{autostrada.2}}</td>
+						<td>{{autostrada.3}}</td>
+						<td><a href="/app/casello?autostrada={{autostrada.0}}">{{autostrada.4}}</a></td>
+					</tr>
 
-							<tr>
-								<td>{{autostrada.0}}</td>
-								<td>{{autostrada.1}}</td>
-								<td>{{autostrada.2}}</td>
-								<td>{{autostrada.3}}</td>
-								<td><a href="/app/casello?autostrada={{autostrada.0}}">{{autostrada.4}}</a></td>
-							</tr>
+					{% endfor %}
+				</table>
 
-							{% endfor %}
-						</table>
+				{% else %}
+				<p>tabella vuota</p>
+				{% endif %}
+			</div>
+		</main>
 
-						{% else %}
-						<p>tabella vuota</p>
-						{% endif %}
-					</div>
-				</div>
-			</main>
-
-			{% include 'header.html' %}
-		</div>
+		{% include 'header.html' %}
 
 		<div class="fixed-bottom">
 			<!-- div footer-->

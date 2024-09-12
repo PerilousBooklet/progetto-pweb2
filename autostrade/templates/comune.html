@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" style="height: 100%">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -96,7 +96,7 @@
 		});
 	</script>
 
-	<body style="overflow: auto" onload="enableTooltips()">
+	<body style="display: flex; height: 100%; flex-direction: column; overflow: auto" onload="enableTooltips()">
 		<div id="alertContainer" class="page-alerts" hidden style="margin-top: 56px">
 			<div class="alert alert-success page-alert" id="alert-1"><strong>Successo!</strong> Placeholder</div>
 
@@ -175,65 +175,59 @@
 			</div>
 		</div>
 
-		<div class="container-fluid" style="padding-top: 50px; padding-right: 80px; padding-bottom: 100px">
-			<!-- Questo contiene tutti gli elementi della pagina -->
-			<main class="row z-index-0">
-				<!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
-				<div class="fixed-top" style="padding-top: 100px; padding-left: 80px; width: 400px">
-					<!-- div filtri -->
-					<h2>Filtri</h2>
-					<form action="/app/comune" method="post">
-						{% csrf_token %} {{ form }}
-						<br />
-						<button type="submit" class="btn btn-primary" data-toggle="tooltip" data-bs-placement="bottom" title="Cerca all'interno del database">Cerca</button>
-						<button type="button" onclick="populateInsertModal()" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" data-bs-placement="bottom" title="Inserisci una nuova riga nel database" data-bs-target="#insertDialog">Inserisci</button>
-						<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light" data-toggle="tooltip" data-bs-placement="bottom" title="Svuota i filitri di ricerca">Svuota</button>
-					</form>
-				</div>
-
-				<div class="col-4"></div>
-
-				<div class="col-xs-6 col-sm-6 col-md-8 overflow-y-auto">
-					<!-- div tabella-->
-					<div class="table-responsive">
-						{% if listaelementi %}
-						<table data-toggle="table" class="table table-bordered table-hover align-middle" sort:true>
-							<thead>
-								<th class="sorting" scope="col" data-sortable="true">Codici</th>
-								<th scope="col" data-sortable="true">Codici Province</th>
-								<th scope="col" data-sortable="true">Nomi</th>
-								<th scope="col" data-sortable="true">Numero Caselli</th>
-								<th scope="col"></th>
-							</thead>
-							<tbody>
-								{% for comune in listaelementi %}
-								<tr class="rs-row">
-									<td>{{comune.0}}</td>
-									<td>{{comune.1}}</td>
-									<td>{{comune.2}}</td>
-									<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
-									<td>
-										<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
-										<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
-						</table>
-
-						{% else %}
-						<p>tabella vuota</p>
-						{% endif %}
-					</div>
-				</div>
-			</main>
-
-			{% include 'header.html' %}
-
-			<div class="fixed-bottom">
-				<!-- div footer-->
-				{% include 'footer.html' %}
+		<!-- Questo contiene tutti gli elementi della pagina -->
+		<main style="display: flex; flex: 1; overflow: hidden; padding: 50px; padding-bottom: 98px">
+			<!-- Primo div, esso contiene la colonna dei filtri e quella della tabella-->
+			<div class="col-sm-2" style="padding-right: 20px">
+				<!-- div filtri -->
+				<h2>Filtri</h2>
+				<form action="/app/comune" method="post">
+					{% csrf_token %} {{ form }}
+					<br />
+					<button type="submit" class="btn btn-primary" data-toggle="tooltip" data-bs-placement="bottom" title="Cerca all'interno del database">Cerca</button>
+					<button type="button" onclick="populateInsertModal()" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" data-bs-placement="bottom" title="Inserisci una nuova riga nel database" data-bs-target="#insertDialog">Inserisci</button>
+					<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light" data-toggle="tooltip" data-bs-placement="bottom" title="Svuota i filitri di ricerca">Svuota</button>
+				</form>
 			</div>
+
+			<div class="col-sm-10" style="overflow: auto; padding-left: 20px">
+				<!-- div tabella-->
+				{% if listaelementi %}
+				<table data-toggle="table" class="table table-bordered table-hover align-middle" sort:true>
+					<thead>
+						<th class="sorting" scope="col" data-sortable="true">Codici</th>
+						<th scope="col" data-sortable="true">Codici Province</th>
+						<th scope="col" data-sortable="true">Nomi</th>
+						<th scope="col" data-sortable="true">Numero Caselli</th>
+						<th scope="col"></th>
+					</thead>
+					<tbody>
+						{% for comune in listaelementi %}
+						<tr class="rs-row">
+							<td>{{comune.0}}</td>
+							<td>{{comune.1}}</td>
+							<td>{{comune.2}}</td>
+							<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
+							<td>
+								<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
+								<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				{% else %}
+				<p>tabella vuota</p>
+				{% endif %}
+			</div>
+		</main>
+
+		{% include 'header.html' %}
+
+		<div class="fixed-bottom">
+			<!-- div footer-->
+			{% include 'footer.html' %}
 		</div>
 	</body>
 </html>
