@@ -2,7 +2,7 @@ from typing import Dict
 import psycopg2
 
 dbname = "pweb2"
-username = "user"
+username = "utente"
 password = "password_qui"
 
 def createConnection():
