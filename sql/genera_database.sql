@@ -18,6 +18,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Crea Utente postgres per la connessione
+--
+DROP USER pweb2;
+CREATE USER pweb2 WITH SUPERUSER;
+
+
 DROP DATABASE pweb2;
 --
 -- TOC entry 3433 (class 1262 OID 17290)
