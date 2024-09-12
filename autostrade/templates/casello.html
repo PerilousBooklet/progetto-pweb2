@@ -29,11 +29,21 @@
 	</head>
 
 	<script>
+		//funzione di Bootstrap per l'avvio dei consigli utente
+		function enableTooltips() {
+			$(document).ready(function () {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		}
+
+		//funzione per rendere i campi numerici
 		function floatValues() {
 			$("#id_x").attr("type", "number");
 			$("#id_y").attr("type", "number");
 		}
 
+		//blocca l'input della data in base allo stato del radio button.
+		//solo quando è selezionato automatico si può modificare la data.
 		function blockDate() {
 			if (document.getElementById("id_is_automatico_2").checked || document.getElementById("id_is_automatico_0").checked) {
 				document.getElementById("id_data_automazione").setAttribute("disabled", "");
@@ -42,6 +52,7 @@
 			}
 		}
 
+		//svuota i filtri di ricerca al click del pulsante svuota
 		function Svuota() {
 			$("#id_codice")[0].value = "";
 			$("#id_cod_naz")[0].value = "";
@@ -50,17 +61,20 @@
 			$("#id_x")[0].value = "";
 			$("#id_y")[0].value = "";
 			$("#id_is_automatico_2")[0].checked = true;
+			//run di blockdate in caso la selezione di automatico sia cambiata
 			blockDate();
 			$("#id_data_automazione").value = "";
 		}
 	</script>
 
-	<body onload="blockDate(); floatValues()" body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
+	<body onload="blockDate(); floatValues(); enableTooltips()" body style="display: flex; height: 100%; flex-direction: column; overflow: auto">
 		<main class="row" style="display: flex; flex: 1; overflow: auto; padding: 50px; padding-top: 106px; padding-bottom: 98px">
 			<!-- Form Menu -->
 			<div class="col-sm-3" style="height: auto; padding-bottom: 30px">
 				<!-- div filtri -->
 				<h2>Filtri</h2>
+
+				<!-- form di ricerca generata da django -->
 				<form action="/app/casello" method="post">
 					{% csrf_token %} {{ form.codice.label_tag }} {{ form.codice }} {{ form.cod_naz.label_tag }} {{ form.cod_naz }} {{ form.comune.label_tag }} {{ form.comune }} {{ form.nome.label_tag }} {{ form.nome }} {{ form.x.label_tag }} {{ form.x }} {{ form.y.label_tag }} {{ form.y }}
 					<div class="form-check">
@@ -76,10 +90,11 @@
 
 					<br />
 					<button type="submit" class="btn btn-primary">Cerca</button>
-					<button type="button" onclick="Svuota()" class="btn btn-light">Svuota</button>
+					<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light" data-toggle="tooltip" data-bs-placement="bottom" title="Svuota i filitri di ricerca">Svuota</button>
 				</form>
 			</div>
 
+			<!-- tabella generata da django -->
 			<div id="tableDiv" class="col-sm-9" style="overflow: auto; height: 100%">
 				{% if listaelementi %}
 
@@ -116,7 +131,7 @@
 				</table>
 
 				{% else %}
-				<p>tabella vuota</p>
+				<p>Nessun risultato :c</p>
 				{% endif %}
 			</div>
 		</main>
