@@ -22,7 +22,7 @@ SET row_security = off;
 -- Crea Utente postgres per la connessione
 --
 DROP USER pweb2;
-CREATE USER pweb2 WITH SUPERUSER;
+CREATE USER pweb2 WITH SUPERUSER PASSWORD 'pweb2';
 
 
 DROP DATABASE pweb2;
