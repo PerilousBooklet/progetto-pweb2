@@ -30,21 +30,28 @@
 	</head>
 
 	<script>
+		//funzione di Bootstrap per l'avvio dei consigli utente
 		function enableTooltips() {
 			$(document).ready(function () {
 				$('[data-toggle="tooltip"]').tooltip();
 			});
 		}
 
+		//svuota i filtri di ricerca al click del pulsante svuota
 		function Svuota() {
 			$("#id_codice")[0].value = "";
 			$("#id_provincia")[0].value = "";
 			$("#id_nome")[0].value = "";
 		}
 
-		console.log("{{success}}");
-
-		// alert
+		//logica degli avvisi di successo o di insuccesso durante le operazioni di CRUD dell'utente
+		// -3 = fallimento eliminazione
+		// -2 = fallimento modifica
+		// -1 = fallimento inserimento
+		//  0 = stato iniziale, netruale
+		//  1 = successo inserimento
+		//  2 = successo modifica
+		//  3 = successo eliminazione
 		$(function () {
 			$(".page-alert").hide();
 			$("#alertContainer").removeAttr("hidden");
@@ -185,7 +192,7 @@
 				<form action="/app/comune" method="post">
 					{% csrf_token %} {{ form }}
 					<br />
-					<button type="submit" class="btn btn-primary" data-toggle="tooltip" data-bs-placement="bottom" title="Cerca all'interno del database">Cerca</button>
+					<button type="submit" class="btn btn-primary">Cerca</button>
 					<button type="button" onclick="populateInsertModal()" class="btn btn-primary" data-bs-toggle="modal" data-toggle="tooltip" data-bs-placement="bottom" title="Inserisci una nuova riga nel database" data-bs-target="#insertDialog">Inserisci</button>
 					<button type="button" onclick="Svuota()" id="btnSvuota" class="btn btn-light" data-toggle="tooltip" data-bs-placement="bottom" title="Svuota i filitri di ricerca">Svuota</button>
 				</form>
@@ -210,6 +217,7 @@
 							<td>{{comune.2}}</td>
 							<td><a href="/app/casello?comune={{comune.0}}">{{comune.3}}</a></td>
 							<td>
+								<!-- pulsanti per modifica ed eliminazione -->
 								<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Modifica riga" data-bs-target="#editDialog"><img src="{% static 'icons/compose.png' %}" /></button>
 								<button type="button" onclick="populateRowModal('{{comune.0}}','{{comune.1}}','{{comune.2}}')" class="btn" data-bs-toggle="modal" data-toggle="tooltip" title="Elimina riga" data-bs-target="#deleteDialog"><img src="{% static 'icons/bin.png' %}" /></button>
 							</td>
@@ -219,7 +227,7 @@
 				</table>
 
 				{% else %}
-				<p>tabella vuota</p>
+				<p>Nessun risultato :c</p>
 				{% endif %}
 			</div>
 		</main>
