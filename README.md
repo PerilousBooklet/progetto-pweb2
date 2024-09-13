@@ -1,6 +1,4 @@
-# Progetto di programmazione web 2
-
-Progetto di Programmazione Web, parte 2.
+# Progetto di Programmazione Web 2
 
 ## Indice
 
