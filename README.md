@@ -26,7 +26,7 @@ mentre i modali sono utilizzati per modificare o rimuovere tuple nel database, t
 
 ## Setup Ambiente di Sviluppo
 
-##### Requisiti:
+### Requisiti:
 
 -   Avere _Python_ nel `PATH`.
 -   Avere _PostgreSQL_ versione 16.
