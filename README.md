@@ -4,12 +4,6 @@
 
 1. [Spiegazione delle scelte del progetto](#spiegazione-delle-scelte-del-progetto)
 2. [Setup Ambiente di Sviluppo](#setup-ambiente-di-sviluppo)
-3. [Setup Database](#setup-database)
-4. [Setup Django Project](#setup-django-project)
-5. [Create Project](#create-project)
-6. [Create Webapp](#create-webapp)
-7. [Run Project](#run-project)
-8. [Access Webapp](#access-webapp)
 
 ## Spiegazione delle scelte del progetto
 
